@@ -1,6 +1,7 @@
 using System.Text;
 using HarmonyLib;
 using KappiMod.Config;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 #if ML
 using Il2Cpp;
@@ -43,7 +44,18 @@ public static class DialogueSkipper
         {
             {
                 "Scene 7 - Backrooms",
-                new DialogueMapping { { "KindMita 1 [Продолжает]", 203 }, { "KindMita 2", 204 } }
+                new DialogueMapping
+                {
+                    { "KindMita 1 [Продолжает]", 203 },
+                    { "KindMita 2", 204 }
+                }
+            },
+            {
+                "Scene 9 - ChibiMita",
+                new DialogueMapping
+                {
+                    { "3D TextFactory 4 H", 35 }
+                }
             },
             {
                 "Scene 17 - Dreamer",
@@ -61,64 +73,44 @@ public static class DialogueSkipper
             },
             {
                 "Scene 14 - MobilePlayer",
-                new DialogueMapping { { "Player 6", 121 }, { "Mita 1 [Шепотом]", 123 } }
+                new DialogueMapping
+                {
+                    { "Player 6", 121 },
+                    { "Mita 1 [Шепотом]", 123 }
+                }
             },
             {
                 "Scene 15 - BasementAndDeath",
-                new DialogueMapping { { "Player 1", 68 }, { "Player 2", 69 } }
+                new DialogueMapping
+                {
+                    { "Player 1", 68 },
+                    { "Player 2", 69 }
+                }
             },
         };
 
         [HarmonyPatch(typeof(Dialogue_3DText), "Start")]
         private static void Prefix(Dialogue_3DText __instance)
         {
-            SkipDialouge(__instance);
+            HandleSkipDialogue(__instance);
         }
 
         [HarmonyPatch(typeof(Dialogue_3DText), "Start")]
         private static void Postfix(Dialogue_3DText __instance)
         {
-            SkipDialouge(__instance);
+            HandleSkipDialogue(__instance);
         }
 
-        private static void SkipDialouge(Dialogue_3DText __instance)
+        private static void HandleSkipDialogue(Dialogue_3DText __instance)
         {
             if (!Enabled)
             {
                 return;
             }
 
-            string objectName = __instance.name;
-            string activeSceneName = SceneManager.GetActiveScene().name;
-            int indexString = __instance.indexString;
-            string text = __instance.textPrint;
-
-            if (
-                _ignoredDialogues.ContainsKey(activeSceneName)
-                && _ignoredDialogues[activeSceneName].ContainsKey(objectName)
-                && _ignoredDialogues[activeSceneName][objectName] == indexString
-            )
-            {
-                LogDialogueInfo(objectName, activeSceneName, indexString, text, separator: '=');
-                return;
-            }
-
-            ApplySkipDialogueSettings(__instance);
-
-            LogDialogueInfo(objectName, activeSceneName, indexString, text);
-        }
-
-        private static void ApplySkipDialogueSettings(Dialogue_3DText __instance)
-        {
             try
             {
-                __instance.dontSubtitles = true;
-                __instance.dontVoice = true;
-                __instance.timeFinish = 0;
-                __instance.timeShow = 0;
-                __instance.timePrint = 0;
-                __instance.timeSound = 0;
-                __instance.textPrint = " ";
+                SkipDialouge(__instance);
             }
             catch (Exception e)
             {
@@ -126,11 +118,42 @@ public static class DialogueSkipper
             }
         }
 
+        private static void SkipDialouge(Dialogue_3DText __instance)
+        {
+            string objectName = __instance.name;
+            string activeSceneName = SceneManager.GetActiveScene().name;
+            int indexString = __instance.indexString;
+            string text = __instance.textPrint;
+            GameObject? speaker = __instance.speaker;
+
+            if (
+                _ignoredDialogues.ContainsKey(activeSceneName)
+                && _ignoredDialogues[activeSceneName].ContainsKey(objectName)
+                && _ignoredDialogues[activeSceneName][objectName] == indexString
+            )
+            {
+                LogDialogueInfo(
+                    objectName,
+                    activeSceneName,
+                    indexString,
+                    text,
+                    speaker,
+                    separator: '='
+                );
+                return;
+            }
+
+            __instance.SkipDialogue();
+
+            LogDialogueInfo(objectName, activeSceneName, indexString, text, speaker);
+        }
+
         private static void LogDialogueInfo(
             string objectName,
             string activeSceneName,
             int indexString,
             string text,
+            GameObject? speaker,
             char separator = '-'
         )
         {
@@ -146,6 +169,7 @@ public static class DialogueSkipper
             sb.AppendLine($"Scene name: {activeSceneName}");
             sb.AppendLine($"Index string: {indexString}");
             sb.AppendLine($"Text: {text}");
+            sb.AppendLine($"Speaker: {speaker?.name ?? "null"}");
             sb.AppendLine(new string(separator, 50));
             KappiModCore.Log(sb.ToString());
         }
