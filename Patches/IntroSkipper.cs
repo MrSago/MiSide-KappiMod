@@ -94,7 +94,7 @@ public static class IntroSkipper
                 return;
             }
 
-            if (SceneTracker.LastSceneName == ObjectNames.ENDING_GAME_SCENE)
+            if (PreviousSceneTracker.Name == ObjectNames.ENDING_GAME_SCENE)
             {
                 return;
             }

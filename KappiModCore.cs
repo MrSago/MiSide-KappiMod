@@ -75,7 +75,7 @@ public static class KappiModCore
 
     private static void InitUtils()
     {
-        SceneTracker.Init();
+        PreviousSceneTracker.Init();
     }
 
     #region LOGGING
