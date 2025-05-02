@@ -1,4 +1,5 @@
 using HarmonyLib;
+using KappiMod.Config;
 using KappiMod.Utils;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -12,6 +13,17 @@ namespace KappiMod.Patches;
 
 public static class IntroSkipper
 {
+    public static bool Enabled
+    {
+        get => ConfigManager.IntroSkipper.Value;
+        set
+        {
+            KappiModCore.Log(value ? "Enabled" : "Disabled");
+
+            ConfigManager.IntroSkipper.Value = value;
+        }
+    }
+
     private static HarmonyLib.Harmony _harmony = null!;
 
     public static void Init()
@@ -26,29 +38,49 @@ public static class IntroSkipper
 
     private static void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
+        if (!Enabled)
+        {
+            return;
+        }
+
         if (sceneName != ObjectNames.AIHASTO_INTRO_SCENE)
         {
             return;
         }
 
+        bool skipped = false;
         try
         {
-            PlayableDirector? playableDirector = GameObject
-                .Find("Scene")
-                ?.GetComponent<PlayableDirector>();
-            if (playableDirector == null)
-            {
-                return;
-            }
-
-            playableDirector.time = playableDirector.duration;
-
-            KappiModCore.Log("Aihasto intro skipped");
+            skipped = SkipIntro();
         }
         catch (Exception e)
         {
             KappiModCore.LogError(e.Message);
         }
+
+        if (skipped)
+        {
+            KappiModCore.Log("Aihasto intro skipped");
+        }
+        else
+        {
+            KappiModCore.LogWarning("Aihasto intro not skipped");
+        }
+    }
+
+    private static bool SkipIntro()
+    {
+        PlayableDirector? playableDirector = GameObject
+            .Find("Scene")
+            ?.GetComponent<PlayableDirector>();
+        if (playableDirector == null)
+        {
+            return false;
+        }
+
+        playableDirector.time = playableDirector.duration;
+
+        return true;
     }
 
     [HarmonyPatch]
@@ -57,11 +89,23 @@ public static class IntroSkipper
         [HarmonyPatch(typeof(Menu), "Start")]
         private static void Postfix(Menu __instance)
         {
+            if (!Enabled)
+            {
+                return;
+            }
+
             if (SceneTracker.LastSceneName == ObjectNames.ENDING_GAME_SCENE)
             {
                 return;
             }
 
+            InvokeSkipEvent(__instance);
+
+            KappiModCore.Log("The opening menu cutscene should be skipped");
+        }
+
+        private static void InvokeSkipEvent(Menu __instance)
+        {
             try
             {
                 __instance.eventSkip.Invoke();
@@ -74,8 +118,6 @@ public static class IntroSkipper
                     but it works anyway and we ignore this exception
                 */
             }
-
-            KappiModCore.Log("The opening menu cutscene should be skipped");
         }
     }
 }
