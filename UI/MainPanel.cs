@@ -16,39 +16,56 @@ public class MainPanel : PanelBase
         : base(owner) { }
 
     public override string Name => $"{BuildInfo.NAME} v{BuildInfo.VERSION}";
-    public override int MinWidth => 600;
-    public override int MinHeight => 300;
+    public override int MinWidth => 420;
+    public override int MinHeight => 320;
     public override Vector2 DefaultAnchorMin => new(0.25f, 0.25f);
-    public override Vector2 DefaultAnchorMax => new(0.5f, 0.5f);
+    public override Vector2 DefaultAnchorMax => new(0.25f, 0.25f);
     public override bool CanDragAndResize => true;
 
     protected Text StatusBar { get; private set; } = null!;
 
+    private GameObject? _togglesColumnsLayout;
+    private GameObject? _togglesLeftColumn;
+    private GameObject? _togglesRightColumn;
+
+    private GameObject? _modsSettingsColumnsLayout;
+    private GameObject? _modsSettingsLeftColumn;
     private GameObject? _fpsLimitRow;
 
     protected override void ConstructPanelContent()
     {
-        _ = UIFactory.CreateLabel(
+        _togglesColumnsLayout = CreateColumnsLayout(
             ContentRoot,
-            "ToggleModsLabel",
-            "Toggle Mods",
-            TextAnchor.MiddleLeft,
-            fontSize: 18
+            "TogglesColumnsLayout",
+            minHeight: 150
         );
-        CreateSprintUnlockerToggle();
-        CreateFlashlightIncreaserToggle();
-        CreateSitUnlockerToggle();
-        CreateTimeScaleScrollerToggle();
-        CreateSkipDialoguesToggle();
 
-        _ = UIFactory.CreateLabel(
+        _togglesLeftColumn = CreateVerticalGroup(_togglesColumnsLayout, "TogglesLeftColumn");
+        _togglesRightColumn = CreateVerticalGroup(_togglesColumnsLayout, "TogglesRightColumn");
+
+        CreateLabel(_togglesLeftColumn, "ToggleModsLabel", "Toggle Mods");
+        CreateSprintUnlockerToggle(_togglesLeftColumn);
+        CreateFlashlightIncreaserToggle(_togglesLeftColumn);
+        CreateSitUnlockerToggle(_togglesLeftColumn);
+        CreateTimeScaleScrollerToggle(_togglesLeftColumn);
+
+        CreateLabel(_togglesRightColumn, "TogglePatchesLabel", "Toggle Patches");
+        CreateSkipDialoguesToggle(_togglesRightColumn);
+        CreateIntroSkipperToggle(_togglesRightColumn);
+
+        _modsSettingsColumnsLayout = CreateColumnsLayout(
             ContentRoot,
-            "SettingsModsLabel",
-            "Settings Mods",
-            TextAnchor.MiddleLeft,
-            fontSize: 18
+            "ModsSettingsColumnsLayout",
+            minHeight: 100
         );
-        CreateFpsLimitField();
+
+        _modsSettingsLeftColumn = CreateVerticalGroup(
+            _modsSettingsColumnsLayout,
+            "ModsSettingsLeftColumn"
+        );
+
+        CreateLabel(_modsSettingsLeftColumn, "ModsSettingsLabel", "Mods Settings");
+        CreateFpsLimitField(_modsSettingsLeftColumn);
 
         CreateStatusBar();
 
@@ -62,14 +79,9 @@ public class MainPanel : PanelBase
 
     #region TOGGLE_MODS
 
-    private void CreateSprintUnlockerToggle()
+    private static void CreateSprintUnlockerToggle(GameObject parent)
     {
-        _ = UIFactory.CreateToggle(
-            ContentRoot,
-            "SprintUnlockerToggle",
-            out Toggle toggle,
-            out Text text
-        );
+        UIFactory.CreateToggle(parent, "SprintUnlockerToggle", out Toggle toggle, out Text text);
         text.text = "Sprint unlocker";
         toggle.isOn = SprintUnlocker.Enabled;
         toggle.onValueChanged.AddListener(
@@ -80,10 +92,10 @@ public class MainPanel : PanelBase
         );
     }
 
-    private void CreateFlashlightIncreaserToggle()
+    private static void CreateFlashlightIncreaserToggle(GameObject parent)
     {
-        _ = UIFactory.CreateToggle(
-            ContentRoot,
+        UIFactory.CreateToggle(
+            parent,
             "FlashlightIncreaserToggle",
             out Toggle toggle,
             out Text text
@@ -98,14 +110,9 @@ public class MainPanel : PanelBase
         );
     }
 
-    private void CreateSitUnlockerToggle()
+    private static void CreateSitUnlockerToggle(GameObject parent)
     {
-        _ = UIFactory.CreateToggle(
-            ContentRoot,
-            "SitUnlockerToggle",
-            out Toggle toggle,
-            out Text text
-        );
+        UIFactory.CreateToggle(parent, "SitUnlockerToggle", out Toggle toggle, out Text text);
         text.text = "Sit unlocker";
         toggle.isOn = SitUnlocker.Enabled;
         toggle.onValueChanged.AddListener(
@@ -116,14 +123,9 @@ public class MainPanel : PanelBase
         );
     }
 
-    private void CreateTimeScaleScrollerToggle()
+    private static void CreateTimeScaleScrollerToggle(GameObject parent)
     {
-        _ = UIFactory.CreateToggle(
-            ContentRoot,
-            "TimeScaleScrollerToggle",
-            out Toggle toggle,
-            out Text text
-        );
+        UIFactory.CreateToggle(parent, "TimeScaleScrollerToggle", out Toggle toggle, out Text text);
         text.text = "Time scale scroller";
         toggle.isOn = TimeScaleScroller.Enabled;
         toggle.onValueChanged.AddListener(
@@ -134,14 +136,13 @@ public class MainPanel : PanelBase
         );
     }
 
-    private void CreateSkipDialoguesToggle()
+    #endregion // TOGGLE_MODS
+
+    #region TOGGLE_PATCHES
+
+    private static void CreateSkipDialoguesToggle(GameObject parent)
     {
-        _ = UIFactory.CreateToggle(
-            ContentRoot,
-            "SkipDialoguesToggle",
-            out Toggle toggle,
-            out Text text
-        );
+        UIFactory.CreateToggle(parent, "SkipDialoguesToggle", out Toggle toggle, out Text text);
         text.text = "Skip dialogues";
         toggle.isOn = DialogueSkipper.Enabled;
         toggle.onValueChanged.AddListener(
@@ -152,14 +153,27 @@ public class MainPanel : PanelBase
         );
     }
 
-    #endregion
+    private static void CreateIntroSkipperToggle(GameObject parent)
+    {
+        UIFactory.CreateToggle(parent, "IntroSkipperToggle", out Toggle toggle, out Text text);
+        text.text = "Skip intro";
+        toggle.isOn = IntroSkipper.Enabled;
+        toggle.onValueChanged.AddListener(
+            (value) =>
+            {
+                IntroSkipper.Enabled = value;
+            }
+        );
+    }
 
-    #region SETTINGS_MODS
+    #endregion // TOGGLE_PATCHES
 
-    private void CreateFpsLimitField()
+    #region MODS_SETTINGS
+
+    private void CreateFpsLimitField(GameObject parent)
     {
         _fpsLimitRow = UIFactory.CreateHorizontalGroup(
-            ContentRoot,
+            parent,
             "FpsLimitRow",
             false,
             true,
@@ -208,7 +222,78 @@ public class MainPanel : PanelBase
         };
     }
 
-    #endregion
+    #endregion // MODS_SETTINGS
+
+    #region UI_HELPERS
+
+    private static GameObject CreateColumnsLayout(
+        GameObject parent,
+        string name,
+        int? minHeight = null,
+        int flexibleHeight = 1,
+        int flexibleWidth = 9999
+    )
+    {
+        GameObject layout = UIFactory.CreateHorizontalGroup(
+            parent,
+            name,
+            false,
+            true,
+            true,
+            true,
+            0,
+            new Vector4(2, 2, 2, 2)
+        );
+
+        UIFactory.SetLayoutElement(
+            layout,
+            minHeight: minHeight,
+            flexibleHeight: flexibleHeight,
+            flexibleWidth: flexibleWidth
+        );
+
+        return layout;
+    }
+
+    private static GameObject CreateVerticalGroup(
+        GameObject parent,
+        string name,
+        int minWidth = 200,
+        int flexibleHeight = 0,
+        int flexibleWidth = 0
+    )
+    {
+        GameObject group = UIFactory.CreateVerticalGroup(
+            parent,
+            name,
+            false,
+            false,
+            true,
+            true,
+            3,
+            new Vector4(2, 2, 2, 2)
+        );
+
+        UIFactory.SetLayoutElement(
+            group,
+            minWidth: minWidth,
+            flexibleHeight: flexibleHeight,
+            flexibleWidth: flexibleWidth
+        );
+
+        return group;
+    }
+
+    private static void CreateLabel(
+        GameObject parent,
+        string name,
+        string text,
+        TextAnchor anchor = TextAnchor.MiddleLeft,
+        int fontSize = 18
+    )
+    {
+        UIFactory.CreateLabel(parent, name, text, anchor, fontSize: fontSize);
+    }
 
     private void CreateStatusBar()
     {
@@ -221,4 +306,6 @@ public class MainPanel : PanelBase
             flexibleHeight: 200
         );
     }
+
+    #endregion // UI_HELPERS
 }
