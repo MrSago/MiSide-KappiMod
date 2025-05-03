@@ -84,7 +84,8 @@ public static class DialogueSkipper
                 new DialogueMapping
                 {
                     { "Player 1", 68 },
-                    { "Player 2", 69 }
+                    { "Player 2", 69 },
+                    { "Player 3", 70 }
                 }
             },
         };
@@ -120,21 +121,26 @@ public static class DialogueSkipper
 
         private static void SkipDialouge(Dialogue_3DText __instance)
         {
+            if (__instance == null || __instance.gameObject == null)
+            {
+                return;
+            }
+
             string objectName = __instance.name;
-            string activeSceneName = SceneManager.GetActiveScene().name;
+            string sceneName = SceneManager.GetActiveScene().name;
             int indexString = __instance.indexString;
             string text = __instance.textPrint;
             GameObject? speaker = __instance.speaker;
 
             if (
-                _ignoredDialogues.ContainsKey(activeSceneName)
-                && _ignoredDialogues[activeSceneName].ContainsKey(objectName)
-                && _ignoredDialogues[activeSceneName][objectName] == indexString
+                _ignoredDialogues.ContainsKey(sceneName)
+                && _ignoredDialogues[sceneName].ContainsKey(objectName)
+                && _ignoredDialogues[sceneName][objectName] == indexString
             )
             {
                 LogDialogueInfo(
                     objectName,
-                    activeSceneName,
+                    sceneName,
                     indexString,
                     text,
                     speaker,
@@ -145,7 +151,7 @@ public static class DialogueSkipper
 
             __instance.SkipDialogue();
 
-            LogDialogueInfo(objectName, activeSceneName, indexString, text, speaker);
+            LogDialogueInfo(objectName, sceneName, indexString, text, speaker);
         }
 
         private static void LogDialogueInfo(
@@ -165,7 +171,7 @@ public static class DialogueSkipper
             StringBuilder sb = new();
             sb.Append('\n');
             sb.AppendLine(new string(separator, 50));
-            sb.AppendLine($"Dialogue: {objectName}");
+            sb.AppendLine($"Dialogue name: {objectName}");
             sb.AppendLine($"Scene name: {activeSceneName}");
             sb.AppendLine($"Index string: {indexString}");
             sb.AppendLine($"Text: {text}");
