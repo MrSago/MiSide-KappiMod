@@ -44,13 +44,14 @@ public class MainPanel : PanelBase
         _togglesRightColumn = CreateVerticalGroup(_togglesColumnsLayout, "TogglesRightColumn");
 
         CreateLabel(_togglesLeftColumn, "ToggleModsLabel", "Toggle Mods");
-        CreateSprintUnlockerToggle(_togglesLeftColumn);
+        CreateDialogueSkipperToggle(_togglesLeftColumn);
         CreateFlashlightIncreaserToggle(_togglesLeftColumn);
         CreateSitUnlockerToggle(_togglesLeftColumn);
+        CreateSprintUnlockerToggle(_togglesLeftColumn);
         CreateTimeScaleScrollerToggle(_togglesLeftColumn);
 
         CreateLabel(_togglesRightColumn, "TogglePatchesLabel", "Toggle Patches");
-        CreateSkipDialoguesToggle(_togglesRightColumn);
+
         CreateIntroSkipperToggle(_togglesRightColumn);
 
         _modsSettingsColumnsLayout = CreateColumnsLayout(
@@ -79,15 +80,15 @@ public class MainPanel : PanelBase
 
     #region TOGGLE_MODS
 
-    private static void CreateSprintUnlockerToggle(GameObject parent)
+    private static void CreateDialogueSkipperToggle(GameObject parent)
     {
-        UIFactory.CreateToggle(parent, "SprintUnlockerToggle", out Toggle toggle, out Text text);
-        text.text = "Sprint unlocker";
-        toggle.isOn = SprintUnlocker.Enabled;
+        UIFactory.CreateToggle(parent, "DialogueSkipperToggle", out Toggle toggle, out Text text);
+        text.text = "Dialogue skipper";
+        toggle.isOn = DialogueSkipper.Enabled;
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                SprintUnlocker.Enabled = value;
+                DialogueSkipper.Enabled = value;
             }
         );
     }
@@ -123,6 +124,19 @@ public class MainPanel : PanelBase
         );
     }
 
+    private static void CreateSprintUnlockerToggle(GameObject parent)
+    {
+        UIFactory.CreateToggle(parent, "SprintUnlockerToggle", out Toggle toggle, out Text text);
+        text.text = "Sprint unlocker";
+        toggle.isOn = SprintUnlocker.Enabled;
+        toggle.onValueChanged.AddListener(
+            (value) =>
+            {
+                SprintUnlocker.Enabled = value;
+            }
+        );
+    }
+
     private static void CreateTimeScaleScrollerToggle(GameObject parent)
     {
         UIFactory.CreateToggle(parent, "TimeScaleScrollerToggle", out Toggle toggle, out Text text);
@@ -139,19 +153,6 @@ public class MainPanel : PanelBase
     #endregion // TOGGLE_MODS
 
     #region TOGGLE_PATCHES
-
-    private static void CreateSkipDialoguesToggle(GameObject parent)
-    {
-        UIFactory.CreateToggle(parent, "SkipDialoguesToggle", out Toggle toggle, out Text text);
-        text.text = "Skip dialogues";
-        toggle.isOn = DialogueSkipper.Enabled;
-        toggle.onValueChanged.AddListener(
-            (value) =>
-            {
-                DialogueSkipper.Enabled = value;
-            }
-        );
-    }
 
     private static void CreateIntroSkipperToggle(GameObject parent)
     {
@@ -193,7 +194,7 @@ public class MainPanel : PanelBase
         Text fpsLimitLabel = UIFactory.CreateLabel(
             _fpsLimitRow,
             "FpsLimitLabel",
-            "Fps limit:",
+            "Fps limit (-1 unlimited):",
             TextAnchor.MiddleLeft
         );
         UIFactory.SetLayoutElement(fpsLimitLabel.gameObject, minWidth: 110, flexibleWidth: 50);
@@ -215,6 +216,12 @@ public class MainPanel : PanelBase
 
         fpsLimitField.OnValueChanged += (value) =>
         {
+            if (value.Length > 4)
+            {
+                value = value[..4];
+                fpsLimitField.Text = value;
+            }
+
             if (int.TryParse(value, out int fpsLimit))
             {
                 FpsLimit.SetFpsLimit(fpsLimit);
