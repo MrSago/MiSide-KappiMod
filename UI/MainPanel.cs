@@ -157,7 +157,7 @@ public class MainPanel : PanelBase
     private static void CreateIntroSkipperToggle(GameObject parent)
     {
         UIFactory.CreateToggle(parent, "IntroSkipperToggle", out Toggle toggle, out Text text);
-        text.text = "Skip main menu intro";
+        text.text = "Skip menu intro";
         toggle.isOn = IntroSkipper.Enabled;
         toggle.onValueChanged.AddListener(
             (value) =>
