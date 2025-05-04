@@ -42,9 +42,9 @@ public static class KappiModCore
             }
         );
 
-        InitMods();
-        InitPatches();
         InitUtils();
+        InitPatches();
+        InitMods();
     }
 
     private static void LateInitUI()
@@ -56,26 +56,27 @@ public static class KappiModCore
         Log($"{BuildInfo.NAME} v{BuildInfo.VERSION} initialized!");
     }
 
+    private static void InitUtils()
+    {
+        PreviousSceneTracker.Init();
+    }
+
+    private static void InitPatches()
+    {
+        DialoguePatcher.Init();
+        IntroSkipper.Init();
+        NativeResolutionOption.Init();
+    }
+
     private static void InitMods()
     {
         ConsoleUnlocker.Init();
+        DialogueSkipper.Init();
         FlashlightIncreaser.Init();
         FpsLimit.Init();
         SitUnlocker.Init();
         SprintUnlocker.Init();
         TimeScaleScroller.Init();
-    }
-
-    private static void InitPatches()
-    {
-        DialogueSkipper.Init();
-        IntroSkipper.Init();
-        NativeResolutionOption.Init();
-    }
-
-    private static void InitUtils()
-    {
-        PreviousSceneTracker.Init();
     }
 
     #region LOGGING
