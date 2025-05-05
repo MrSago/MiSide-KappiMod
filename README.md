@@ -156,6 +156,8 @@ Adds an option in the settings with native resolution with the maximum monitor r
 
 _Soon..._
 
+But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
+
 ---
 
 # _KappiMod_ пак для MiSide (Russian)
