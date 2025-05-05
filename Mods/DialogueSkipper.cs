@@ -18,30 +18,15 @@ public static class DialogueSkipper
         },
         {
             "Scene 17 - Dreamer",
-            new DialogueMapping
-            {
-                { "Mita 3", 74 },
-                { "Mita 4", 75 },
-                { "Mita 5", 76 },
-                { "Player 7", 100 },
-                { "Player 8", 101 },
-                { "Mita 1(Clone)", 106 },
-                { "Mita 2(Clone)", 105 },
-                { "Mita 3(Clone)", 104 },
-            }
+            new DialogueMapping { { "Mita 3", 74 }, { "Mita 4", 75 } }
         },
         {
             "Scene 14 - MobilePlayer",
-            new DialogueMapping { { "Player 6", 121 }, { "Mita 1 [Шепотом]", 123 } }
+            new DialogueMapping { { "Mita 4", 118 } }
         },
         {
             "Scene 15 - BasementAndDeath",
-            new DialogueMapping
-            {
-                { "Player 1", 68 },
-                { "Player 2", 69 },
-                { "Player 3", 70 },
-            }
+            new DialogueMapping { { "Player 3", 70 } }
         },
     };
 
@@ -95,7 +80,7 @@ public static class DialogueSkipper
     {
         if (IsDialogueIgnored(args))
         {
-            LogDialogueInfo(args, separator: '=');
+            LogDialogueInfo(args, separator: '=', isWarning: true);
             return;
         }
 
@@ -109,7 +94,11 @@ public static class DialogueSkipper
         && _ignoredDialogues[args.SceneName].ContainsKey(args.ObjectName)
         && _ignoredDialogues[args.SceneName][args.ObjectName] == args.IndexString;
 
-    private static void LogDialogueInfo(DialogueEventArgs args, char separator = '-')
+    private static void LogDialogueInfo(
+        DialogueEventArgs args,
+        char separator = '-',
+        bool isWarning = false
+    )
     {
         if (string.IsNullOrWhiteSpace(args.Text))
         {
@@ -125,6 +114,14 @@ public static class DialogueSkipper
         sb.AppendLine($"Text: {args.Text}");
         sb.AppendLine($"Speaker: {args.Speaker?.name ?? "null"}");
         sb.AppendLine(new string(separator, 50));
-        KappiModCore.Log(sb.ToString());
+
+        if (isWarning)
+        {
+            KappiModCore.LogWarning(sb.ToString());
+        }
+        else
+        {
+            KappiModCore.Log(sb.ToString());
+        }
     }
 }
