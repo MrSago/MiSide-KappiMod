@@ -14,7 +14,7 @@ public class DialogueEventArgs : EventArgs
     public string SceneName { get; private init; }
     public int IndexString { get; private init; }
     public string Text { get; private init; }
-    public GameObject Speaker { get; private init; }
+    public GameObject? Speaker { get; private init; }
 
     public DialogueEventArgs(
         Dialogue_3DText dialogueInstance,
@@ -22,7 +22,7 @@ public class DialogueEventArgs : EventArgs
         string sceneName,
         int indexString,
         string text,
-        GameObject speaker
+        GameObject? speaker
     )
     {
         DialogueInstance = dialogueInstance;

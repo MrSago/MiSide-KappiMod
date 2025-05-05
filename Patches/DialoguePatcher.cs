@@ -62,9 +62,8 @@ public static class DialoguePatcher
             }
         }
 
-        private static DialogueEventArgs CreateDialogueEventArgs(Dialogue_3DText instance)
-        {
-            return new DialogueEventArgs(
+        private static DialogueEventArgs CreateDialogueEventArgs(Dialogue_3DText instance) =>
+            new(
                 instance,
                 instance.name,
                 SceneManager.GetActiveScene().name,
@@ -72,6 +71,5 @@ public static class DialoguePatcher
                 instance.textPrint,
                 instance.speaker
             );
-        }
     }
 }
