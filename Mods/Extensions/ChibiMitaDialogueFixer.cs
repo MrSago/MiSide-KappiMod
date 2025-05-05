@@ -25,7 +25,7 @@ public static class ChibiMitaDialogueFixer
             _cachedChibiMita = null;
         }
 
-        KappiModCore.Loader.SceneWasInitialized += OnSceneInitialized;
+        KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
         DialogueEventSystem.OnPostfixDialogueStart += HandleDialogue;
 
         KappiModCore.Log("Initialized");
@@ -35,13 +35,13 @@ public static class ChibiMitaDialogueFixer
     {
         _cachedChibiMita = null;
 
-        KappiModCore.Loader.SceneWasInitialized -= OnSceneInitialized;
+        KappiModCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
         DialogueEventSystem.OnPostfixDialogueStart -= HandleDialogue;
 
         KappiModCore.Log("Cleaned up");
     }
 
-    private static void OnSceneInitialized(int buildIndex, string sceneName)
+    private static void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
         if (sceneName is ObjectNames.CHIBIMITA_SCENE)
         {
@@ -83,13 +83,7 @@ public static class ChibiMitaDialogueFixer
             .FindObjectsOfTypeAll(Il2CppType.Of<Mob_ChibiMita>())
             ?.FirstOrDefault(x => x.name == "ChibiMita")
             ?.Cast<Mob_ChibiMita>();
-        if (_cachedChibiMita != null)
-        {
-            KappiModCore.Log("ChibiMita found");
-        }
-        else
-        {
-            KappiModCore.Log("ChibiMita not found");
-        }
+
+        KappiModCore.Log($"ChibiMita {(_cachedChibiMita == null ? "not found" : "found")}");
     }
 }
