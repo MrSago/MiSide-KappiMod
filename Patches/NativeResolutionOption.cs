@@ -76,12 +76,7 @@ public static class NativeResolutionOption
             int index = menuCaseOption.resolutions.IndexOf(resolution);
             index = index >= 0 ? index : menuCaseOption.resolutions.Count - 1;
 
-            Interface_ChangeScreenButton_Class_ButtonInfo newButtonInfo = new()
-            {
-                buttonText = buttonText,
-                value_int = index,
-            };
-            menuCaseOption.scrIccb.Add(newButtonInfo);
+            menuCaseOption.scrIccb.Add(new() { buttonText = buttonText, value_int = index });
 
             KappiModCore.Log("Option successfully added");
         }
@@ -92,9 +87,10 @@ public static class NativeResolutionOption
             int nativeWidth = primaryDisplay.systemWidth;
             int nativeHeight = primaryDisplay.systemHeight;
 
-            int maxRefreshRate = Screen
-                .resolutions.Where(r => r.width == nativeWidth && r.height == nativeHeight)
-                .Max(r => r.refreshRate);
+            int maxRefreshRate =
+                Screen
+                    .resolutions.Where(r => r.width == nativeWidth && r.height == nativeHeight)
+                    ?.Max(r => r.refreshRate) ?? Screen.resolutions.Max(r => r.refreshRate);
 
             return new Resolution
             {
