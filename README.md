@@ -14,6 +14,7 @@
       - [**5. Sit unlocker**](#5-sit-unlocker)
       - [**6. Sprint unlocker**](#6-sprint-unlocker)
       - [**7. Time scale scroller**](#7-time-scale-scroller)
+      - [**8. Dialogue skipper**](#8-dialogue-skipper)
       - [**Next mode**](#next-mode)
     - [Patch list](#patch-list)
       - [**1. Intro skipper**](#1-intro-skipper)
@@ -32,6 +33,7 @@
       - [**5. Разблокировка приседания**](#5-разблокировка-приседания)
       - [**6. Разблокировка спринта**](#6-разблокировка-спринта)
       - [**7. Скроллер time scale**](#7-скроллер-time-scale)
+      - [**8. Пропуск диалогов**](#8-пропуск-диалогов)
       - [**Следующий мод**](#следующий-мод)
     - [Список патчей](#список-патчей)
       - [**1. Пропуск интро**](#1-пропуск-интро)
@@ -94,6 +96,10 @@ Unlocks sprint mode by holding the Shift key.
 #### **7. Time scale scroller**
 
 Hold Left Shift and scroll mouse wheel for changing time scale.
+
+#### **8. Dialogue skipper**
+
+Skips dialogues. **⚠️ MAY CAUSE SOFTLOCK ⚠️**
 
 #### **Next mode**
 
@@ -209,6 +215,10 @@ _Soon..._
 #### **7. Скроллер time scale**
 
 Зажмите левый Shift и прокрутите колесико мыши чтобы изменить time scale.
+
+#### **8. Пропуск диалогов**
+
+Пропускает диалоги. **⚠️ МОЖЕТ ВЫЗВАТЬ СОФТЛОК ⚠️**
 
 #### **Следующий мод**
 
