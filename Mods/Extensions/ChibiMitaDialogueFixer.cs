@@ -10,11 +10,11 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Mods.Extensions;
 
-public static class ChibiMitaDialogueFixer
+internal static class ChibiMitaDialogueFixer
 {
     private static Mob_ChibiMita? _cachedChibiMita;
 
-    public static void Init()
+    internal static void Init()
     {
         if (SceneManager.GetActiveScene().name is ObjectNames.CHIBIMITA_SCENE)
         {
@@ -31,7 +31,7 @@ public static class ChibiMitaDialogueFixer
         KappiModCore.Log("Initialized");
     }
 
-    public static void CleanUp()
+    internal static void CleanUp()
     {
         _cachedChibiMita = null;
 

@@ -77,83 +77,6 @@ public class MainPanel : PanelBase
         OnClosePanelClicked();
     }
 
-    private void CheckForUpdates()
-    {
-        UpdateStatusBar("Checking for updates...");
-
-        VersionChecker.CheckForUpdatesAsync();
-        KappiModCore.Loader.Update += OnVersionCheckUpdate;
-    }
-
-    private void OnVersionCheckUpdate()
-    {
-        if (VersionChecker.IsCheckingVersion)
-        {
-            return;
-        }
-
-        KappiModCore.Loader.Update -= OnVersionCheckUpdate;
-
-        if (VersionChecker.UpdateAvailable)
-        {
-            UpdateStatusBar(
-                $"Update available! v{VersionChecker.CurrentVersion} -> v{VersionChecker.LatestVersion}"
-            );
-            CreateUpdateButton();
-        }
-        else
-        {
-            UpdateStatusBar("Ready! You are using the latest version.");
-        }
-    }
-
-    private void CreateUpdateButton()
-    {
-        if (_updateButton != null)
-            return;
-
-        GameObject buttonContainer = UIFactory.CreateHorizontalGroup(
-            UIRoot,
-            "UpdateButtonContainer",
-            false,
-            true,
-            true,
-            true,
-            2,
-            new Vector4(2, 2, 2, 2)
-        );
-
-        UIFactory.SetLayoutElement(
-            buttonContainer,
-            minHeight: 30,
-            minWidth: 200,
-            flexibleHeight: 0,
-            flexibleWidth: 0
-        );
-
-        ButtonRef updateButton = UIFactory.CreateButton(
-            buttonContainer,
-            "UpdateButton",
-            "Download Update"
-        );
-
-        _updateButton = updateButton.Component.gameObject;
-        updateButton.OnClick += OpenDownloadPage;
-
-        UIFactory.SetLayoutElement(
-            _updateButton,
-            minHeight: 25,
-            minWidth: 150,
-            flexibleHeight: 0,
-            flexibleWidth: 0
-        );
-    }
-
-    private void OpenDownloadPage()
-    {
-        Application.OpenURL(VersionChecker.DownloadUrl);
-    }
-
     protected override void OnClosePanelClicked()
     {
         Owner.Enabled = !Owner.Enabled;
@@ -311,6 +234,87 @@ public class MainPanel : PanelBase
     }
 
     #endregion // MODS_SETTINGS
+
+    #region CHECK_FOR_UPDATES
+
+    private void CheckForUpdates()
+    {
+        UpdateStatusBar("Checking for updates...");
+
+        VersionChecker.CheckForUpdatesAsync();
+        KappiModCore.Loader.Update += OnVersionCheckUpdate;
+    }
+
+    private void OnVersionCheckUpdate()
+    {
+        if (VersionChecker.IsCheckingVersion)
+        {
+            return;
+        }
+
+        KappiModCore.Loader.Update -= OnVersionCheckUpdate;
+
+        if (VersionChecker.UpdateAvailable)
+        {
+            UpdateStatusBar(
+                $"Update available! v{VersionChecker.CurrentVersion} -> v{VersionChecker.LatestVersion}"
+            );
+            CreateUpdateButton();
+        }
+        else
+        {
+            UpdateStatusBar("Ready! You are using the latest version.");
+        }
+    }
+
+    private void CreateUpdateButton()
+    {
+        if (_updateButton != null)
+            return;
+
+        GameObject buttonContainer = UIFactory.CreateHorizontalGroup(
+            UIRoot,
+            "UpdateButtonContainer",
+            false,
+            true,
+            true,
+            true,
+            2,
+            new Vector4(2, 2, 2, 2)
+        );
+
+        UIFactory.SetLayoutElement(
+            buttonContainer,
+            minHeight: 30,
+            minWidth: 200,
+            flexibleHeight: 0,
+            flexibleWidth: 0
+        );
+
+        ButtonRef updateButton = UIFactory.CreateButton(
+            buttonContainer,
+            "UpdateButton",
+            "Download Update"
+        );
+
+        _updateButton = updateButton.Component.gameObject;
+        updateButton.OnClick += OpenDownloadPage;
+
+        UIFactory.SetLayoutElement(
+            _updateButton,
+            minHeight: 25,
+            minWidth: 150,
+            flexibleHeight: 0,
+            flexibleWidth: 0
+        );
+    }
+
+    private void OpenDownloadPage()
+    {
+        Application.OpenURL(VersionChecker.DownloadUrl);
+    }
+
+    #endregion // CHECK_FOR_UPDATES
 
     #region CREATING_UI_HELPERS
 
