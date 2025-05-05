@@ -58,6 +58,7 @@ public static class KappiModCore
 
     private static void InitUtils()
     {
+        VersionChecker.CheckForUpdatesAsync();
         PreviousSceneTracker.Init();
     }
 

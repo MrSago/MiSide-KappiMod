@@ -1,6 +1,7 @@
 using KappiMod.Mods;
 using KappiMod.Patches;
 using KappiMod.Properties;
+using KappiMod.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 using UniverseLib;
@@ -17,12 +18,13 @@ public class MainPanel : PanelBase
 
     public override string Name => $"{BuildInfo.NAME} v{BuildInfo.VERSION}";
     public override int MinWidth => 420;
-    public override int MinHeight => 320;
+    public override int MinHeight => 400;
     public override Vector2 DefaultAnchorMin => new(0.25f, 0.25f);
     public override Vector2 DefaultAnchorMax => new(0.25f, 0.25f);
     public override bool CanDragAndResize => true;
 
     protected Text StatusBar { get; private set; } = null!;
+    private GameObject? _updateButton;
 
     private GameObject? _togglesColumnsLayout;
     private GameObject? _togglesLeftColumn;
@@ -57,7 +59,7 @@ public class MainPanel : PanelBase
         _modsSettingsColumnsLayout = CreateColumnsLayout(
             ContentRoot,
             "ModsSettingsColumnsLayout",
-            minHeight: 100
+            minHeight: 150
         );
 
         _modsSettingsLeftColumn = CreateVerticalGroup(
@@ -70,7 +72,86 @@ public class MainPanel : PanelBase
 
         CreateStatusBar();
 
+        CheckForUpdates();
+
         OnClosePanelClicked();
+    }
+
+    private void CheckForUpdates()
+    {
+        UpdateStatusBar("Checking for updates...");
+
+        VersionChecker.CheckForUpdatesAsync();
+        KappiModCore.Loader.Update += OnVersionCheckUpdate;
+    }
+
+    private void OnVersionCheckUpdate()
+    {
+        if (VersionChecker.IsCheckingVersion)
+        {
+            return;
+        }
+
+        KappiModCore.Loader.Update -= OnVersionCheckUpdate;
+
+        if (VersionChecker.UpdateAvailable)
+        {
+            UpdateStatusBar(
+                $"Update available! v{VersionChecker.CurrentVersion} -> v{VersionChecker.LatestVersion}"
+            );
+            CreateUpdateButton();
+        }
+        else
+        {
+            UpdateStatusBar("Ready! You are using the latest version.");
+        }
+    }
+
+    private void CreateUpdateButton()
+    {
+        if (_updateButton != null)
+            return;
+
+        GameObject buttonContainer = UIFactory.CreateHorizontalGroup(
+            UIRoot,
+            "UpdateButtonContainer",
+            false,
+            true,
+            true,
+            true,
+            2,
+            new Vector4(2, 2, 2, 2)
+        );
+
+        UIFactory.SetLayoutElement(
+            buttonContainer,
+            minHeight: 30,
+            minWidth: 200,
+            flexibleHeight: 0,
+            flexibleWidth: 0
+        );
+
+        ButtonRef updateButton = UIFactory.CreateButton(
+            buttonContainer,
+            "UpdateButton",
+            "Download Update"
+        );
+
+        _updateButton = updateButton.Component.gameObject;
+        updateButton.OnClick += OpenDownloadPage;
+
+        UIFactory.SetLayoutElement(
+            _updateButton,
+            minHeight: 25,
+            minWidth: 150,
+            flexibleHeight: 0,
+            flexibleWidth: 0
+        );
+    }
+
+    private void OpenDownloadPage()
+    {
+        Application.OpenURL(VersionChecker.DownloadUrl);
     }
 
     protected override void OnClosePanelClicked()
@@ -231,7 +312,7 @@ public class MainPanel : PanelBase
 
     #endregion // MODS_SETTINGS
 
-    #region UI_HELPERS
+    #region CREATING_UI_HELPERS
 
     private static GameObject CreateColumnsLayout(
         GameObject parent,
@@ -312,6 +393,15 @@ public class MainPanel : PanelBase
             flexibleWidth: 9999,
             flexibleHeight: 200
         );
+    }
+
+    #endregion // CREATING_UI_HELPERS
+
+    #region UI_HELPERS
+
+    protected void UpdateStatusBar(string text)
+    {
+        StatusBar.text = text;
     }
 
     #endregion // UI_HELPERS
