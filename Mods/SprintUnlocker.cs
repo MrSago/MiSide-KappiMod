@@ -81,8 +81,6 @@ public static class SprintUnlocker
         }
     }
 
-    private static bool IsPlayerMoveValid()
-    {
-        return _cachedPlayerMove != null && _cachedPlayerMove.gameObject != null;
-    }
+    private static bool IsPlayerMoveValid() =>
+        _cachedPlayerMove != null && _cachedPlayerMove.gameObject != null;
 }

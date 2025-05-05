@@ -45,9 +45,10 @@ internal static class ChibiMitaDialogueFixer
     {
         if (sceneName is ObjectNames.CHIBIMITA_SCENE)
         {
+            _cachedChibiMita = null;
             TryFindChibiMita();
         }
-        else
+        else if (_cachedChibiMita != null)
         {
             _cachedChibiMita = null;
         }
@@ -60,25 +61,24 @@ internal static class ChibiMitaDialogueFixer
             return;
         }
 
+        TryFindChibiMita();
         if (_cachedChibiMita == null)
         {
-            TryFindChibiMita();
+            return;
         }
 
-        if (_cachedChibiMita != null)
-        {
-            _cachedChibiMita.AnimationStop();
+        _cachedChibiMita.AnimationStop();
 
-            KappiModCore.Log("ChibiMita animation stopped");
-        }
-        else
-        {
-            KappiModCore.Log("ChibiMita not found");
-        }
+        KappiModCore.Log("ChibiMita animation stopped");
     }
 
     private static void TryFindChibiMita()
     {
+        if (IsChibiMitaValid())
+        {
+            return;
+        }
+
         _cachedChibiMita = Resources
             .FindObjectsOfTypeAll(Il2CppType.Of<Mob_ChibiMita>())
             ?.FirstOrDefault(x => x.name == "ChibiMita")
@@ -86,4 +86,7 @@ internal static class ChibiMitaDialogueFixer
 
         KappiModCore.Log($"ChibiMita {(_cachedChibiMita == null ? "not found" : "found")}");
     }
+
+    private static bool IsChibiMitaValid() =>
+        _cachedChibiMita != null && _cachedChibiMita.gameObject != null;
 }
