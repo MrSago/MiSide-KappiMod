@@ -34,7 +34,7 @@ public static class SprintUnlocker
         }
     }
 
-    private static PlayerMove? _playerMove;
+    private static PlayerMove? _cachedPlayerMove;
 
     public static void Init()
     {
@@ -50,13 +50,14 @@ public static class SprintUnlocker
     {
         try
         {
-            PlayerMove? playerMove = GetPlayerMove();
-            if (playerMove == null)
+            TryFindPlayerMove();
+            if (_cachedPlayerMove == null)
             {
+                KappiModCore.LogError("PlayerMove component not found!");
                 return;
             }
 
-            playerMove.canRun = value;
+            _cachedPlayerMove.canRun = value;
         }
         catch (Exception e)
         {
@@ -72,17 +73,16 @@ public static class SprintUnlocker
         }
     }
 
-    private static PlayerMove? GetPlayerMove()
+    private static void TryFindPlayerMove()
     {
         if (!IsPlayerMoveValid())
         {
-            _playerMove = GameObject.Find("Player")?.GetComponent<PlayerMove>();
+            _cachedPlayerMove = GameObject.Find("Player")?.GetComponent<PlayerMove>();
         }
-        return _playerMove;
     }
 
     private static bool IsPlayerMoveValid()
     {
-        return _playerMove != null && _playerMove.gameObject != null;
+        return _cachedPlayerMove != null && _cachedPlayerMove.gameObject != null;
     }
 }

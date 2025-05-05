@@ -1,4 +1,5 @@
 #if BIE
+
 using System;
 using HarmonyLib;
 using UnityEngine;
@@ -18,4 +19,4 @@ public static class BepInExPatches
     }
 }
 
-#endif
+#endif // BIE

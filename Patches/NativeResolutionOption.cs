@@ -47,7 +47,7 @@ public static class NativeResolutionOption
 
         private static void AddNativeResolutionOption()
         {
-            var menuCaseOption = Resources
+            MenuCaseOption? menuCaseOption = Resources
                 .FindObjectsOfTypeAll(Il2CppType.Of<MenuCaseOption>())
                 ?.FirstOrDefault(x => x.name == "Button Resolution")
                 ?.Cast<MenuCaseOption>();
@@ -75,7 +75,8 @@ public static class NativeResolutionOption
 
             int index = menuCaseOption.resolutions.IndexOf(resolution);
             index = index >= 0 ? index : menuCaseOption.resolutions.Count - 1;
-            var newButtonInfo = new Interface_ChangeScreenButton_Class_ButtonInfo()
+
+            Interface_ChangeScreenButton_Class_ButtonInfo newButtonInfo = new()
             {
                 buttonText = buttonText,
                 value_int = index,

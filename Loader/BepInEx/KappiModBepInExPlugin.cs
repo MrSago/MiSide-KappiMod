@@ -1,4 +1,5 @@
 #if BIE
+
 using BepInEx;
 using BepInEx.IL2CPP;
 using BepInEx.Logging;
@@ -57,4 +58,4 @@ public class KappiModBepInExPlugin : BasePlugin, IKappiModLoader
     }
 }
 
-#endif
+#endif // BIE

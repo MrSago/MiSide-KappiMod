@@ -55,22 +55,25 @@ public static class ChibiMitaDialogueFixer
 
     private static void HandleDialogue(object? sender, DialogueEventArgs args)
     {
-        if (args.ObjectName is ObjectNames.CHIBIMITA_BROKEN_DIALOGUE)
+        if (args.ObjectName is not ObjectNames.CHIBIMITA_BROKEN_DIALOGUE)
         {
-            if (_cachedChibiMita == null)
-            {
-                TryFindChibiMita();
-            }
+            return;
+        }
 
-            if (_cachedChibiMita != null)
-            {
-                _cachedChibiMita.AnimationStop();
-                KappiModCore.Log("ChibiMita animation stopped");
-            }
-            else
-            {
-                KappiModCore.Log("ChibiMita not found");
-            }
+        if (_cachedChibiMita == null)
+        {
+            TryFindChibiMita();
+        }
+
+        if (_cachedChibiMita != null)
+        {
+            _cachedChibiMita.AnimationStop();
+
+            KappiModCore.Log("ChibiMita animation stopped");
+        }
+        else
+        {
+            KappiModCore.Log("ChibiMita not found");
         }
     }
 

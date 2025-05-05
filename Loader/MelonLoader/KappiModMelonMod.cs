@@ -1,4 +1,5 @@
 #if ML
+
 using MelonLoader;
 using MelonLoader.Utils;
 using KappiMod.Config;
@@ -53,4 +54,4 @@ public class KappiModMelonMod : MelonMod, IKappiModLoader
     }
 }
 
-#endif
+#endif // ML

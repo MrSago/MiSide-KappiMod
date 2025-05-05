@@ -12,13 +12,13 @@ public static class ConfigManager
     public static ConfigElement<bool> ForceUnlockMouse { get; private set; } = null!;
 
     // Mod config elements
+    public static ConfigElement<bool> DialogueSkipper { get; private set; } = null!;
     public static ConfigElement<bool> FlashlightIncreaser { get; private set; } = null!;
     public static ConfigElement<bool> SitUnlocker { get; private set; } = null!;
     public static ConfigElement<bool> SprintUnlocker { get; private set; } = null!;
     public static ConfigElement<bool> TimeScaleScroller { get; private set; } = null!;
 
     // Patch config elements
-    public static ConfigElement<bool> DialogueSkipper { get; private set; } = null!;
     public static ConfigElement<bool> IntroSkipper { get; private set; } = null!;
 
     // Mod settings elements
@@ -50,12 +50,12 @@ public static class ConfigManager
         );
         ForceUnlockMouse = new("ForceUnlockMouse", "Force unlock mouse", true);
 
+        DialogueSkipper = new("DialogueSkipper", "Dialogue skipper", false);
         FlashlightIncreaser = new("FlashlightIncreaser", "Flashlight increaser", true);
         SitUnlocker = new("SitUnlocker", "Sit unlocker", true);
         SprintUnlocker = new("SprintUnlocker", "Sprint unlocker", true);
         TimeScaleScroller = new("TimeScaleScroller", "Time scale scroller", true);
 
-        DialogueSkipper = new("DialogueSkipper", "Dialogue skipper", false);
         IntroSkipper = new("IntroSkipper", "Intro skipper", false);
 
         FpsLimit = new("FpsLimit", "Fps limit", -1);

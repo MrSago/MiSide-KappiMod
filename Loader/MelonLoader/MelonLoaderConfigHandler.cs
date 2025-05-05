@@ -1,6 +1,8 @@
 #if ML
+
 using MelonLoader;
 using KappiMod.Config;
+using System.Reflection;
 
 namespace KappiMod.Loader.MelonLoader;
 
@@ -19,10 +21,10 @@ public class MelonLoaderConfigHandler : ConfigHandler
     {
         foreach (var element in ConfigManager.ConfigElements)
         {
-            var key = element.Key;
+            string? key = element.Key;
             if (PrefCategory.GetEntry(key) is not null)
             {
-                var config = element.Value;
+                IConfigElement? config = element.Value;
                 config.BoxedValue = config.GetLoaderConfigValue();
             }
         }
@@ -34,7 +36,7 @@ public class MelonLoaderConfigHandler : ConfigHandler
 
     public override void RegisterConfigElement<T>(ConfigElement<T> element)
     {
-        var entry = PrefCategory.CreateEntry(
+        MelonPreferences_Entry<T> entry = PrefCategory.CreateEntry(
             element.Name,
             element.Value,
             null,
@@ -72,8 +74,8 @@ public class MelonLoaderConfigHandler : ConfigHandler
             this.entry = entry;
             this.config = config;
 
-            var evt = entry.GetType().GetEvent("OnValueChangedUntyped");
-            var thisMethod = GetType().GetMethod("OnChanged");
+            EventInfo? evt = entry.GetType().GetEvent("OnValueChangedUntyped");
+            MethodInfo? thisMethod = GetType().GetMethod("OnChanged");
             if (evt is null or { EventHandlerType: null } || thisMethod is null)
             {
                 return;
@@ -100,4 +102,4 @@ public class MelonLoaderConfigHandler : ConfigHandler
     }
 }
 
-#endif
+#endif // ML

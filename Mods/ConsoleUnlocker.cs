@@ -38,7 +38,7 @@ public static class ConsoleUnlocker
 
     private static void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
-        if (sceneName != ObjectNames.MAIN_MENU_SCENE)
+        if (sceneName is not ObjectNames.MAIN_MENU_SCENE)
         {
             return;
         }

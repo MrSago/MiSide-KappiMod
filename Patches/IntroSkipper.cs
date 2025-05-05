@@ -18,6 +18,15 @@ public static class IntroSkipper
         get => ConfigManager.IntroSkipper.Value;
         set
         {
+            if (value)
+            {
+                KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+            }
+            else
+            {
+                KappiModCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
+            }
+
             KappiModCore.Log(value ? "Enabled" : "Disabled");
 
             ConfigManager.IntroSkipper.Value = value;
@@ -28,7 +37,10 @@ public static class IntroSkipper
 
     public static void Init()
     {
-        KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+        if (Enabled)
+        {
+            KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+        }
 
         _harmony = new("com.miside.introskipper");
         _harmony.PatchAll(typeof(Patch));
@@ -38,12 +50,7 @@ public static class IntroSkipper
 
     private static void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
-        if (!Enabled)
-        {
-            return;
-        }
-
-        if (sceneName != ObjectNames.AIHASTO_INTRO_SCENE)
+        if (sceneName is not ObjectNames.AIHASTO_INTRO_SCENE)
         {
             return;
         }
@@ -94,7 +101,7 @@ public static class IntroSkipper
                 return;
             }
 
-            if (PreviousSceneTracker.Name == ObjectNames.ENDING_GAME_SCENE)
+            if (PreviousSceneTracker.Name is ObjectNames.ENDING_GAME_SCENE)
             {
                 return;
             }

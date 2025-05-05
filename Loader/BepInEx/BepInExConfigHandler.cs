@@ -1,4 +1,5 @@
 #if BIE
+
 using BepInEx.Configuration;
 using KappiMod.Config;
 using KappiMod.Properties;
@@ -64,4 +65,4 @@ public class BepInExConfigHandler : ConfigHandler
     }
 }
 
-#endif
+#endif // BIE
