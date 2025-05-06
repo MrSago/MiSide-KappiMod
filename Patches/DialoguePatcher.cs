@@ -12,6 +12,8 @@ namespace KappiMod.Patches;
 public static class DialoguePatcher
 {
     private static bool _isInitialized = false;
+    public static bool IsInitialized => _isInitialized;
+
     private static HarmonyLib.Harmony _harmony = null!;
 
     public static void Init()
@@ -22,10 +24,11 @@ public static class DialoguePatcher
             return;
         }
 
+        _isInitialized = true;
+
         _harmony = new("com.miside.dialoguepatcher");
         _harmony.PatchAll(typeof(Patch));
 
-        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

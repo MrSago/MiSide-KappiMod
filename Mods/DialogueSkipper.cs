@@ -2,6 +2,7 @@ using System.Text;
 using KappiMod.Config;
 using KappiMod.Events;
 using KappiMod.Mods.Extensions;
+using KappiMod.Patches;
 
 namespace KappiMod.Mods;
 
@@ -34,7 +35,7 @@ public static class DialogueSkipper
 
     public static bool Enabled
     {
-        get => ConfigManager.DialogueSkipper.Value;
+        get => _isInitialized && ConfigManager.DialogueSkipper.Value;
         set
         {
             if (!_isInitialized || value == Enabled)
@@ -65,12 +66,21 @@ public static class DialogueSkipper
             return;
         }
 
+        if (!DialoguePatcher.IsInitialized)
+        {
+            KappiModCore.LogError(
+                $"{nameof(DialoguePatcher)} is not initialized. Mod can't be used."
+            );
+            return;
+        }
+
+        _isInitialized = true;
+
         if (Enabled)
         {
             SubscribeEvents();
         }
 
-        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

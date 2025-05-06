@@ -22,7 +22,7 @@ public static class FlashlightIncreaser
 
     public static bool Enabled
     {
-        get => ConfigManager.FlashlightIncreaser.Value;
+        get => _isInitialized && ConfigManager.FlashlightIncreaser.Value;
         set
         {
             if (!_isInitialized || value == Enabled)
@@ -57,12 +57,13 @@ public static class FlashlightIncreaser
             return;
         }
 
+        _isInitialized = true;
+
         if (Enabled)
         {
             KappiModCore.Loader.Update += OnUpdate;
         }
 
-        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

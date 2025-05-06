@@ -15,7 +15,7 @@ public static class SitUnlocker
 
     public static bool Enabled
     {
-        get => ConfigManager.SitUnlocker.Value;
+        get => _isInitialized && ConfigManager.SitUnlocker.Value;
         set
         {
             if (!_isInitialized || value == Enabled)
@@ -50,12 +50,13 @@ public static class SitUnlocker
             return;
         }
 
+        _isInitialized = true;
+
         if (Enabled)
         {
             KappiModCore.Loader.Update += OnUpdate;
         }
 
-        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

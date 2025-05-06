@@ -15,7 +15,7 @@ public static class SprintUnlocker
 
     public static bool Enabled
     {
-        get => ConfigManager.SprintUnlocker.Value;
+        get => _isInitialized && ConfigManager.SprintUnlocker.Value;
         set
         {
             if (!_isInitialized || value == Enabled)
@@ -50,12 +50,13 @@ public static class SprintUnlocker
             return;
         }
 
+        _isInitialized = true;
+
         if (Enabled)
         {
             KappiModCore.Loader.Update += OnUpdate;
         }
 
-        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

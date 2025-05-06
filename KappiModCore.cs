@@ -131,5 +131,5 @@ public static class KappiModCore
         }
     }
 
-    #endregion
+    #endregion LOGGING
 }

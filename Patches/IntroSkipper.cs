@@ -49,6 +49,8 @@ public static class IntroSkipper
             return;
         }
 
+        _isInitialized = true;
+
         if (Enabled)
         {
             KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
@@ -57,7 +59,6 @@ public static class IntroSkipper
         _harmony = new("com.miside.introskipper");
         _harmony.PatchAll(typeof(Patch));
 
-        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

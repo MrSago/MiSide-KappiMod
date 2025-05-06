@@ -10,7 +10,7 @@ public static class TimeScaleScroller
 
     public static bool Enabled
     {
-        get => ConfigManager.TimeScaleScroller.Value;
+        get => _isInitialized && ConfigManager.TimeScaleScroller.Value;
         set
         {
             if (!_isInitialized || value == Enabled)
@@ -45,12 +45,13 @@ public static class TimeScaleScroller
             return;
         }
 
+        _isInitialized = true;
+
         if (Enabled)
         {
             KappiModCore.Loader.Update += OnUpdate;
         }
 
-        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

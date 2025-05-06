@@ -99,6 +99,10 @@ public class MainPanel : PanelBase
             (value) =>
             {
                 DialogueSkipper.Enabled = value;
+                if (DialogueSkipper.Enabled != value)
+                {
+                    toggle.isOn = DialogueSkipper.Enabled;
+                }
             }
         );
     }
@@ -117,6 +121,10 @@ public class MainPanel : PanelBase
             (value) =>
             {
                 FlashlightIncreaser.Enabled = value;
+                if (FlashlightIncreaser.Enabled != value)
+                {
+                    toggle.isOn = FlashlightIncreaser.Enabled;
+                }
             }
         );
     }
@@ -130,6 +138,10 @@ public class MainPanel : PanelBase
             (value) =>
             {
                 SitUnlocker.Enabled = value;
+                if (SitUnlocker.Enabled != value)
+                {
+                    toggle.isOn = SitUnlocker.Enabled;
+                }
             }
         );
     }
@@ -143,6 +155,10 @@ public class MainPanel : PanelBase
             (value) =>
             {
                 SprintUnlocker.Enabled = value;
+                if (SprintUnlocker.Enabled != value)
+                {
+                    toggle.isOn = SprintUnlocker.Enabled;
+                }
             }
         );
     }
@@ -156,11 +172,15 @@ public class MainPanel : PanelBase
             (value) =>
             {
                 TimeScaleScroller.Enabled = value;
+                if (TimeScaleScroller.Enabled != value)
+                {
+                    toggle.isOn = TimeScaleScroller.Enabled;
+                }
             }
         );
     }
 
-    #endregion // TOGGLE_MODS
+    #endregion TOGGLE_MODS
 
     #region TOGGLE_PATCHES
 
@@ -173,11 +193,15 @@ public class MainPanel : PanelBase
             (value) =>
             {
                 IntroSkipper.Enabled = value;
+                if (IntroSkipper.Enabled != value)
+                {
+                    toggle.isOn = IntroSkipper.Enabled;
+                }
             }
         );
     }
 
-    #endregion // TOGGLE_PATCHES
+    #endregion TOGGLE_PATCHES
 
     #region MODS_SETTINGS
 
@@ -239,7 +263,7 @@ public class MainPanel : PanelBase
         };
     }
 
-    #endregion // MODS_SETTINGS
+    #endregion MODS_SETTINGS
 
     #region CHECK_FOR_UPDATES
 
@@ -320,7 +344,7 @@ public class MainPanel : PanelBase
         Application.OpenURL(VersionChecker.DownloadUrl);
     }
 
-    #endregion // CHECK_FOR_UPDATES
+    #endregion CHECK_FOR_UPDATES
 
     #region CREATING_UI_HELPERS
 
@@ -405,5 +429,5 @@ public class MainPanel : PanelBase
         );
     }
 
-    #endregion // CREATING_UI_HELPERS
+    #endregion CREATING_UI_HELPERS
 }
