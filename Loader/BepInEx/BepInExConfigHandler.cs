@@ -28,10 +28,7 @@ public class BepInExConfigHandler : ConfigHandler
         }
     }
 
-    public override void SaveConfig()
-    {
-        Config.Save();
-    }
+    public override void SaveConfig() => Config.Save();
 
     public override void RegisterConfigElement<T>(ConfigElement<T> config)
     {
@@ -61,7 +58,7 @@ public class BepInExConfigHandler : ConfigHandler
             return;
         }
 
-        KappiModCore.Log("Could not get config entry '" + element.Name + "'");
+        KappiModCore.LogWarning("Could not get config entry '" + element.Name + "'");
     }
 }
 

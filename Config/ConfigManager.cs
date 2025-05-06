@@ -26,6 +26,11 @@ public static class ConfigManager
 
     public static void Init(ConfigHandler handler)
     {
+        if (Handler is not null)
+        {
+            throw new Exception($"{nameof(ConfigManager)} is already initialized");
+        }
+
         Handler = handler;
         Handler.Init();
 

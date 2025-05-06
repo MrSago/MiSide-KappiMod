@@ -26,13 +26,13 @@ public class KappiModBepInExPlugin : BasePlugin, IKappiModLoader
     private BepInExConfigHandler _configHandler = null!;
     public ConfigHandler ConfigHandler => _configHandler;
 
-    public event Action? Update;
-    public event Action<int, string>? SceneWasLoaded;
-    public event Action<int, string>? SceneWasInitialized;
-
     public Action<object> OnLogMessage => Log.LogMessage;
     public Action<object> OnLogWarning => Log.LogWarning;
     public Action<object> OnLogError => Log.LogError;
+
+    public event Action? Update;
+    public event Action<int, string>? SceneWasLoaded;
+    public event Action<int, string>? SceneWasInitialized;
 
     public void OnUpdate() => Update?.Invoke();
 
