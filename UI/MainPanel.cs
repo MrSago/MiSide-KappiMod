@@ -13,6 +13,16 @@ namespace KappiMod.UI;
 
 public class MainPanel : PanelBase
 {
+    private GameObject? _updateButton;
+
+    private GameObject? _togglesColumnsLayout;
+    private GameObject? _togglesLeftColumn;
+    private GameObject? _togglesRightColumn;
+
+    private GameObject? _modsSettingsColumnsLayout;
+    private GameObject? _modsSettingsLeftColumn;
+    private GameObject? _fpsLimitRow;
+
     public MainPanel(UIBase owner)
         : base(owner) { }
 
@@ -24,15 +34,6 @@ public class MainPanel : PanelBase
     public override bool CanDragAndResize => true;
 
     protected Text StatusBar { get; private set; } = null!;
-    private GameObject? _updateButton;
-
-    private GameObject? _togglesColumnsLayout;
-    private GameObject? _togglesLeftColumn;
-    private GameObject? _togglesRightColumn;
-
-    private GameObject? _modsSettingsColumnsLayout;
-    private GameObject? _modsSettingsLeftColumn;
-    private GameObject? _fpsLimitRow;
 
     protected override void ConstructPanelContent()
     {
@@ -80,6 +81,11 @@ public class MainPanel : PanelBase
     protected override void OnClosePanelClicked()
     {
         Owner.Enabled = !Owner.Enabled;
+    }
+
+    protected void UpdateStatusBar(string text)
+    {
+        StatusBar.text = text;
     }
 
     #region TOGGLE_MODS
@@ -400,13 +406,4 @@ public class MainPanel : PanelBase
     }
 
     #endregion // CREATING_UI_HELPERS
-
-    #region UI_HELPERS
-
-    protected void UpdateStatusBar(string text)
-    {
-        StatusBar.text = text;
-    }
-
-    #endregion // UI_HELPERS
 }

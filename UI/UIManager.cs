@@ -11,7 +11,7 @@ public static class UIManager
         get => UiBase is not null and { Enabled: true };
         set
         {
-            if (UiBase is null || UiBase.Enabled == value)
+            if (UiBase is null || value == UiBase.Enabled)
             {
                 return;
             }

@@ -10,11 +10,19 @@ namespace KappiMod.Mods;
 
 public static class SitUnlocker
 {
+    private static bool _isInitialized = false;
+    private static PlayerMove? _cachedPlayerMove;
+
     public static bool Enabled
     {
         get => ConfigManager.SitUnlocker.Value;
         set
         {
+            if (!_isInitialized || value == Enabled)
+            {
+                return;
+            }
+
             if (value)
             {
                 KappiModCore.Loader.Update += OnUpdate;
@@ -22,7 +30,10 @@ public static class SitUnlocker
             else
             {
                 KappiModCore.Loader.Update -= OnUpdate;
-                SetPlayerSitState(false);
+                if (IsPlayerMoveValid())
+                {
+                    SetPlayerSitState(false);
+                }
             }
 
             KappiModCore.Log(value ? "Enabled" : "Disabled");
@@ -31,15 +42,20 @@ public static class SitUnlocker
         }
     }
 
-    private static PlayerMove? _cachedPlayerMove;
-
     public static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(SitUnlocker)} is already initialized");
+            return;
+        }
+
         if (Enabled)
         {
             KappiModCore.Loader.Update += OnUpdate;
         }
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

@@ -8,10 +8,19 @@ namespace KappiMod.Mods;
 
 public static class ConsoleUnlocker
 {
+    private static bool _isInitialized = false;
+
     public static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(ConsoleUnlocker)} is already initialized");
+            return;
+        }
+
         KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

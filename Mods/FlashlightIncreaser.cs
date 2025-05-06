@@ -14,11 +14,22 @@ public static class FlashlightIncreaser
     private const float FLASHLIGHT_RANGE = 1000.0f;
     private const float FLASHLIGHT_SPOT_ANGLE = 70.0f;
 
+    private static bool _isInitialized = false;
+    private static bool _isFlashlightEnabled = false;
+    private static float _savedFlashlightRange = NOT_INITIALIZED;
+    private static float _savedFlashlightSpotAngle = NOT_INITIALIZED;
+    private static WorldPlayer? _cachedWorldPlayer;
+
     public static bool Enabled
     {
         get => ConfigManager.FlashlightIncreaser.Value;
         set
         {
+            if (!_isInitialized || value == Enabled)
+            {
+                return;
+            }
+
             if (value)
             {
                 KappiModCore.Loader.Update += OnUpdate;
@@ -38,18 +49,20 @@ public static class FlashlightIncreaser
         }
     }
 
-    private static bool _isFlashlightEnabled = false;
-    private static WorldPlayer? _cachedWorldPlayer;
-    private static float _savedFlashlightRange = NOT_INITIALIZED;
-    private static float _savedFlashlightSpotAngle = NOT_INITIALIZED;
-
     public static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(FlashlightIncreaser)} is already initialized");
+            return;
+        }
+
         if (Enabled)
         {
             KappiModCore.Loader.Update += OnUpdate;
         }
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

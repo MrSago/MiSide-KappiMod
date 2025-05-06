@@ -30,11 +30,18 @@ public static class DialogueSkipper
         },
     };
 
+    private static bool _isInitialized = false;
+
     public static bool Enabled
     {
         get => ConfigManager.DialogueSkipper.Value;
         set
         {
+            if (!_isInitialized || value == Enabled)
+            {
+                return;
+            }
+
             if (value)
             {
                 SubscribeEvents();
@@ -52,11 +59,18 @@ public static class DialogueSkipper
 
     public static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(DialogueSkipper)} is already initialized");
+            return;
+        }
+
         if (Enabled)
         {
             SubscribeEvents();
         }
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

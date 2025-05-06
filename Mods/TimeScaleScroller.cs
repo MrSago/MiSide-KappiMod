@@ -6,11 +6,18 @@ namespace KappiMod.Mods;
 
 public static class TimeScaleScroller
 {
+    private static bool _isInitialized = false;
+
     public static bool Enabled
     {
         get => ConfigManager.TimeScaleScroller.Value;
         set
         {
+            if (!_isInitialized || value == Enabled)
+            {
+                return;
+            }
+
             if (value)
             {
                 KappiModCore.Loader.Update += OnUpdate;
@@ -32,11 +39,18 @@ public static class TimeScaleScroller
 
     public static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(TimeScaleScroller)} is already initialized");
+            return;
+        }
+
         if (Enabled)
         {
             KappiModCore.Loader.Update += OnUpdate;
         }
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 
@@ -56,20 +70,22 @@ public static class TimeScaleScroller
 
     private static void OnUpdate()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (!Input.GetKey(KeyCode.LeftShift))
         {
-            if (Input.mouseScrollDelta.y > 0.0f)
-            {
-                SetTimeScale(Time.timeScale + 0.1f);
-            }
-            else if (Input.mouseScrollDelta.y < 0.0f)
-            {
-                SetTimeScale(Time.timeScale - 0.1f);
-            }
-            else if (Input.GetMouseButtonDown((int)MouseButton.MiddleMouse))
-            {
-                SetTimeScale(Mathf.Approximately(Time.timeScale, 1.0f) ? 0.0f : 1.0f);
-            }
+            return;
+        }
+
+        if (Input.mouseScrollDelta.y > 0.0f)
+        {
+            SetTimeScale(Time.timeScale + 0.1f);
+        }
+        else if (Input.mouseScrollDelta.y < 0.0f)
+        {
+            SetTimeScale(Time.timeScale - 0.1f);
+        }
+        else if (Input.GetMouseButtonDown((int)MouseButton.MiddleMouse))
+        {
+            SetTimeScale(Mathf.Approximately(Time.timeScale, 1.0f) ? 0.0f : 1.0f);
         }
     }
 }

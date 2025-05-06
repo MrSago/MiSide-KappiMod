@@ -11,13 +11,21 @@ namespace KappiMod.Patches;
 
 public static class NativeResolutionOption
 {
+    private static bool _isInitialized = false;
     private static HarmonyLib.Harmony _harmony = null!;
 
     public static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(NativeResolutionOption)} is already initialized");
+            return;
+        }
+
         _harmony = new("com.miside.nativeresolutionoption");
         _harmony.PatchAll(typeof(Patch));
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

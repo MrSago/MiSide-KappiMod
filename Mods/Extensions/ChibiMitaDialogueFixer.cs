@@ -12,10 +12,17 @@ namespace KappiMod.Mods.Extensions;
 
 internal static class ChibiMitaDialogueFixer
 {
+    private static bool _isInitialized = false;
     private static Mob_ChibiMita? _cachedChibiMita;
 
     internal static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(ChibiMitaDialogueFixer)} is already initialized");
+            return;
+        }
+
         if (SceneManager.GetActiveScene().name is ObjectNames.CHIBIMITA_SCENE)
         {
             TryFindChibiMita();
@@ -28,16 +35,24 @@ internal static class ChibiMitaDialogueFixer
         KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
         DialogueEventSystem.OnPostfixDialogueStart += HandleDialogue;
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 
     internal static void CleanUp()
     {
+        if (!_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(ChibiMitaDialogueFixer)} is not initialized");
+            return;
+        }
+
         _cachedChibiMita = null;
 
         KappiModCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
         DialogueEventSystem.OnPostfixDialogueStart -= HandleDialogue;
 
+        _isInitialized = false;
         KappiModCore.Log("Cleaned up");
     }
 

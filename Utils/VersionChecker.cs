@@ -4,14 +4,14 @@ namespace KappiMod.Utils;
 
 internal static class VersionChecker
 {
+    private const string GitHubApiUrl =
+        "https://api.github.com/repos/MrSago/MiSide-KappiMod/releases/latest";
+
     internal static bool IsCheckingVersion { get; private set; } = false;
     internal static bool UpdateAvailable { get; private set; } = false;
     internal static string LatestVersion { get; private set; } = string.Empty;
     internal static string CurrentVersion => BuildInfo.VERSION;
     internal static string DownloadUrl => BuildInfo.DOWNLOADLINK + "/releases/latest";
-
-    private const string GitHubApiUrl =
-        "https://api.github.com/repos/MrSago/MiSide-KappiMod/releases/latest";
 
     internal static async void CheckForUpdatesAsync()
     {
@@ -35,6 +35,7 @@ internal static class VersionChecker
 
             KappiModCore.Log($"Current version: {CurrentVersion}");
             KappiModCore.Log($"Latest version: {LatestVersion}");
+
             if (UpdateAvailable)
             {
                 KappiModCore.Log($"Update available! Download it here: {DownloadUrl}");

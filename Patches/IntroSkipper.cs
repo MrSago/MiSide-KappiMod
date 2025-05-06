@@ -13,11 +13,19 @@ namespace KappiMod.Patches;
 
 public static class IntroSkipper
 {
+    private static bool _isInitialized = false;
+    private static HarmonyLib.Harmony _harmony = null!;
+
     public static bool Enabled
     {
         get => ConfigManager.IntroSkipper.Value;
         set
         {
+            if (!_isInitialized || value == Enabled)
+            {
+                return;
+            }
+
             if (value)
             {
                 KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
@@ -33,10 +41,14 @@ public static class IntroSkipper
         }
     }
 
-    private static HarmonyLib.Harmony _harmony = null!;
-
     public static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(IntroSkipper)} is already initialized");
+            return;
+        }
+
         if (Enabled)
         {
             KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
@@ -45,6 +57,7 @@ public static class IntroSkipper
         _harmony = new("com.miside.introskipper");
         _harmony.PatchAll(typeof(Patch));
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 

@@ -10,11 +10,19 @@ namespace KappiMod.Mods;
 
 public static class SprintUnlocker
 {
+    private static bool _isInitialized = false;
+    private static PlayerMove? _cachedPlayerMove;
+
     public static bool Enabled
     {
         get => ConfigManager.SprintUnlocker.Value;
         set
         {
+            if (!_isInitialized || value == Enabled)
+            {
+                return;
+            }
+
             if (value)
             {
                 KappiModCore.Loader.Update += OnUpdate;
@@ -34,15 +42,20 @@ public static class SprintUnlocker
         }
     }
 
-    private static PlayerMove? _cachedPlayerMove;
-
     public static void Init()
     {
+        if (_isInitialized)
+        {
+            KappiModCore.LogError($"{nameof(SprintUnlocker)} is already initialized");
+            return;
+        }
+
         if (Enabled)
         {
             KappiModCore.Loader.Update += OnUpdate;
         }
 
+        _isInitialized = true;
         KappiModCore.Log("Initialized");
     }
 
