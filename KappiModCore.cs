@@ -82,21 +82,21 @@ public static class KappiModCore
 
     #region LOGGING
 
-    public static void Log(object message, LogType logType) => InternalLog(message, null, logType);
+    public static void Log(object message, LogType logType) => InternalLog(message, logType);
 
     public static void Log(object message, [CallerFilePath] string? callerFilePath = null) =>
-        InternalLog(message, callerFilePath, LogType.Log);
+        InternalLog(message, LogType.Log, callerFilePath);
 
     public static void LogWarning(object message, [CallerFilePath] string? callerFilePath = null) =>
-        InternalLog(message, callerFilePath, LogType.Warning);
+        InternalLog(message, LogType.Warning, callerFilePath);
 
     public static void LogError(object message, [CallerFilePath] string? callerFilePath = null) =>
-        InternalLog(message, callerFilePath, LogType.Error);
+        InternalLog(message, LogType.Error, callerFilePath);
 
     private static void InternalLog(
         object? message,
-        string? callerFilePath = null,
-        LogType logType = LogType.Log
+        LogType logType = LogType.Log,
+        string? callerFilePath = null
     )
     {
         string log;
