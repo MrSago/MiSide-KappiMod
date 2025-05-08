@@ -54,7 +54,6 @@ public class MainPanel : PanelBase
         CreateTimeScaleScrollerToggle(_togglesLeftColumn);
 
         CreateLabel(_togglesRightColumn, "TogglePatchesLabel", "Toggle Patches");
-
         CreateIntroSkipperToggle(_togglesRightColumn);
 
         _modsSettingsColumnsLayout = CreateColumnsLayout(

@@ -31,7 +31,6 @@ public static class ConsoleUnlocker
             if (ConsoleMain.liteVersion)
             {
                 ConsoleMain.liteVersion = false;
-
                 KappiModCore.Log("Console successfully unlocked!");
             }
             else

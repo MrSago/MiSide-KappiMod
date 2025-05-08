@@ -1,5 +1,6 @@
 using Il2CppInterop.Runtime;
 using KappiMod.Events;
+using KappiMod.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 #if ML
@@ -76,22 +77,20 @@ internal static class ChibiMitaDialogueFixer
             return;
         }
 
-        TryFindChibiMita();
-        if (_cachedChibiMita == null)
+        if (!TryFindChibiMita() || _cachedChibiMita == null)
         {
             return;
         }
 
         _cachedChibiMita.AnimationStop();
-
         KappiModCore.Log("ChibiMita animation stopped");
     }
 
-    private static void TryFindChibiMita()
+    private static bool TryFindChibiMita()
     {
-        if (IsChibiMitaValid())
+        if (UnityHelpers.IsValid(_cachedChibiMita))
         {
-            return;
+            return true;
         }
 
         _cachedChibiMita = Resources
@@ -99,9 +98,8 @@ internal static class ChibiMitaDialogueFixer
             ?.FirstOrDefault(x => x.name == "ChibiMita")
             ?.Cast<Mob_ChibiMita>();
 
-        KappiModCore.Log($"ChibiMita {(_cachedChibiMita == null ? "not found" : "found")}");
+        bool isFound = UnityHelpers.IsValid(_cachedChibiMita);
+        KappiModCore.Log($"ChibiMita {(isFound ? "found" : "not found")}");
+        return isFound;
     }
-
-    private static bool IsChibiMitaValid() =>
-        _cachedChibiMita != null && _cachedChibiMita.gameObject != null;
 }

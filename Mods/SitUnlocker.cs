@@ -1,4 +1,5 @@
 using KappiMod.Config;
+using KappiMod.Utils;
 using UnityEngine;
 #if ML
 using Il2Cpp;
@@ -30,14 +31,13 @@ public static class SitUnlocker
             else
             {
                 KappiModCore.Loader.Update -= OnUpdate;
-                if (IsPlayerMoveValid())
+                if (UnityHelpers.IsValid(_cachedPlayerMove))
                 {
                     SetPlayerSitState(false);
                 }
             }
 
             KappiModCore.Log(value ? "Enabled" : "Disabled");
-
             ConfigManager.SitUnlocker.Value = value;
         }
     }
@@ -64,8 +64,7 @@ public static class SitUnlocker
     {
         try
         {
-            TryFindPlayerMove();
-            if (_cachedPlayerMove == null)
+            if (!TryFindPlayerMove() || _cachedPlayerMove == null)
             {
                 KappiModCore.LogError("PlayerMove component not found!");
                 return;
@@ -87,14 +86,14 @@ public static class SitUnlocker
         }
     }
 
-    private static void TryFindPlayerMove()
+    private static bool TryFindPlayerMove()
     {
-        if (!IsPlayerMoveValid())
+        if (UnityHelpers.IsValid(_cachedPlayerMove))
         {
-            _cachedPlayerMove = GameObject.Find("Player")?.GetComponent<PlayerMove>();
+            return true;
         }
-    }
 
-    private static bool IsPlayerMoveValid() =>
-        _cachedPlayerMove != null && _cachedPlayerMove.gameObject != null;
+        _cachedPlayerMove = GameObject.Find("Player")?.GetComponent<PlayerMove>();
+        return UnityHelpers.IsValid(_cachedPlayerMove);
+    }
 }

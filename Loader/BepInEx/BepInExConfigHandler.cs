@@ -33,7 +33,6 @@ public class BepInExConfigHandler : ConfigHandler
     public override void RegisterConfigElement<T>(ConfigElement<T> config)
     {
         ConfigEntry<T> entry = Config.Bind(CFG_NAME, config.Name, config.Value, config.Description);
-
         entry.SettingChanged += (object? o, EventArgs e) =>
         {
             config.Value = entry.Value;

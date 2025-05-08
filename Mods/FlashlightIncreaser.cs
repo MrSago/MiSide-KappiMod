@@ -1,4 +1,5 @@
 using KappiMod.Config;
+using KappiMod.Utils;
 using UnityEngine;
 #if ML
 using Il2Cpp;
@@ -44,7 +45,6 @@ public static class FlashlightIncreaser
             }
 
             KappiModCore.Log(value ? "Enabled" : "Disabled");
-
             ConfigManager.FlashlightIncreaser.Value = value;
         }
     }
@@ -80,7 +80,6 @@ public static class FlashlightIncreaser
         }
 
         KappiModCore.Log($"Flashlight {(_isFlashlightEnabled ? "increased" : "restored")}");
-
         return _isFlashlightEnabled;
     }
 
@@ -96,8 +95,7 @@ public static class FlashlightIncreaser
     {
         try
         {
-            TryFindWorldPlayer();
-            if (_cachedWorldPlayer == null)
+            if (!TryFindWorldPlayer() || _cachedWorldPlayer == null)
             {
                 KappiModCore.LogError($"Object {nameof(WorldPlayer)} not found!");
 
@@ -114,7 +112,6 @@ public static class FlashlightIncreaser
         catch (Exception e)
         {
             KappiModCore.LogError(e.Message);
-
             ResetState();
         }
     }
@@ -141,22 +138,19 @@ public static class FlashlightIncreaser
         catch (Exception e)
         {
             KappiModCore.LogError(e.Message);
-
             ResetState();
         }
     }
 
-    private static void TryFindWorldPlayer()
+    private static bool TryFindWorldPlayer()
     {
-        if (!IsWoldPlayerValid())
+        if (UnityHelpers.IsValid(_cachedWorldPlayer))
         {
-            _cachedWorldPlayer = GameObject.Find("World")?.GetComponent<WorldPlayer>();
+            return true;
         }
-    }
 
-    private static bool IsWoldPlayerValid()
-    {
-        return _cachedWorldPlayer != null && _cachedWorldPlayer.gameObject != null;
+        _cachedWorldPlayer = GameObject.Find("World")?.GetComponent<WorldPlayer>();
+        return UnityHelpers.IsValid(_cachedWorldPlayer);
     }
 
     private static void ResetState()

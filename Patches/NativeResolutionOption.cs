@@ -1,5 +1,6 @@
 using HarmonyLib;
 using Il2CppInterop.Runtime;
+using KappiMod.Utils;
 using UnityEngine;
 #if ML
 using Il2Cpp;
@@ -59,22 +60,21 @@ public static class NativeResolutionOption
                 .FindObjectsOfTypeAll(Il2CppType.Of<MenuCaseOption>())
                 ?.FirstOrDefault(x => x.name == "Button Resolution")
                 ?.Cast<MenuCaseOption>();
-            if (menuCaseOption == null)
+            if (!UnityHelpers.IsValid(menuCaseOption) || menuCaseOption == null)
             {
                 KappiModCore.LogError("MenuCaseOption not found");
                 return;
             }
 
             Resolution resolution = GetNativeResolution();
-            string buttonText = "Native Resolution";
-
             KappiModCore.Log(
                 $"Native resolution: {resolution.width}x{resolution.height}@{resolution.refreshRate}Hz"
             );
 
+            const string buttonText = "Native Resolution";
             foreach (var buttonInfo in menuCaseOption.scrIccb)
             {
-                if (buttonInfo.buttonText == buttonText)
+                if (buttonInfo.buttonText is buttonText)
                 {
                     KappiModCore.Log("Option is already exists");
                     return;
@@ -85,7 +85,6 @@ public static class NativeResolutionOption
             index = index >= 0 ? index : menuCaseOption.resolutions.Count - 1;
 
             menuCaseOption.scrIccb.Add(new() { buttonText = buttonText, value_int = index });
-
             KappiModCore.Log("Option successfully added");
         }
 

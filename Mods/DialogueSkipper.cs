@@ -53,7 +53,6 @@ public static class DialogueSkipper
             }
 
             KappiModCore.Log(value ? "Enabled" : "Disabled");
-
             ConfigManager.DialogueSkipper.Value = value;
         }
     }
@@ -109,7 +108,6 @@ public static class DialogueSkipper
         }
 
         args.DialogueInstance.SkipDialogue();
-
         LogDialogueInfo(args);
     }
 

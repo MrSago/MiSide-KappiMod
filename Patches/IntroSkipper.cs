@@ -36,7 +36,6 @@ public static class IntroSkipper
             }
 
             KappiModCore.Log(value ? "Enabled" : "Disabled");
-
             ConfigManager.IntroSkipper.Value = value;
         }
     }
@@ -69,23 +68,20 @@ public static class IntroSkipper
             return;
         }
 
-        bool skipped = false;
         try
         {
-            skipped = SkipIntro();
+            if (SkipIntro())
+            {
+                KappiModCore.Log("Aihasto intro skipped");
+            }
+            else
+            {
+                KappiModCore.LogWarning("Aihasto intro not skipped");
+            }
         }
         catch (Exception e)
         {
             KappiModCore.LogError(e.Message);
-        }
-
-        if (skipped)
-        {
-            KappiModCore.Log("Aihasto intro skipped");
-        }
-        else
-        {
-            KappiModCore.LogWarning("Aihasto intro not skipped");
         }
     }
 
@@ -121,7 +117,6 @@ public static class IntroSkipper
             }
 
             InvokeSkipEvent(__instance);
-
             KappiModCore.Log("The opening menu cutscene should be skipped");
         }
 

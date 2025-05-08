@@ -1,5 +1,6 @@
 using HarmonyLib;
 using KappiMod.Events;
+using KappiMod.Utils;
 using UnityEngine.SceneManagement;
 #if ML
 using Il2Cpp;
@@ -38,7 +39,7 @@ public static class DialoguePatcher
         [HarmonyPatch(typeof(Dialogue_3DText), "Start")]
         private static void Prefix(Dialogue_3DText __instance)
         {
-            if (__instance == null || __instance.gameObject == null)
+            if (!UnityHelpers.IsValid(__instance))
             {
                 return;
             }
@@ -57,7 +58,7 @@ public static class DialoguePatcher
         [HarmonyPatch(typeof(Dialogue_3DText), "Start")]
         private static void Postfix(Dialogue_3DText __instance)
         {
-            if (__instance == null || __instance.gameObject == null)
+            if (!UnityHelpers.IsValid(__instance))
             {
                 return;
             }

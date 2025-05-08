@@ -32,7 +32,6 @@ public static class TimeScaleScroller
             }
 
             KappiModCore.Log(value ? "Enabled" : "Disabled");
-
             ConfigManager.TimeScaleScroller.Value = value;
         }
     }
@@ -60,7 +59,6 @@ public static class TimeScaleScroller
         try
         {
             Time.timeScale = Mathf.Max(0.0f, timeScale);
-
             KappiModCore.Log($"TimeScale: {Time.timeScale}");
         }
         catch (Exception e)
