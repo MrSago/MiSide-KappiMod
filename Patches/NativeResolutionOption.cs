@@ -23,7 +23,7 @@ public static class NativeResolutionOption
             return;
         }
 
-        _harmony = new("com.miside.nativeresolutionoption");
+        _harmony = new("com.kappimod.nativeresolutionoption");
         _harmony.PatchAll(typeof(Patch));
 
         _isInitialized = true;

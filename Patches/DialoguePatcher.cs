@@ -27,7 +27,7 @@ public static class DialoguePatcher
 
         _isInitialized = true;
 
-        _harmony = new("com.miside.dialoguepatcher");
+        _harmony = new("com.kappimod.dialoguepatcher");
         _harmony.PatchAll(typeof(Patch));
 
         KappiModCore.Log("Initialized");
