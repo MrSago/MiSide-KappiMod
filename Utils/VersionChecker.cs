@@ -113,9 +113,9 @@ internal static class VersionChecker
 
             return false;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            KappiModCore.LogError($"Error comparing versions: {e.Message}");
+            KappiModCore.LogError($"Error comparing versions: {ex.Message}");
             return false;
         }
     }

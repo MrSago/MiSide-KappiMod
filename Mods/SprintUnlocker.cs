@@ -72,9 +72,9 @@ public static class SprintUnlocker
 
             _cachedPlayerMove.canRun = value;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            KappiModCore.LogError(e.Message);
+            KappiModCore.LogError(ex.Message);
         }
     }
 

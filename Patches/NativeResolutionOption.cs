@@ -48,9 +48,9 @@ public static class NativeResolutionOption
             {
                 AddNativeResolutionOption();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                KappiModCore.LogError(e.Message);
+                KappiModCore.LogError(ex.Message);
             }
         }
 

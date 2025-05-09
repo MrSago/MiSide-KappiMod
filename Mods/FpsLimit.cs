@@ -41,9 +41,9 @@ public static class FpsLimit
             KappiModCore.Log($"FPS limit set to {(fps < 0 ? "unlimited" : fps.ToString())}");
             CurrentFpsLimit = fps;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            KappiModCore.LogError(e.Message);
+            KappiModCore.LogError(ex.Message);
         }
     }
 

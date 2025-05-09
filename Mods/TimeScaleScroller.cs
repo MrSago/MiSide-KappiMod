@@ -61,9 +61,9 @@ public static class TimeScaleScroller
             Time.timeScale = Mathf.Max(0.0f, timeScale);
             KappiModCore.Log($"TimeScale: {Time.timeScale}");
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            KappiModCore.LogError(e.Message);
+            KappiModCore.LogError(ex.Message);
         }
     }
 

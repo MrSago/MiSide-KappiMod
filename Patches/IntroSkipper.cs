@@ -79,9 +79,9 @@ public static class IntroSkipper
                 KappiModCore.LogWarning("Aihasto intro not skipped");
             }
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            KappiModCore.LogError(e.Message);
+            KappiModCore.LogError(ex.Message);
         }
     }
 
@@ -127,7 +127,7 @@ public static class IntroSkipper
                 __instance.eventSkip.Invoke();
                 __instance.SkipStart();
             }
-            catch (Exception)
+            catch
             {
                 /*
                     __instance.SkipStart() throws an exception

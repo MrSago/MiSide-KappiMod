@@ -109,9 +109,9 @@ public static class FlashlightIncreaser
             _cachedWorldPlayer.flashLightRange = FLASHLIGHT_RANGE;
             _cachedWorldPlayer.flashLightSpotAngle = FLASHLIGHT_SPOT_ANGLE;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            KappiModCore.LogError(e.Message);
+            KappiModCore.LogError(ex.Message);
             ResetState();
         }
     }
@@ -135,9 +135,9 @@ public static class FlashlightIncreaser
 
             ResetState();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            KappiModCore.LogError(e.Message);
+            KappiModCore.LogError(ex.Message);
             ResetState();
         }
     }

@@ -49,9 +49,9 @@ public static class DialoguePatcher
                 DialogueEventArgs args = CreateDialogueEventArgs(__instance);
                 DialogueEventSystem.InvokePrefixDialogueStart(args);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                KappiModCore.LogError(e.Message);
+                KappiModCore.LogError(ex.Message);
             }
         }
 
@@ -68,9 +68,9 @@ public static class DialoguePatcher
                 DialogueEventArgs args = CreateDialogueEventArgs(__instance);
                 DialogueEventSystem.InvokePostfixDialogueStart(args);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                KappiModCore.LogError(e.Message);
+                KappiModCore.LogError(ex.Message);
             }
         }
 
