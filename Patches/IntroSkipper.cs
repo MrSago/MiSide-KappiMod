@@ -18,7 +18,7 @@ public static class IntroSkipper
 
     public static bool Enabled
     {
-        get => ConfigManager.IntroSkipper.Value;
+        get => _isInitialized && ConfigManager.IntroSkipper.Value;
         set
         {
             if (!_isInitialized || value == Enabled)
