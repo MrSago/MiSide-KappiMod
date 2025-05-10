@@ -29,7 +29,7 @@ public static class UIManager
 
         Panel = new(UiBase);
 
-        KappiModCore.Loader.Update += OnUpdate;
+        KappiCore.Loader.Update += OnUpdate;
     }
 
     private static void OnUpdate()

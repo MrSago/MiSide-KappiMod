@@ -36,12 +36,12 @@ public sealed class TimeScaleScroller : BaseMod
 
     protected override void OnEnable()
     {
-        KappiModCore.Loader.Update += OnUpdate;
+        KappiCore.Loader.Update += OnUpdate;
     }
 
     protected override void OnDisable()
     {
-        KappiModCore.Loader.Update -= OnUpdate;
+        KappiCore.Loader.Update -= OnUpdate;
         if (!Mathf.Approximately(Time.timeScale, 1.0f))
         {
             SetTimeScale(1.0f);

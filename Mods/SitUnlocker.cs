@@ -43,12 +43,12 @@ public sealed class SitUnlocker : BaseMod
 
     protected override void OnEnable()
     {
-        KappiModCore.Loader.Update += OnUpdate;
+        KappiCore.Loader.Update += OnUpdate;
     }
 
     protected override void OnDisable()
     {
-        KappiModCore.Loader.Update -= OnUpdate;
+        KappiCore.Loader.Update -= OnUpdate;
         if (UnityHelpers.IsValid(_cachedPlayerMove))
         {
             SetPlayerSitState(false);

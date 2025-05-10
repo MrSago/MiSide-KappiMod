@@ -29,11 +29,11 @@ public static class IntroSkipper
 
             if (value)
             {
-                KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+                KappiCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
             }
             else
             {
-                KappiModCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
+                KappiCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
             }
 
             KappiLogger.Log(value ? "Enabled" : "Disabled");
@@ -53,7 +53,7 @@ public static class IntroSkipper
 
         if (Enabled)
         {
-            KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+            KappiCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
         }
 
         _harmony = new("com.kappimod.introskipper");

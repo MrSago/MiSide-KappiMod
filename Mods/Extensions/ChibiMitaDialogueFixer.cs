@@ -34,7 +34,7 @@ internal static class ChibiMitaDialogueFixer
             _cachedChibiMita = null;
         }
 
-        KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+        KappiCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
         DialogueEventSystem.OnPostfixDialogueStart += HandleDialogue;
 
         _isInitialized = true;
@@ -51,7 +51,7 @@ internal static class ChibiMitaDialogueFixer
 
         _cachedChibiMita = null;
 
-        KappiModCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
+        KappiCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
         DialogueEventSystem.OnPostfixDialogueStart -= HandleDialogue;
 
         _isInitialized = false;

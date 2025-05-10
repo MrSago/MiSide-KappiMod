@@ -22,7 +22,7 @@ public static class PreviousSceneTracker
             return;
         }
 
-        KappiModCore.Loader.SceneWasLoaded += OnSceneWasLoaded;
+        KappiCore.Loader.SceneWasLoaded += OnSceneWasLoaded;
 
         _isInitialized = true;
         KappiLogger.Log("Initialized");

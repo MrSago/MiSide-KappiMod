@@ -21,7 +21,7 @@ public sealed class ConsoleUnlocker : BaseMod
 
     protected override void OnInitialize()
     {
-        KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+        KappiCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
     }
 
     public static void UnlockConsole()

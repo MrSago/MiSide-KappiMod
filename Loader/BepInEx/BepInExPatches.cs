@@ -14,8 +14,8 @@ public static class BepInExPatches
     [HarmonyPostfix]
     private static void SceneLoadedPostfix(Scene scene)
     {
-        KappiModBepInExPlugin.Instance?.OnSceneWasLoaded(scene.buildIndex, scene.name);
-        KappiModBepInExPlugin.Instance?.OnSceneWasInitialized(scene.buildIndex, scene.name);
+        KappiBepInExPlugin.Instance?.OnSceneWasLoaded(scene.buildIndex, scene.name);
+        KappiBepInExPlugin.Instance?.OnSceneWasInitialized(scene.buildIndex, scene.name);
     }
 }
 

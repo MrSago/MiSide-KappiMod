@@ -6,7 +6,7 @@ using KappiMod.Config;
 
 [assembly: MelonPlatformDomain(MelonPlatformDomainAttribute.CompatibleDomains.IL2CPP)]
 [assembly: MelonInfo(
-    typeof(KappiMod.Loader.MelonLoader.KappiModMelonMod),
+    typeof(KappiMod.Loader.MelonLoader.KappiMelonMod),
     KappiMod.Properties.BuildInfo.NAME,
     KappiMod.Properties.BuildInfo.VERSION,
     KappiMod.Properties.BuildInfo.AUTHOR,
@@ -19,7 +19,7 @@ using KappiMod.Config;
 
 namespace KappiMod.Loader.MelonLoader;
 
-public class KappiModMelonMod : MelonMod, IKappiModLoader
+public class KappiMelonMod : MelonMod, IKappiModLoader
 {
     public string KappiModDirectoryDestination => MelonEnvironment.ModsDirectory;
     public string UnhollowedModulesDirectory =>
@@ -50,7 +50,7 @@ public class KappiModMelonMod : MelonMod, IKappiModLoader
     public override void OnLateInitializeMelon()
     {
         _configHandler = new MelonLoaderConfigHandler();
-        KappiModCore.Init(this);
+        KappiCore.Init(this);
     }
 }
 

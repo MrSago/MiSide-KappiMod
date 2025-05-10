@@ -10,7 +10,7 @@ using UniverseLib;
 
 namespace KappiMod;
 
-public static class KappiModCore
+public static class KappiCore
 {
     public const string MOD_DIRECTORY_NAME = "KappiMod";
 

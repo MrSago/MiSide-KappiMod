@@ -12,15 +12,15 @@ using UnityEngine;
 namespace KappiMod.Loader.BepInEx;
 
 [BepInPlugin(BuildInfo.PACKAGE, BuildInfo.NAME, BuildInfo.VERSION)]
-public class KappiModBepInExPlugin : BasePlugin, IKappiModLoader
+public class KappiBepInExPlugin : BasePlugin, IKappiModLoader
 {
-    public static KappiModBepInExPlugin Instance = null!;
+    public static KappiBepInExPlugin Instance = null!;
 
     private static readonly Harmony _harmony = new(BuildInfo.GUID);
     public Harmony HarmonyInstance => _harmony;
 
     public string KappiModDirectoryDestination =>
-        Path.Combine(Paths.PluginPath, KappiModCore.MOD_DIRECTORY_NAME);
+        Path.Combine(Paths.PluginPath, KappiCore.MOD_DIRECTORY_NAME);
     public string UnhollowedModulesDirectory => Path.Combine(Paths.BepInExRootPath, "interop");
 
     private BepInExConfigHandler _configHandler = null!;
@@ -48,7 +48,7 @@ public class KappiModBepInExPlugin : BasePlugin, IKappiModLoader
         _configHandler = new BepInExConfigHandler();
         HarmonyInstance.PatchAll(typeof(BepInExPatches));
         IL2CPPChainloader.AddUnityComponent(typeof(KappiModBepInExEventProxy));
-        KappiModCore.Init(this);
+        KappiCore.Init(this);
     }
 
     // Need to use unique class name to avoid conflicts with other mods

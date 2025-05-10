@@ -50,12 +50,12 @@ public sealed class FlashlightIncreaser : BaseMod
 
     protected override void OnEnable()
     {
-        KappiModCore.Loader.Update += OnUpdate;
+        KappiCore.Loader.Update += OnUpdate;
     }
 
     protected override void OnDisable()
     {
-        KappiModCore.Loader.Update -= OnUpdate;
+        KappiCore.Loader.Update -= OnUpdate;
         if (_isFlashlightEnabled)
         {
             Toggle();

@@ -11,7 +11,7 @@ public class BepInExConfigHandler : ConfigHandler
 {
     internal const string CFG_NAME = BuildInfo.NAME;
 
-    internal ConfigFile Config => KappiModBepInExPlugin.Instance.Config;
+    internal ConfigFile Config => KappiBepInExPlugin.Instance.Config;
 
     public override void Init() { }
 

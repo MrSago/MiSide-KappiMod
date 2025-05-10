@@ -34,12 +34,12 @@ public sealed class FpsLimit : BaseMod
 
     protected override void OnEnable()
     {
-        KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+        KappiCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
     }
 
     protected override void OnDisable()
     {
-        KappiModCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
+        KappiCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
     }
 
     public static void SetFpsLimit(int fpsLimit)

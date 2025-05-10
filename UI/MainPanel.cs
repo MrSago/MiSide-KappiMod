@@ -350,7 +350,7 @@ public class MainPanel : PanelBase
         UpdateStatusBar("Checking for updates...");
 
         VersionChecker.CheckForUpdatesAsync();
-        KappiModCore.Loader.Update += OnVersionCheckUpdate;
+        KappiCore.Loader.Update += OnVersionCheckUpdate;
     }
 
     private void OnVersionCheckUpdate()
@@ -360,7 +360,7 @@ public class MainPanel : PanelBase
             return;
         }
 
-        KappiModCore.Loader.Update -= OnVersionCheckUpdate;
+        KappiCore.Loader.Update -= OnVersionCheckUpdate;
 
         if (VersionChecker.UpdateAvailable)
         {
