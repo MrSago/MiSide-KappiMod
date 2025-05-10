@@ -1,57 +1,50 @@
 using KappiMod.Config;
+using KappiMod.Mods.Core;
+using KappiMod.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace KappiMod.Mods;
 
-public static class TimeScaleScroller
+[ModInfo(
+    name: "Time Scale Scroller",
+    description: "Allows you to adjust the time scale using the mouse scroll wheel.",
+    version: "1.0.0",
+    author: BuildInfo.COMPANY
+)]
+public sealed class TimeScaleScroller : BaseMod
 {
-    private static bool _isInitialized = false;
-
-    public static bool Enabled
+    public override bool IsEnabled
     {
-        get => _isInitialized && ConfigManager.TimeScaleScroller.Value;
-        set
+        get => base.IsEnabled && ConfigManager.TimeScaleScroller.Value;
+        protected set
         {
-            if (!_isInitialized || value == Enabled)
-            {
-                return;
-            }
-
-            if (value)
-            {
-                KappiModCore.Loader.Update += OnUpdate;
-            }
-            else
-            {
-                KappiModCore.Loader.Update -= OnUpdate;
-                if (!Mathf.Approximately(Time.timeScale, 1.0f))
-                {
-                    SetTimeScale(1.0f);
-                }
-            }
-
-            KappiModCore.Log(value ? "Enabled" : "Disabled");
+            base.IsEnabled = value;
             ConfigManager.TimeScaleScroller.Value = value;
         }
     }
 
-    public static void Init()
+    protected override void OnInitialize()
     {
-        if (_isInitialized)
+        if (ConfigManager.TimeScaleScroller.Value)
         {
-            KappiModCore.LogError($"{nameof(TimeScaleScroller)} is already initialized");
-            return;
+            OnEnable();
+            base.IsEnabled = true;
         }
+    }
 
-        _isInitialized = true;
+    protected override void OnEnable()
+    {
+        KappiModCore.Loader.Update += OnUpdate;
+    }
 
-        if (Enabled)
+    protected override void OnDisable()
+    {
+        KappiModCore.Loader.Update -= OnUpdate;
+        if (!Mathf.Approximately(Time.timeScale, 1.0f))
         {
-            KappiModCore.Loader.Update += OnUpdate;
+            SetTimeScale(1.0f);
         }
-
-        KappiModCore.Log("Initialized");
     }
 
     public static void SetTimeScale(float timeScale)
@@ -67,7 +60,7 @@ public static class TimeScaleScroller
         }
     }
 
-    private static void OnUpdate()
+    private void OnUpdate()
     {
         if (!Input.GetKey(KeyCode.LeftShift))
         {

@@ -1,4 +1,6 @@
 using KappiMod.Config;
+using KappiMod.Mods.Core;
+using KappiMod.Properties;
 using KappiMod.Utils;
 using UnityEngine;
 #if ML
@@ -9,66 +11,64 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Mods;
 
-public static class FlashlightIncreaser
+[ModInfo(
+    name: "Flashlight Increaser",
+    description: "Enhances the flashlight range and angle for better visibility",
+    version: "1.0.0",
+    author: BuildInfo.COMPANY
+)]
+public sealed class FlashlightIncreaser : BaseMod
 {
     private const float NOT_INITIALIZED = -1.0f;
     private const float FLASHLIGHT_RANGE = 1000.0f;
     private const float FLASHLIGHT_SPOT_ANGLE = 70.0f;
 
-    private static bool _isInitialized = false;
-    private static bool _isFlashlightEnabled = false;
-    private static float _savedFlashlightRange = NOT_INITIALIZED;
-    private static float _savedFlashlightSpotAngle = NOT_INITIALIZED;
-    private static WorldPlayer? _cachedWorldPlayer;
+    private bool _isFlashlightEnabled = false;
+    private float _savedFlashlightRange = NOT_INITIALIZED;
+    private float _savedFlashlightSpotAngle = NOT_INITIALIZED;
+    private WorldPlayer? _cachedWorldPlayer;
 
-    public static bool Enabled
+    public override bool IsEnabled
     {
-        get => _isInitialized && ConfigManager.FlashlightIncreaser.Value;
-        set
+        get => base.IsEnabled && ConfigManager.FlashlightIncreaser.Value;
+        protected set
         {
-            if (!_isInitialized || value == Enabled)
-            {
-                return;
-            }
-
-            if (value)
-            {
-                KappiModCore.Loader.Update += OnUpdate;
-            }
-            else
-            {
-                KappiModCore.Loader.Update -= OnUpdate;
-                if (_isFlashlightEnabled)
-                {
-                    Toggle();
-                }
-            }
-
-            KappiModCore.Log(value ? "Enabled" : "Disabled");
+            base.IsEnabled = value;
             ConfigManager.FlashlightIncreaser.Value = value;
         }
     }
 
-    public static void Init()
+    protected override void OnInitialize()
     {
-        if (_isInitialized)
+        if (ConfigManager.FlashlightIncreaser.Value)
         {
-            KappiModCore.LogError($"{nameof(FlashlightIncreaser)} is already initialized");
-            return;
+            OnEnable();
+            base.IsEnabled = true;
         }
-
-        _isInitialized = true;
-
-        if (Enabled)
-        {
-            KappiModCore.Loader.Update += OnUpdate;
-        }
-
-        KappiModCore.Log("Initialized");
     }
 
-    public static bool Toggle()
+    protected override void OnEnable()
     {
+        KappiModCore.Loader.Update += OnUpdate;
+    }
+
+    protected override void OnDisable()
+    {
+        KappiModCore.Loader.Update -= OnUpdate;
+        if (_isFlashlightEnabled)
+        {
+            Toggle();
+        }
+    }
+
+    public bool Toggle()
+    {
+        if (!IsEnabled || !IsInitialized)
+        {
+            KappiModCore.LogError("Mod is not enabled or initialized");
+            return false;
+        }
+
         _isFlashlightEnabled = !_isFlashlightEnabled;
         if (_isFlashlightEnabled)
         {
@@ -83,7 +83,7 @@ public static class FlashlightIncreaser
         return _isFlashlightEnabled;
     }
 
-    private static void OnUpdate()
+    private void OnUpdate()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -91,14 +91,13 @@ public static class FlashlightIncreaser
         }
     }
 
-    private static void ActivateFlashlightFeatures()
+    private void ActivateFlashlightFeatures()
     {
         try
         {
             if (!TryFindWorldPlayer() || _cachedWorldPlayer == null)
             {
                 KappiModCore.LogError($"Object {nameof(WorldPlayer)} not found!");
-
                 ResetState();
                 return;
             }
@@ -116,7 +115,7 @@ public static class FlashlightIncreaser
         }
     }
 
-    private static void RevertFlashlightState()
+    private void RevertFlashlightState()
     {
         try
         {
@@ -142,7 +141,7 @@ public static class FlashlightIncreaser
         }
     }
 
-    private static bool TryFindWorldPlayer()
+    private bool TryFindWorldPlayer()
     {
         if (UnityHelpers.IsValid(_cachedWorldPlayer))
         {
@@ -153,7 +152,7 @@ public static class FlashlightIncreaser
         return UnityHelpers.IsValid(_cachedWorldPlayer);
     }
 
-    private static void ResetState()
+    private void ResetState()
     {
         _cachedWorldPlayer = null;
         _isFlashlightEnabled = false;

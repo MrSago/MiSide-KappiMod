@@ -1,4 +1,5 @@
 using KappiMod.Mods;
+using KappiMod.Mods.Core;
 using KappiMod.Patches;
 using KappiMod.Properties;
 using KappiMod.Utils;
@@ -91,16 +92,31 @@ public class MainPanel : PanelBase
 
     private static void CreateDialogueSkipperToggle(GameObject parent)
     {
-        UIFactory.CreateToggle(parent, "DialogueSkipperToggle", out Toggle toggle, out Text text);
-        text.text = "Dialogue skipper";
-        toggle.isOn = DialogueSkipper.Enabled;
+        var mod = ModManager.GetMod<DialogueSkipper>();
+        if (mod is null)
+        {
+            KappiModCore.LogError($"{nameof(DialogueSkipper)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                DialogueSkipper.Enabled = value;
-                if (DialogueSkipper.Enabled != value)
+                if (value)
                 {
-                    toggle.isOn = DialogueSkipper.Enabled;
+                    mod.Enable();
+                }
+                else
+                {
+                    mod.Disable();
+                }
+
+                if (mod.IsEnabled != value)
+                {
+                    toggle.isOn = mod.IsEnabled;
                 }
             }
         );
@@ -108,21 +124,31 @@ public class MainPanel : PanelBase
 
     private static void CreateFlashlightIncreaserToggle(GameObject parent)
     {
-        UIFactory.CreateToggle(
-            parent,
-            "FlashlightIncreaserToggle",
-            out Toggle toggle,
-            out Text text
-        );
-        text.text = "Flashlight increaser";
-        toggle.isOn = FlashlightIncreaser.Enabled;
+        var mod = ModManager.GetMod<FlashlightIncreaser>();
+        if (mod is null)
+        {
+            KappiModCore.LogError($"{nameof(FlashlightIncreaser)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                FlashlightIncreaser.Enabled = value;
-                if (FlashlightIncreaser.Enabled != value)
+                if (value)
                 {
-                    toggle.isOn = FlashlightIncreaser.Enabled;
+                    mod.Enable();
+                }
+                else
+                {
+                    mod.Disable();
+                }
+
+                if (mod.IsEnabled != value)
+                {
+                    toggle.isOn = mod.IsEnabled;
                 }
             }
         );
@@ -130,16 +156,31 @@ public class MainPanel : PanelBase
 
     private static void CreateSitUnlockerToggle(GameObject parent)
     {
-        UIFactory.CreateToggle(parent, "SitUnlockerToggle", out Toggle toggle, out Text text);
-        text.text = "Sit unlocker";
-        toggle.isOn = SitUnlocker.Enabled;
+        var mod = ModManager.GetMod<SitUnlocker>();
+        if (mod is null)
+        {
+            KappiModCore.LogError($"{nameof(SitUnlocker)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                SitUnlocker.Enabled = value;
-                if (SitUnlocker.Enabled != value)
+                if (value)
                 {
-                    toggle.isOn = SitUnlocker.Enabled;
+                    mod.Enable();
+                }
+                else
+                {
+                    mod.Disable();
+                }
+
+                if (mod.IsEnabled != value)
+                {
+                    toggle.isOn = mod.IsEnabled;
                 }
             }
         );
@@ -147,16 +188,31 @@ public class MainPanel : PanelBase
 
     private static void CreateSprintUnlockerToggle(GameObject parent)
     {
-        UIFactory.CreateToggle(parent, "SprintUnlockerToggle", out Toggle toggle, out Text text);
-        text.text = "Sprint unlocker";
-        toggle.isOn = SprintUnlocker.Enabled;
+        var mod = ModManager.GetMod<SprintUnlocker>();
+        if (mod is null)
+        {
+            KappiModCore.LogError($"{nameof(SprintUnlocker)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                SprintUnlocker.Enabled = value;
-                if (SprintUnlocker.Enabled != value)
+                if (value)
                 {
-                    toggle.isOn = SprintUnlocker.Enabled;
+                    mod.Enable();
+                }
+                else
+                {
+                    mod.Disable();
+                }
+
+                if (mod.IsEnabled != value)
+                {
+                    toggle.isOn = mod.IsEnabled;
                 }
             }
         );
@@ -164,16 +220,31 @@ public class MainPanel : PanelBase
 
     private static void CreateTimeScaleScrollerToggle(GameObject parent)
     {
-        UIFactory.CreateToggle(parent, "TimeScaleScrollerToggle", out Toggle toggle, out Text text);
-        text.text = "Time scale scroller";
-        toggle.isOn = TimeScaleScroller.Enabled;
+        var mod = ModManager.GetMod<TimeScaleScroller>();
+        if (mod is null)
+        {
+            KappiModCore.LogError($"{nameof(TimeScaleScroller)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                TimeScaleScroller.Enabled = value;
-                if (TimeScaleScroller.Enabled != value)
+                if (value)
                 {
-                    toggle.isOn = TimeScaleScroller.Enabled;
+                    mod.Enable();
+                }
+                else
+                {
+                    mod.Disable();
+                }
+
+                if (mod.IsEnabled != value)
+                {
+                    toggle.isOn = mod.IsEnabled;
                 }
             }
         );
@@ -206,6 +277,13 @@ public class MainPanel : PanelBase
 
     private void CreateFpsLimitField(GameObject parent)
     {
+        var mod = ModManager.GetMod<FpsLimit>();
+        if (mod is null)
+        {
+            KappiModCore.LogError("FpsLimit mod not found!");
+            return;
+        }
+
         _fpsLimitRow = UIFactory.CreateHorizontalGroup(
             parent,
             "FpsLimitRow",

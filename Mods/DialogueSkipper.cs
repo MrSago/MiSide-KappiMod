@@ -1,15 +1,23 @@
 using System.Text;
 using KappiMod.Config;
 using KappiMod.Events;
+using KappiMod.Mods.Core;
 using KappiMod.Mods.Extensions;
 using KappiMod.Patches;
+using KappiMod.Properties;
 
 namespace KappiMod.Mods;
 
 using DialogueMapping = Dictionary<string, int>;
 using DialogueSceneMappings = Dictionary<string, Dictionary<string, int>>;
 
-public static class DialogueSkipper
+[ModInfo(
+    name: "Dialogue Skipper",
+    description: "Skip certain dialogue sections in the game",
+    version: "1.0.0",
+    author: BuildInfo.COMPANY
+)]
+public sealed class DialogueSkipper : BaseMod
 {
     private static readonly DialogueSceneMappings _ignoredDialogues = new()
     {
@@ -31,40 +39,18 @@ public static class DialogueSkipper
         },
     };
 
-    private static bool _isInitialized = false;
-
-    public static bool Enabled
+    public override bool IsEnabled
     {
-        get => _isInitialized && ConfigManager.DialogueSkipper.Value;
-        set
+        get => base.IsEnabled && ConfigManager.DialogueSkipper.Value;
+        protected set
         {
-            if (!_isInitialized || value == Enabled)
-            {
-                return;
-            }
-
-            if (value)
-            {
-                SubscribeEvents();
-            }
-            else
-            {
-                UnsubscribeEvents();
-            }
-
-            KappiModCore.Log(value ? "Enabled" : "Disabled");
+            base.IsEnabled = value;
             ConfigManager.DialogueSkipper.Value = value;
         }
     }
 
-    public static void Init()
+    protected override void OnInitialize()
     {
-        if (_isInitialized)
-        {
-            KappiModCore.LogError($"{nameof(DialogueSkipper)} is already initialized");
-            return;
-        }
-
         if (!DialoguePatcher.IsInitialized)
         {
             KappiModCore.LogError(
@@ -73,14 +59,21 @@ public static class DialogueSkipper
             return;
         }
 
-        _isInitialized = true;
-
-        if (Enabled)
+        if (ConfigManager.DialogueSkipper.Value)
         {
-            SubscribeEvents();
+            OnEnable();
+            base.IsEnabled = true;
         }
+    }
 
-        KappiModCore.Log("Initialized");
+    protected override void OnEnable()
+    {
+        SubscribeEvents();
+    }
+
+    protected override void OnDisable()
+    {
+        UnsubscribeEvents();
     }
 
     private static void SubscribeEvents()

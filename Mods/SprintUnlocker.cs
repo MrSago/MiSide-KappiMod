@@ -1,4 +1,6 @@
 using KappiMod.Config;
+using KappiMod.Mods.Core;
+using KappiMod.Properties;
 using KappiMod.Utils;
 using UnityEngine;
 #if ML
@@ -9,58 +11,51 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Mods;
 
-public static class SprintUnlocker
+[ModInfo(
+    name: "Sprint Unlocker",
+    description: "Unlocks the sprinting ability in the game.",
+    version: "1.0.0",
+    author: BuildInfo.COMPANY
+)]
+public sealed class SprintUnlocker : BaseMod
 {
-    private static bool _isInitialized = false;
-    private static PlayerMove? _cachedPlayerMove;
+    private PlayerMove? _cachedPlayerMove;
 
-    public static bool Enabled
+    public override bool IsEnabled
     {
-        get => _isInitialized && ConfigManager.SprintUnlocker.Value;
-        set
+        get => base.IsEnabled && ConfigManager.SprintUnlocker.Value;
+        protected set
         {
-            if (!_isInitialized || value == Enabled)
-            {
-                return;
-            }
-
-            if (value)
-            {
-                KappiModCore.Loader.Update += OnUpdate;
-            }
-            else
-            {
-                KappiModCore.Loader.Update -= OnUpdate;
-                if (UnityHelpers.IsValid(_cachedPlayerMove))
-                {
-                    SetPlayerRunState(false);
-                }
-            }
-
-            KappiModCore.Log(value ? "Enabled" : "Disabled");
+            base.IsEnabled = value;
             ConfigManager.SprintUnlocker.Value = value;
         }
     }
 
-    public static void Init()
+    protected override void OnInitialize()
     {
-        if (_isInitialized)
+        if (ConfigManager.SprintUnlocker.Value)
         {
-            KappiModCore.LogError($"{nameof(SprintUnlocker)} is already initialized");
-            return;
+            OnEnable();
+            base.IsEnabled = true;
         }
-
-        _isInitialized = true;
-
-        if (Enabled)
-        {
-            KappiModCore.Loader.Update += OnUpdate;
-        }
-
-        KappiModCore.Log("Initialized");
     }
 
-    public static void SetPlayerRunState(bool value)
+    protected override void OnEnable()
+    {
+        KappiModCore.Loader.Update += OnUpdate;
+    }
+
+    protected override void OnDisable()
+    {
+        KappiModCore.Loader.Update -= OnUpdate;
+        if (UnityHelpers.IsValid(_cachedPlayerMove))
+        {
+            SetPlayerRunState(false);
+            _cachedPlayerMove = null;
+        }
+    }
+
+    public void SetPlayerRunState(bool value)
     {
         try
         {
@@ -78,7 +73,7 @@ public static class SprintUnlocker
         }
     }
 
-    private static void OnUpdate()
+    private void OnUpdate()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -86,7 +81,7 @@ public static class SprintUnlocker
         }
     }
 
-    private static bool TryFindPlayerMove()
+    private bool TryFindPlayerMove()
     {
         if (UnityHelpers.IsValid(_cachedPlayerMove))
         {

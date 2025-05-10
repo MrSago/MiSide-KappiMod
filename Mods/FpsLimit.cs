@@ -1,11 +1,19 @@
 using KappiMod.Config;
+using KappiMod.Mods.Core;
+using KappiMod.Properties;
 using UnityEngine;
 
 namespace KappiMod.Mods;
 
-public static class FpsLimit
+[ModInfo(
+    name: "FPS Limit",
+    description: "Sets the FPS limit for the game.",
+    version: "1.0.0",
+    author: BuildInfo.COMPANY
+)]
+public sealed class FpsLimit : BaseMod
 {
-    private static bool _isInitialized = false;
+    public override bool IsEnabled => true;
 
     public static int CurrentFpsLimit
     {
@@ -13,18 +21,25 @@ public static class FpsLimit
         private set => ConfigManager.FpsLimit.Value = value;
     }
 
-    public static void Init()
+    protected override void OnInitialize()
     {
-        if (_isInitialized)
+        if (ConfigManager.FpsLimit.Value < 0)
         {
-            KappiModCore.LogError($"{nameof(FpsLimit)} is already initialized");
-            return;
+            ConfigManager.FpsLimit.Value = -1;
         }
 
-        KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+        SetFpsLimit(ConfigManager.FpsLimit.Value);
+        OnEnable();
+    }
 
-        _isInitialized = true;
-        KappiModCore.Log("Initialized");
+    protected override void OnEnable()
+    {
+        KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
+    }
+
+    protected override void OnDisable()
+    {
+        KappiModCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
     }
 
     public static void SetFpsLimit(int fpsLimit)
@@ -47,7 +62,7 @@ public static class FpsLimit
         }
     }
 
-    private static void OnSceneWasInitialized(int buildIndex, string sceneName)
+    private void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
         if (sceneName is not ObjectNames.MAIN_MENU_SCENE)
         {

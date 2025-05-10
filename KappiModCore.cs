@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using KappiMod.Config;
 using KappiMod.Loader;
-using KappiMod.Mods;
+using KappiMod.Mods.Core;
 using KappiMod.Patches;
 using KappiMod.Properties;
 using KappiMod.UI;
@@ -71,26 +71,24 @@ public static class KappiModCore
 
     private static void InitMods()
     {
-        ConsoleUnlocker.Init();
-        DialogueSkipper.Init();
-        FlashlightIncreaser.Init();
-        FpsLimit.Init();
-        SitUnlocker.Init();
-        SprintUnlocker.Init();
-        TimeScaleScroller.Init();
+        Log("Initializing mod system...");
+        ModManager.Initialize();
+        Log($"Mod system initialized with {ModManager.RegisteredMods.Count} mods");
     }
 
     #region LOGGING
 
-    public static void Log(object message, LogType logType) => InternalLog(message, logType);
+    public static void Log(object? message, LogType logType) => InternalLog(message, logType);
 
-    public static void Log(object message, [CallerFilePath] string? callerFilePath = null) =>
+    public static void Log(object? message, [CallerFilePath] string? callerFilePath = null) =>
         InternalLog(message, LogType.Log, callerFilePath);
 
-    public static void LogWarning(object message, [CallerFilePath] string? callerFilePath = null) =>
-        InternalLog(message, LogType.Warning, callerFilePath);
+    public static void LogWarning(
+        object? message,
+        [CallerFilePath] string? callerFilePath = null
+    ) => InternalLog(message, LogType.Warning, callerFilePath);
 
-    public static void LogError(object message, [CallerFilePath] string? callerFilePath = null) =>
+    public static void LogError(object? message, [CallerFilePath] string? callerFilePath = null) =>
         InternalLog(message, LogType.Error, callerFilePath);
 
     private static void InternalLog(

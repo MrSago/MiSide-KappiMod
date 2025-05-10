@@ -1,3 +1,5 @@
+using KappiMod.Mods.Core;
+using KappiMod.Properties;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -6,22 +8,19 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Mods;
 
-public static class ConsoleUnlocker
+[ModInfo(
+    name: "Console Unlocker",
+    description: "Unlocks the developer console in the game",
+    version: "1.0.0",
+    author: BuildInfo.COMPANY
+)]
+public sealed class ConsoleUnlocker : BaseMod
 {
-    private static bool _isInitialized = false;
+    public override bool IsEnabled => true;
 
-    public static void Init()
+    protected override void OnInitialize()
     {
-        if (_isInitialized)
-        {
-            KappiModCore.LogError($"{nameof(ConsoleUnlocker)} is already initialized");
-            return;
-        }
-
         KappiModCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
-
-        _isInitialized = true;
-        KappiModCore.Log("Initialized");
     }
 
     public static void UnlockConsole()
@@ -38,13 +37,13 @@ public static class ConsoleUnlocker
                 KappiModCore.Log("Console is already unlocked!");
             }
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            KappiModCore.LogError(e.Message);
+            KappiModCore.LogError(ex.Message);
         }
     }
 
-    private static void OnSceneWasInitialized(int buildIndex, string sceneName)
+    private void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
         if (sceneName is not ObjectNames.MAIN_MENU_SCENE)
         {
