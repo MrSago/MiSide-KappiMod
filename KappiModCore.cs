@@ -1,12 +1,11 @@
-﻿using System.Runtime.CompilerServices;
-using KappiMod.Config;
+﻿using KappiMod.Config;
 using KappiMod.Loader;
+using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Patches;
 using KappiMod.Properties;
 using KappiMod.UI;
 using KappiMod.Utils;
-using UnityEngine;
 using UniverseLib;
 
 namespace KappiMod;
@@ -26,14 +25,16 @@ public static class KappiModCore
 
         Loader = loader;
 
-        Log($"{BuildInfo.NAME} v{BuildInfo.VERSION} initializing...");
+        Loader.OnLogMessage($"{BuildInfo.NAME} v{BuildInfo.VERSION} initializing...");
 
         ConfigManager.Init(Loader.ConfigHandler);
+
+        KappiLogger.Init(Loader, ConfigManager.DebugMode.Value);
 
         Universe.Init(
             ConfigManager.StartupDelayTime.Value,
             LateInitUI,
-            Log,
+            (message, logType) => KappiLogger.Log(message, null, logType),
             new()
             {
                 Disable_EventSystem_Override = ConfigManager.DisableEventSystemOverride.Value,
@@ -44,16 +45,14 @@ public static class KappiModCore
 
         InitUtils();
         InitPatches();
-        InitMods();
+        InitModSystem();
     }
 
     private static void LateInitUI()
     {
-        Log("Loading UI...");
-
+        KappiLogger.Log("Loading UI...");
         UIManager.Init();
-
-        Log($"{BuildInfo.NAME} v{BuildInfo.VERSION} initialized!");
+        KappiLogger.Log($"{BuildInfo.NAME} v{BuildInfo.VERSION} initialized!");
     }
 
     private static void InitUtils()
@@ -69,65 +68,10 @@ public static class KappiModCore
         NativeResolutionOption.Init();
     }
 
-    private static void InitMods()
+    private static void InitModSystem()
     {
-        Log("Initializing mod system...");
+        KappiLogger.Log("Initializing mod system...");
         ModManager.Initialize();
-        Log($"Mod system initialized with {ModManager.RegisteredMods.Count} mods");
+        KappiLogger.Log($"Mod system initialized with {ModManager.RegisteredMods.Count} mods");
     }
-
-    #region LOGGING
-
-    public static void Log(object? message, LogType logType) => InternalLog(message, logType);
-
-    public static void Log(object? message, [CallerFilePath] string? callerFilePath = null) =>
-        InternalLog(message, LogType.Log, callerFilePath);
-
-    public static void LogWarning(
-        object? message,
-        [CallerFilePath] string? callerFilePath = null
-    ) => InternalLog(message, LogType.Warning, callerFilePath);
-
-    public static void LogError(object? message, [CallerFilePath] string? callerFilePath = null) =>
-        InternalLog(message, LogType.Error, callerFilePath);
-
-    private static void InternalLog(
-        object? message,
-        LogType logType = LogType.Log,
-        string? callerFilePath = null
-    )
-    {
-        string log;
-        if (callerFilePath is not null)
-        {
-            string callerClassName = Path.GetFileNameWithoutExtension(callerFilePath);
-            log = $"[{callerClassName}] {message?.ToString() ?? string.Empty}";
-        }
-        else
-        {
-            log = message?.ToString() ?? string.Empty;
-        }
-
-        switch (logType)
-        {
-            case LogType.Log:
-            case LogType.Assert:
-                Loader.OnLogMessage(log);
-                break;
-
-            case LogType.Warning:
-                Loader.OnLogWarning(log);
-                break;
-
-            case LogType.Error:
-            case LogType.Exception:
-                Loader.OnLogError(log);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    #endregion LOGGING
 }

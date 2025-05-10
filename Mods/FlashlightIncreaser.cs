@@ -1,4 +1,5 @@
 using KappiMod.Config;
+using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Properties;
 using KappiMod.Utils;
@@ -63,12 +64,6 @@ public sealed class FlashlightIncreaser : BaseMod
 
     public bool Toggle()
     {
-        if (!IsEnabled || !IsInitialized)
-        {
-            KappiModCore.LogError("Mod is not enabled or initialized");
-            return false;
-        }
-
         _isFlashlightEnabled = !_isFlashlightEnabled;
         if (_isFlashlightEnabled)
         {
@@ -79,7 +74,7 @@ public sealed class FlashlightIncreaser : BaseMod
             RevertFlashlightState();
         }
 
-        KappiModCore.Log($"Flashlight {(_isFlashlightEnabled ? "increased" : "restored")}");
+        KappiLogger.Log($"Flashlight {(_isFlashlightEnabled ? "increased" : "restored")}");
         return _isFlashlightEnabled;
     }
 
@@ -97,7 +92,7 @@ public sealed class FlashlightIncreaser : BaseMod
         {
             if (!TryFindWorldPlayer() || _cachedWorldPlayer == null)
             {
-                KappiModCore.LogError($"Object {nameof(WorldPlayer)} not found!");
+                KappiLogger.LogError($"Object {nameof(WorldPlayer)} not found!");
                 ResetState();
                 return;
             }
@@ -110,7 +105,7 @@ public sealed class FlashlightIncreaser : BaseMod
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError(ex.Message);
+            KappiLogger.LogException("Failed to activate flashlight features", exception: ex);
             ResetState();
         }
     }
@@ -136,7 +131,7 @@ public sealed class FlashlightIncreaser : BaseMod
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError(ex.Message);
+            KappiLogger.LogException("Failed to revert flashlight state", exception: ex);
             ResetState();
         }
     }

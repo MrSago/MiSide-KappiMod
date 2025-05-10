@@ -1,4 +1,5 @@
 using KappiMod.Config;
+using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Properties;
 using UnityEngine;
@@ -52,11 +53,11 @@ public sealed class TimeScaleScroller : BaseMod
         try
         {
             Time.timeScale = Mathf.Max(0.0f, timeScale);
-            KappiModCore.Log($"TimeScale: {Time.timeScale}");
+            KappiLogger.Log($"TimeScale: {Time.timeScale}");
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError(ex.Message);
+            KappiLogger.LogException("Failed to set time scale", exception: ex);
         }
     }
 

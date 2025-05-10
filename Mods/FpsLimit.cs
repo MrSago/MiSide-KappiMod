@@ -1,4 +1,5 @@
 using KappiMod.Config;
+using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Properties;
 using UnityEngine;
@@ -28,7 +29,6 @@ public sealed class FpsLimit : BaseMod
             ConfigManager.FpsLimit.Value = -1;
         }
 
-        SetFpsLimit(ConfigManager.FpsLimit.Value);
         OnEnable();
     }
 
@@ -53,12 +53,12 @@ public sealed class FpsLimit : BaseMod
             }
 
             Application.targetFrameRate = fps;
-            KappiModCore.Log($"FPS limit set to {(fps < 0 ? "unlimited" : fps.ToString())}");
+            KappiLogger.Log($"FPS limit set to {(fps < 0 ? "unlimited" : fps.ToString())}");
             CurrentFpsLimit = fps;
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError(ex.Message);
+            KappiLogger.LogException("Failed to set FPS limit", exception: ex);
         }
     }
 

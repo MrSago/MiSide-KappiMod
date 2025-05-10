@@ -1,3 +1,4 @@
+using KappiMod.Logging;
 using KappiMod.Mods;
 using KappiMod.Mods.Core;
 using KappiMod.Patches;
@@ -95,7 +96,7 @@ public class MainPanel : PanelBase
         var mod = ModManager.GetMod<DialogueSkipper>();
         if (mod is null)
         {
-            KappiModCore.LogError($"{nameof(DialogueSkipper)} mod not found!");
+            KappiLogger.LogError($"{nameof(DialogueSkipper)} mod not found!");
             return;
         }
 
@@ -127,7 +128,7 @@ public class MainPanel : PanelBase
         var mod = ModManager.GetMod<FlashlightIncreaser>();
         if (mod is null)
         {
-            KappiModCore.LogError($"{nameof(FlashlightIncreaser)} mod not found!");
+            KappiLogger.LogError($"{nameof(FlashlightIncreaser)} mod not found!");
             return;
         }
 
@@ -159,7 +160,7 @@ public class MainPanel : PanelBase
         var mod = ModManager.GetMod<SitUnlocker>();
         if (mod is null)
         {
-            KappiModCore.LogError($"{nameof(SitUnlocker)} mod not found!");
+            KappiLogger.LogError($"{nameof(SitUnlocker)} mod not found!");
             return;
         }
 
@@ -191,7 +192,7 @@ public class MainPanel : PanelBase
         var mod = ModManager.GetMod<SprintUnlocker>();
         if (mod is null)
         {
-            KappiModCore.LogError($"{nameof(SprintUnlocker)} mod not found!");
+            KappiLogger.LogError($"{nameof(SprintUnlocker)} mod not found!");
             return;
         }
 
@@ -223,7 +224,7 @@ public class MainPanel : PanelBase
         var mod = ModManager.GetMod<TimeScaleScroller>();
         if (mod is null)
         {
-            KappiModCore.LogError($"{nameof(TimeScaleScroller)} mod not found!");
+            KappiLogger.LogError($"{nameof(TimeScaleScroller)} mod not found!");
             return;
         }
 
@@ -280,7 +281,7 @@ public class MainPanel : PanelBase
         var mod = ModManager.GetMod<FpsLimit>();
         if (mod is null)
         {
-            KappiModCore.LogError("FpsLimit mod not found!");
+            KappiLogger.LogError("FpsLimit mod not found!");
             return;
         }
 

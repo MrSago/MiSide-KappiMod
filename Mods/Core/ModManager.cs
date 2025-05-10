@@ -1,4 +1,5 @@
 using System.Reflection;
+using KappiMod.Logging;
 
 namespace KappiMod.Mods.Core;
 
@@ -11,18 +12,18 @@ public static class ModManager
 
     public static void Initialize()
     {
-        KappiModCore.Log("Initializing ModManager...");
+        KappiLogger.Log("Initializing ModManager...");
         DiscoverMods();
         InstantiateMods();
         InitializeMods();
-        KappiModCore.Log($"ModManager initialized with {_registeredMods.Count} mods");
+        KappiLogger.Log($"ModManager initialized with {_registeredMods.Count} mods");
     }
 
     private static void DiscoverMods()
     {
         try
         {
-            KappiModCore.Log("Discovering mods...");
+            KappiLogger.Log("Discovering mods...");
             Assembly? assembly = Assembly.GetExecutingAssembly();
 
             var modTypes = assembly
@@ -31,17 +32,17 @@ public static class ModManager
                 .ToList();
 
             _modTypes.AddRange(modTypes);
-            KappiModCore.Log($"Discovered {modTypes.Count} mod types");
+            KappiLogger.Log($"Discovered {modTypes.Count} mod types");
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError($"Error discovering mods: {ex.Message}");
+            KappiLogger.LogException("Error discovering mods", exception: ex);
         }
     }
 
     private static void InstantiateMods()
     {
-        KappiModCore.Log("Instantiating mods...");
+        KappiLogger.Log("Instantiating mods...");
 
         foreach (var modType in _modTypes)
         {
@@ -50,7 +51,7 @@ public static class ModManager
                 object? modInstance = Activator.CreateInstance(modType);
                 if (modInstance is not BaseMod mod)
                 {
-                    KappiModCore.LogError(
+                    KappiLogger.LogError(
                         $"Failed to create an instance of {modType.Name}."
                             + $" The instance is null or not of type {nameof(BaseMod)}."
                     );
@@ -59,25 +60,28 @@ public static class ModManager
 
                 if (_registeredMods.ContainsKey(modType.Name))
                 {
-                    KappiModCore.LogError(
+                    KappiLogger.LogError(
                         $"Mod with ID {modType.Name} is already registered. Skipping registration."
                     );
                     continue;
                 }
 
                 _registeredMods[modType.Name] = mod;
-                KappiModCore.Log($"Registered mod: {modType.Name}");
+                KappiLogger.Log($"Registered mod: {modType.Name}");
             }
             catch (Exception ex)
             {
-                KappiModCore.LogError($"Failed to instantiate mod {modType.Name}: {ex.Message}");
+                KappiLogger.LogException(
+                    $"Failed to instantiate mod: {modType.Name}",
+                    exception: ex
+                );
             }
         }
     }
 
     private static void InitializeMods()
     {
-        KappiModCore.Log("Initializing mods...");
+        KappiLogger.Log("Initializing mods...");
 
         foreach (var mod in _registeredMods.Values)
         {
@@ -87,7 +91,7 @@ public static class ModManager
             }
             catch (Exception ex)
             {
-                KappiModCore.LogError($"Failed to initialize mod {mod.Name}: {ex.Message}");
+                KappiLogger.LogException($"Failed to initialize mod: {mod.Name}", exception: ex);
             }
         }
     }

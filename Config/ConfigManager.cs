@@ -7,6 +7,7 @@ public static class ConfigManager
     public static ConfigHandler Handler { get; private set; } = null!;
 
     // Internal config elements
+    public static ConfigElement<bool> DebugMode { get; private set; } = null!;
     public static ConfigElement<float> StartupDelayTime { get; private set; } = null!;
     public static ConfigElement<bool> DisableEventSystemOverride { get; private set; } = null!;
     public static ConfigElement<bool> ForceUnlockMouse { get; private set; } = null!;
@@ -47,22 +48,23 @@ public static class ConfigManager
 
     private static void CreateConfigElements()
     {
-        StartupDelayTime = new("StartupDelayTime", "Startup delay time", 0.0f);
+        DebugMode = new(nameof(DebugMode), "Debug mode", false);
+        StartupDelayTime = new(nameof(StartupDelayTime), "Startup delay time", 0.0f);
         DisableEventSystemOverride = new(
-            "DisableEventSystemOverride",
+            nameof(DisableEventSystemOverride),
             "Disable event system override",
             false
         );
-        ForceUnlockMouse = new("ForceUnlockMouse", "Force unlock mouse", true);
+        ForceUnlockMouse = new(nameof(ForceUnlockMouse), "Force unlock mouse", true);
 
-        DialogueSkipper = new("DialogueSkipper", "Dialogue skipper", false);
-        FlashlightIncreaser = new("FlashlightIncreaser", "Flashlight increaser", true);
-        SitUnlocker = new("SitUnlocker", "Sit unlocker", true);
-        SprintUnlocker = new("SprintUnlocker", "Sprint unlocker", true);
-        TimeScaleScroller = new("TimeScaleScroller", "Time scale scroller", true);
+        DialogueSkipper = new(nameof(DialogueSkipper), "Dialogue skipper", false);
+        FlashlightIncreaser = new(nameof(FlashlightIncreaser), "Flashlight increaser", true);
+        SitUnlocker = new(nameof(SitUnlocker), "Sit unlocker", true);
+        SprintUnlocker = new(nameof(SprintUnlocker), "Sprint unlocker", true);
+        TimeScaleScroller = new(nameof(TimeScaleScroller), "Time scale scroller", true);
 
-        IntroSkipper = new("IntroSkipper", "Intro skipper", false);
+        IntroSkipper = new(nameof(IntroSkipper), "Intro skipper", false);
 
-        FpsLimit = new("FpsLimit", "Fps limit", -1);
+        FpsLimit = new(nameof(FpsLimit), "Fps limit", -1);
     }
 }

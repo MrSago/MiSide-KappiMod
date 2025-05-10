@@ -1,6 +1,7 @@
 using System.Text;
 using KappiMod.Config;
 using KappiMod.Events;
+using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Mods.Extensions;
 using KappiMod.Patches;
@@ -53,7 +54,7 @@ public sealed class DialogueSkipper : BaseMod
     {
         if (!DialoguePatcher.IsInitialized)
         {
-            KappiModCore.LogError(
+            KappiLogger.LogError(
                 $"{nameof(DialoguePatcher)} is not initialized. Mod can't be used."
             );
             return;
@@ -132,11 +133,11 @@ public sealed class DialogueSkipper : BaseMod
 
         if (isWarning)
         {
-            KappiModCore.LogWarning(sb.ToString());
+            KappiLogger.LogWarning(sb.ToString());
         }
         else
         {
-            KappiModCore.Log(sb.ToString());
+            KappiLogger.Log(sb.ToString());
         }
     }
 }

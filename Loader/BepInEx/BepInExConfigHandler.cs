@@ -3,6 +3,7 @@
 using BepInEx.Configuration;
 using KappiMod.Config;
 using KappiMod.Properties;
+using KappiMod.Logging;
 
 namespace KappiMod.Loader.BepInEx;
 
@@ -57,7 +58,7 @@ public class BepInExConfigHandler : ConfigHandler
             return;
         }
 
-        KappiModCore.LogWarning("Could not get config entry '" + element.Name + "'");
+        KappiLogger.LogWarning("Could not get config entry '" + element.Name + "'");
     }
 }
 

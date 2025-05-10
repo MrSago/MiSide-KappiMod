@@ -1,5 +1,6 @@
 using HarmonyLib;
 using KappiMod.Events;
+using KappiMod.Logging;
 using KappiMod.Utils;
 using UnityEngine.SceneManagement;
 #if ML
@@ -21,7 +22,7 @@ public static class DialoguePatcher
     {
         if (_isInitialized)
         {
-            KappiModCore.LogError($"{nameof(DialoguePatcher)} is already initialized");
+            KappiLogger.LogError($"{nameof(DialoguePatcher)} is already initialized");
             return;
         }
 
@@ -30,7 +31,7 @@ public static class DialoguePatcher
         _harmony = new("com.kappimod.dialoguepatcher");
         _harmony.PatchAll(typeof(Patch));
 
-        KappiModCore.Log("Initialized");
+        KappiLogger.Log("Initialized");
     }
 
     [HarmonyPatch]
@@ -51,7 +52,7 @@ public static class DialoguePatcher
             }
             catch (Exception ex)
             {
-                KappiModCore.LogError(ex.Message);
+                KappiLogger.LogException("Failed to process prefix start dialogue", exception: ex);
             }
         }
 
@@ -70,7 +71,7 @@ public static class DialoguePatcher
             }
             catch (Exception ex)
             {
-                KappiModCore.LogError(ex.Message);
+                KappiLogger.LogException("Failed to process postfix dialogue start", exception: ex);
             }
         }
 

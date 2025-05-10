@@ -1,4 +1,5 @@
 using KappiMod.Config;
+using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Properties;
 using KappiMod.Utils;
@@ -61,7 +62,7 @@ public sealed class SitUnlocker : BaseMod
         {
             if (!TryFindPlayerMove() || _cachedPlayerMove == null)
             {
-                KappiModCore.LogError("PlayerMove component not found!");
+                KappiLogger.LogError($"Object {nameof(PlayerMove)} not found!");
                 return;
             }
 
@@ -69,7 +70,7 @@ public sealed class SitUnlocker : BaseMod
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError(ex.Message);
+            KappiLogger.LogException("Failed to set player sit state", exception: ex);
         }
     }
 

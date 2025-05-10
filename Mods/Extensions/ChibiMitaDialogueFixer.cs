@@ -1,5 +1,6 @@
 using Il2CppInterop.Runtime;
 using KappiMod.Events;
+using KappiMod.Logging;
 using KappiMod.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,7 +21,7 @@ internal static class ChibiMitaDialogueFixer
     {
         if (_isInitialized)
         {
-            KappiModCore.LogError($"{nameof(ChibiMitaDialogueFixer)} is already initialized");
+            KappiLogger.LogError($"{nameof(ChibiMitaDialogueFixer)} is already initialized");
             return;
         }
 
@@ -37,14 +38,14 @@ internal static class ChibiMitaDialogueFixer
         DialogueEventSystem.OnPostfixDialogueStart += HandleDialogue;
 
         _isInitialized = true;
-        KappiModCore.Log("Initialized");
+        KappiLogger.Log("Initialized");
     }
 
     internal static void CleanUp()
     {
         if (!_isInitialized)
         {
-            KappiModCore.LogError($"{nameof(ChibiMitaDialogueFixer)} is not initialized");
+            KappiLogger.LogError($"{nameof(ChibiMitaDialogueFixer)} is not initialized");
             return;
         }
 
@@ -54,7 +55,7 @@ internal static class ChibiMitaDialogueFixer
         DialogueEventSystem.OnPostfixDialogueStart -= HandleDialogue;
 
         _isInitialized = false;
-        KappiModCore.Log("Cleaned up");
+        KappiLogger.Log("Cleaned up");
     }
 
     private static void OnSceneWasInitialized(int buildIndex, string sceneName)
@@ -83,7 +84,7 @@ internal static class ChibiMitaDialogueFixer
         }
 
         _cachedChibiMita.AnimationStop();
-        KappiModCore.Log("ChibiMita animation stopped");
+        KappiLogger.Log("ChibiMita animation stopped");
     }
 
     private static bool TryFindChibiMita()
@@ -99,7 +100,7 @@ internal static class ChibiMitaDialogueFixer
             ?.Cast<Mob_ChibiMita>();
 
         bool isFound = UnityHelpers.IsValid(_cachedChibiMita);
-        KappiModCore.Log($"ChibiMita {(isFound ? "found" : "not found")}");
+        KappiLogger.Log($"ChibiMita {(isFound ? "found" : "not found")}");
         return isFound;
     }
 }

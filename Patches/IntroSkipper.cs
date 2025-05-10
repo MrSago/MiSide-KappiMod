@@ -1,5 +1,6 @@
 using HarmonyLib;
 using KappiMod.Config;
+using KappiMod.Logging;
 using KappiMod.Utils;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -35,7 +36,7 @@ public static class IntroSkipper
                 KappiModCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
             }
 
-            KappiModCore.Log(value ? "Enabled" : "Disabled");
+            KappiLogger.Log(value ? "Enabled" : "Disabled");
             ConfigManager.IntroSkipper.Value = value;
         }
     }
@@ -44,7 +45,7 @@ public static class IntroSkipper
     {
         if (_isInitialized)
         {
-            KappiModCore.LogError($"{nameof(IntroSkipper)} is already initialized");
+            KappiLogger.LogError($"{nameof(IntroSkipper)} is already initialized");
             return;
         }
 
@@ -58,7 +59,7 @@ public static class IntroSkipper
         _harmony = new("com.kappimod.introskipper");
         _harmony.PatchAll(typeof(Patch));
 
-        KappiModCore.Log("Initialized");
+        KappiLogger.Log("Initialized");
     }
 
     private static void OnSceneWasInitialized(int buildIndex, string sceneName)
@@ -72,16 +73,16 @@ public static class IntroSkipper
         {
             if (SkipIntro())
             {
-                KappiModCore.Log("Aihasto intro skipped");
+                KappiLogger.Log("Aihasto intro skipped");
             }
             else
             {
-                KappiModCore.LogWarning("Aihasto intro not skipped");
+                KappiLogger.LogWarning("Aihasto intro not skipped");
             }
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError(ex.Message);
+            KappiLogger.LogException("Failed to skip intro", exception: ex);
         }
     }
 
@@ -117,7 +118,7 @@ public static class IntroSkipper
             }
 
             InvokeSkipEvent(__instance);
-            KappiModCore.Log("The opening menu cutscene should be skipped");
+            KappiLogger.Log("The opening menu cutscene should be skipped");
         }
 
         private static void InvokeSkipEvent(Menu __instance)

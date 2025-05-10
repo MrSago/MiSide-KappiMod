@@ -1,3 +1,4 @@
+using KappiMod.Logging;
 using KappiMod.Properties;
 
 namespace KappiMod.Utils;
@@ -33,21 +34,21 @@ internal static class VersionChecker
             LatestVersion = latestVersion.TrimStart('v');
             UpdateAvailable = IsNewerVersion(LatestVersion, CurrentVersion);
 
-            KappiModCore.Log($"Current version: {CurrentVersion}");
-            KappiModCore.Log($"Latest version: {LatestVersion}");
+            KappiLogger.Log($"Current version: {CurrentVersion}");
+            KappiLogger.Log($"Latest version: {LatestVersion}");
 
             if (UpdateAvailable)
             {
-                KappiModCore.Log($"Update available! Download it here: {DownloadUrl}");
+                KappiLogger.Log($"Update available! Download it here: {DownloadUrl}");
             }
             else
             {
-                KappiModCore.Log("You are using the latest version");
+                KappiLogger.Log("You are using the latest version");
             }
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError($"Failed to check for updates: {ex.Message}");
+            KappiLogger.LogException("Failed to check for updates", exception: ex);
         }
         finally
         {
@@ -115,7 +116,10 @@ internal static class VersionChecker
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError($"Error comparing versions: {ex.Message}");
+            KappiLogger.LogException(
+                $"Error comparing versions: {latestVersion} and {currentVersion}",
+                exception: ex
+            );
             return false;
         }
     }

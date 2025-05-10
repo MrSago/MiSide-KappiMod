@@ -1,5 +1,6 @@
 using HarmonyLib;
 using Il2CppInterop.Runtime;
+using KappiMod.Logging;
 using KappiMod.Utils;
 using UnityEngine;
 #if ML
@@ -19,7 +20,7 @@ public static class NativeResolutionOption
     {
         if (_isInitialized)
         {
-            KappiModCore.LogError($"{nameof(NativeResolutionOption)} is already initialized");
+            KappiLogger.LogError($"{nameof(NativeResolutionOption)} is already initialized");
             return;
         }
 
@@ -27,7 +28,7 @@ public static class NativeResolutionOption
         _harmony.PatchAll(typeof(Patch));
 
         _isInitialized = true;
-        KappiModCore.Log("Initialized");
+        KappiLogger.Log("Initialized");
     }
 
     [HarmonyPatch]
@@ -50,7 +51,7 @@ public static class NativeResolutionOption
             }
             catch (Exception ex)
             {
-                KappiModCore.LogError(ex.Message);
+                KappiLogger.LogException("Failed to add native resolution option", exception: ex);
             }
         }
 
@@ -62,12 +63,12 @@ public static class NativeResolutionOption
                 ?.Cast<MenuCaseOption>();
             if (!UnityHelpers.IsValid(menuCaseOption) || menuCaseOption == null)
             {
-                KappiModCore.LogError("MenuCaseOption not found");
+                KappiLogger.LogError("MenuCaseOption not found");
                 return;
             }
 
             Resolution resolution = GetNativeResolution();
-            KappiModCore.Log(
+            KappiLogger.Log(
                 $"Native resolution: {resolution.width}x{resolution.height}@{resolution.refreshRate}Hz"
             );
 
@@ -76,7 +77,7 @@ public static class NativeResolutionOption
             {
                 if (buttonInfo.buttonText is buttonText)
                 {
-                    KappiModCore.Log("Option is already exists");
+                    KappiLogger.Log("Option is already exists");
                     return;
                 }
             }
@@ -85,7 +86,7 @@ public static class NativeResolutionOption
             index = index >= 0 ? index : menuCaseOption.resolutions.Count - 1;
 
             menuCaseOption.scrIccb.Add(new() { buttonText = buttonText, value_int = index });
-            KappiModCore.Log("Option successfully added");
+            KappiLogger.Log("Option successfully added");
         }
 
         private static Resolution GetNativeResolution()

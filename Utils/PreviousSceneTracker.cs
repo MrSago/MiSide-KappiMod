@@ -1,3 +1,5 @@
+using KappiMod.Logging;
+
 namespace KappiMod.Utils;
 
 public static class PreviousSceneTracker
@@ -16,14 +18,14 @@ public static class PreviousSceneTracker
     {
         if (_isInitialized)
         {
-            KappiModCore.LogError($"{nameof(PreviousSceneTracker)} is already initialized");
+            KappiLogger.LogError($"{nameof(PreviousSceneTracker)} is already initialized");
             return;
         }
 
         KappiModCore.Loader.SceneWasLoaded += OnSceneWasLoaded;
 
         _isInitialized = true;
-        KappiModCore.Log("Initialized");
+        KappiLogger.Log("Initialized");
     }
 
     private static void OnSceneWasLoaded(int buildIndex, string sceneName)

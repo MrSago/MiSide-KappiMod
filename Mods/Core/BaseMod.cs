@@ -1,5 +1,5 @@
 using System.Reflection;
-using UnityEngine;
+using KappiMod.Logging;
 
 namespace KappiMod.Mods.Core;
 
@@ -28,7 +28,7 @@ public abstract class BaseMod
     {
         if (IsInitialized)
         {
-            KappiModCore.Log($"[{Id}] Mod is already initialized", LogType.Warning);
+            KappiLogger.LogWarning("Mod is already initialized", Id);
             return;
         }
 
@@ -37,11 +37,11 @@ public abstract class BaseMod
             InitializeAttribute();
             OnInitialize();
             IsInitialized = true;
-            KappiModCore.Log($"[{Id}] Mod initialized successfully", LogType.Log);
+            KappiLogger.Log("Mod initialized successfully", Id);
         }
         catch (Exception ex)
         {
-            KappiModCore.Log($"[{Id}] Failed to initialize: {ex.Message}", LogType.Error);
+            KappiLogger.LogException("Failed to initialize mod", Id, ex);
         }
     }
 
@@ -49,13 +49,13 @@ public abstract class BaseMod
     {
         if (!IsInitialized)
         {
-            KappiModCore.Log($"[{Id}] Cannot enable: not initialized", LogType.Error);
+            KappiLogger.LogWarning("Cannot enable: not initialized", Id);
             return;
         }
 
         if (IsEnabled)
         {
-            KappiModCore.Log($"[{Id}] is already enabled", LogType.Warning);
+            KappiLogger.LogWarning("Is already enabled", Id);
             return;
         }
 
@@ -63,11 +63,11 @@ public abstract class BaseMod
         {
             OnEnable();
             IsEnabled = true;
-            KappiModCore.Log($"[{Id}] Enabled successfully", LogType.Log);
+            KappiLogger.Log("Enabled successfully", Id);
         }
         catch (Exception ex)
         {
-            KappiModCore.Log($"[{Id}] Failed to enable: {ex.Message}", LogType.Error);
+            KappiLogger.LogException("Failed to enable mod", Id, ex);
         }
     }
 
@@ -75,13 +75,13 @@ public abstract class BaseMod
     {
         if (!IsInitialized)
         {
-            KappiModCore.Log($"[{Id}] Cannot disable: not initialized", LogType.Error);
+            KappiLogger.LogWarning("Cannot disable: not initialized", Id);
             return;
         }
 
         if (!IsEnabled)
         {
-            KappiModCore.Log($"[{Id}] is already disabled", LogType.Warning);
+            KappiLogger.LogWarning("Is already disabled", Id);
             return;
         }
 
@@ -89,11 +89,11 @@ public abstract class BaseMod
         {
             OnDisable();
             IsEnabled = false;
-            KappiModCore.Log($"[{Id}] Disabled successfully", LogType.Log);
+            KappiLogger.Log("Disabled successfully", Id);
         }
         catch (Exception ex)
         {
-            KappiModCore.Log($"[{Id}] Failed to disable: {ex.Message}", LogType.Error);
+            KappiLogger.LogException("Failed to disable mod", Id, ex);
         }
     }
 

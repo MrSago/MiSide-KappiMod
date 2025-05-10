@@ -1,3 +1,4 @@
+using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Properties;
 #if ML
@@ -30,16 +31,16 @@ public sealed class ConsoleUnlocker : BaseMod
             if (ConsoleMain.liteVersion)
             {
                 ConsoleMain.liteVersion = false;
-                KappiModCore.Log("Console successfully unlocked!");
+                KappiLogger.Log("Console successfully unlocked!");
             }
             else
             {
-                KappiModCore.Log("Console is already unlocked!");
+                KappiLogger.Log("Console is already unlocked!");
             }
         }
         catch (Exception ex)
         {
-            KappiModCore.LogError(ex.Message);
+            KappiLogger.LogException("Failed to unlock console", exception: ex);
         }
     }
 
