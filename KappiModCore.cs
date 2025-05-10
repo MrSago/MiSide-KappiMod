@@ -71,7 +71,7 @@ public static class KappiModCore
     private static void InitModSystem()
     {
         KappiLogger.Log("Initializing mod system...");
-        ModManager.Initialize();
+        ModManager.Init();
         KappiLogger.Log($"Mod system initialized with {ModManager.RegisteredMods.Count} mods");
     }
 }
