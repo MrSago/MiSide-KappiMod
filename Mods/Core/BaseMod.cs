@@ -107,13 +107,16 @@ public abstract class BaseMod
     {
         var type = GetType();
         var modInfoAttribute = type.GetCustomAttribute<ModInfoAttribute>();
-        if (modInfoAttribute is not null)
+        if (modInfoAttribute is null)
         {
-            _id = type.DeclaringType?.Name ?? type.Name;
-            _name = modInfoAttribute.Name;
-            _description = modInfoAttribute.Description;
-            _version = modInfoAttribute.Version;
-            _author = modInfoAttribute.Author;
+            KappiLogger.LogError($"{nameof(ModInfoAttribute)} is missing", Id);
+            throw new InvalidOperationException($"{nameof(ModInfoAttribute)} is missing");
         }
+
+        _id = type.DeclaringType?.Name ?? type.Name;
+        _name = modInfoAttribute.Name;
+        _description = modInfoAttribute.Description;
+        _version = modInfoAttribute.Version;
+        _author = modInfoAttribute.Author;
     }
 }
