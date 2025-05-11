@@ -59,14 +59,17 @@ public static class ModManager
         {
             KappiLogger.Log("Discovering mods...");
 
-            var modTypes = Assembly
+            int initialCount = _modTypes.Count;
+
+            var newModTypes = Assembly
                 .GetExecutingAssembly()
                 .GetTypes()
                 .Where(t => !t.IsAbstract && t.IsClass && typeof(BaseMod).IsAssignableFrom(t))
-                .ToList();
+                .Except(_modTypes);
 
-            _modTypes.AddRange(modTypes);
-            KappiLogger.Log($"Discovered {modTypes.Count} mod types");
+            _modTypes.AddRange(newModTypes);
+            int addedCount = _modTypes.Count - initialCount;
+            KappiLogger.Log($"Discovered {addedCount} new mod types");
         }
         catch (Exception ex)
         {
@@ -82,20 +85,20 @@ public static class ModManager
         {
             try
             {
+                if (_registeredMods.ContainsKey(modType.Name))
+                {
+                    KappiLogger.LogError(
+                        $"Mod with ID {modType.Name} is already registered. Skipping registration."
+                    );
+                    continue;
+                }
+
                 object? modInstance = Activator.CreateInstance(modType);
                 if (modInstance is not BaseMod mod)
                 {
                     KappiLogger.LogError(
                         $"Failed to create an instance of {modType.Name}."
                             + $" The instance is null or not of type {nameof(BaseMod)}."
-                    );
-                    continue;
-                }
-
-                if (_registeredMods.ContainsKey(modType.Name))
-                {
-                    KappiLogger.LogError(
-                        $"Mod with ID {modType.Name} is already registered. Skipping registration."
                     );
                     continue;
                 }
@@ -117,7 +120,8 @@ public static class ModManager
     {
         KappiLogger.Log("Initializing mods...");
 
-        foreach (var mod in _registeredMods.Values)
+        var notInitializedMods = _registeredMods.Values.Where(m => !m.IsInitialized);
+        foreach (var mod in notInitializedMods)
         {
             try
             {
