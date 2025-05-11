@@ -21,9 +21,6 @@ public static class KappiLogger
         _debugMode = debugMode;
     }
 
-    // public static void Log(object? message, [CallerFilePath] string? callerFilePath = null) =>
-    //     Log(message, LogType.Log);
-
     public static void LogWarning(object? message, [CallerFilePath] string? prefix = null) =>
         Log(message, prefix, LogType.Warning);
 
