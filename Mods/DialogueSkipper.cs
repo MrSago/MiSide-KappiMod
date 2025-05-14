@@ -20,7 +20,7 @@ using DialogueSceneMappings = Dictionary<string, Dictionary<string, int>>;
 )]
 public sealed class DialogueSkipper : BaseMod
 {
-    private static readonly DialogueSceneMappings _ignoredDialogues = new()
+    private readonly DialogueSceneMappings _ignoredDialogues = new()
     {
         {
             "Scene 7 - Backrooms",
@@ -39,6 +39,8 @@ public sealed class DialogueSkipper : BaseMod
             new DialogueMapping { { "Player 3", 70 } }
         },
     };
+
+    private readonly ChibiMitaDialogueFixer _chibiMitaDialogueFixer = new();
 
     public override bool IsEnabled
     {
@@ -70,30 +72,28 @@ public sealed class DialogueSkipper : BaseMod
     protected override void OnEnable()
     {
         SubscribeEvents();
+        _chibiMitaDialogueFixer.Init();
     }
 
     protected override void OnDisable()
     {
         UnsubscribeEvents();
+        _chibiMitaDialogueFixer.CleanUp();
     }
 
-    private static void SubscribeEvents()
+    private void SubscribeEvents()
     {
         DialogueEventSystem.OnPrefixDialogueStart += HandleDialogueSkip;
         DialogueEventSystem.OnPostfixDialogueStart += HandleDialogueSkip;
-
-        ChibiMitaDialogueFixer.Init();
     }
 
-    private static void UnsubscribeEvents()
+    private void UnsubscribeEvents()
     {
         DialogueEventSystem.OnPrefixDialogueStart -= HandleDialogueSkip;
         DialogueEventSystem.OnPostfixDialogueStart -= HandleDialogueSkip;
-
-        ChibiMitaDialogueFixer.CleanUp();
     }
 
-    private static void HandleDialogueSkip(object? sender, DialogueEventArgs args)
+    private void HandleDialogueSkip(object? sender, DialogueEventArgs args)
     {
         if (IsDialogueIgnored(args))
         {
@@ -105,7 +105,7 @@ public sealed class DialogueSkipper : BaseMod
         LogDialogueInfo(args);
     }
 
-    private static bool IsDialogueIgnored(DialogueEventArgs args) =>
+    private bool IsDialogueIgnored(DialogueEventArgs args) =>
         _ignoredDialogues.ContainsKey(args.SceneName)
         && _ignoredDialogues[args.SceneName].ContainsKey(args.ObjectName)
         && _ignoredDialogues[args.SceneName][args.ObjectName] == args.IndexString;

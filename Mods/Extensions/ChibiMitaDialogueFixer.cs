@@ -12,12 +12,12 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Mods.Extensions;
 
-internal static class ChibiMitaDialogueFixer
+internal class ChibiMitaDialogueFixer
 {
-    private static bool _isInitialized = false;
-    private static Mob_ChibiMita? _cachedChibiMita;
+    private bool _isInitialized = false;
+    private Mob_ChibiMita? _cachedChibiMita;
 
-    internal static void Init()
+    internal void Init()
     {
         if (_isInitialized)
         {
@@ -41,7 +41,7 @@ internal static class ChibiMitaDialogueFixer
         KappiLogger.Log("Initialized");
     }
 
-    internal static void CleanUp()
+    internal void CleanUp()
     {
         if (!_isInitialized)
         {
@@ -58,7 +58,7 @@ internal static class ChibiMitaDialogueFixer
         KappiLogger.Log("Cleaned up");
     }
 
-    private static void OnSceneWasInitialized(int buildIndex, string sceneName)
+    private void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
         if (sceneName is ObjectNames.CHIBIMITA_SCENE)
         {
@@ -71,7 +71,7 @@ internal static class ChibiMitaDialogueFixer
         }
     }
 
-    private static void HandleDialogue(object? sender, DialogueEventArgs args)
+    private void HandleDialogue(object? sender, DialogueEventArgs args)
     {
         if (args.ObjectName is not ObjectNames.CHIBIMITA_BROKEN_DIALOGUE)
         {
@@ -87,7 +87,7 @@ internal static class ChibiMitaDialogueFixer
         KappiLogger.Log("ChibiMita animation stopped");
     }
 
-    private static bool TryFindChibiMita()
+    private bool TryFindChibiMita()
     {
         if (UnityHelpers.IsValid(_cachedChibiMita))
         {
