@@ -63,7 +63,7 @@ public static class ConfigManager
         SprintUnlocker = new(nameof(SprintUnlocker), "Sprint unlocker", true);
         TimeScaleScroller = new(nameof(TimeScaleScroller), "Time scale scroller", true);
 
-        IntroSkipper = new(nameof(IntroSkipper), "Intro skipper", false);
+        IntroSkipper = new(nameof(IntroSkipper), "Intro skipper", true);
 
         FpsLimit = new(nameof(FpsLimit), "Fps limit", -1);
     }
