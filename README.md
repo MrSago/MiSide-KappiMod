@@ -15,7 +15,6 @@
       - [**6. Sprint unlocker**](#6-sprint-unlocker)
       - [**7. Time scale scroller**](#7-time-scale-scroller)
       - [**8. Dialogue skipper**](#8-dialogue-skipper)
-      - [**Next mode**](#next-mode)
     - [Patch list](#patch-list)
       - [**1. Intro skipper**](#1-intro-skipper)
       - [**2. Native resolution option**](#2-native-resolution-option)
@@ -34,7 +33,6 @@
       - [**6. Разблокировка спринта**](#6-разблокировка-спринта)
       - [**7. Скроллер time scale**](#7-скроллер-time-scale)
       - [**8. Пропуск диалогов**](#8-пропуск-диалогов)
-      - [**Следующий мод**](#следующий-мод)
     - [Список патчей](#список-патчей)
       - [**1. Пропуск интро**](#1-пропуск-интро)
       - [**2. Нативное разрешение в настройках**](#2-нативное-разрешение-в-настройках)
@@ -47,10 +45,10 @@ Latest version of the mod pack is available [here](https://github.com/MrSago/MiS
 
 ### Supported mod loaders
 
-| Mod loader  | Supported |
-| :---------: | :-------: |
-|   BepInEx   |    ✅     |
-| MelonLoader |    ✅     |
+| Mod Loader  |   Version   | Supported |
+| :---------: | :---------: | :-------: |
+|   BepInEx   | 6.0.0-pre.2 |    ✅     |
+| MelonLoader |    0.7.0    |    ✅     |
 
 ### Mod list
 
@@ -101,10 +99,6 @@ Hold Left Shift and scroll mouse wheel for changing time scale.
 
 Skips dialogues. **⚠️ MAY CAUSE SOFTLOCK ⚠️**
 
-#### **Next mode**
-
-❓
-
 ### Patch list
 
 #### **1. Intro skipper**
@@ -124,11 +118,11 @@ Adds an option in the settings with native resolution with the maximum monitor r
 
 - Install one of the supported mod loaders **(I recommend install BepInEx)**:
 
-  - [BepInEx](https://github.com/BepInEx/BepInEx/releases)
-    - We need **BepInEx-Unity.IL2CPP-win-x64-6.x.x** (6th version)
+  - [BepInEx](https://github.com/BepInEx/BepInEx/releases/tag/v6.0.0-pre.2)
+    - We need **BepInEx-Unity.IL2CPP-win-x64-6.0.0-pre.2**
     - Unzip the contents of the archive into the game folder
-  - [MelonLoader](https://github.com/LavaGang/MelonLoader/releases)
-    - Just use the latest version **installer**
+  - [MelonLoader](https://github.com/LavaGang/MelonLoader/releases/tag/v0.7.0)
+    - Installer version **v0.7.0**
 
 - Download [the latest version of the mod](https://github.com/MrSago/MiSide-KappiMod/releases/latest) for **the required loader**:
 
@@ -168,10 +162,10 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
 
 ### Поддерживаемые загрузчики модов
 
-|  Загрузчик  | Поддержка |
-| :---------: | :-------: |
-| MelonLoader |    ✅     |
-|   BepInEx   |    ✅     |
+|  Загрузчик  |   Версия    | Поддержка |
+| :---------: | :---------: | :-------: |
+|   BepInEx   | 6.0.0-pre.2 |    ✅     |
+| MelonLoader |    0.7.0    |    ✅     |
 
 ### Список модификаций
 
@@ -222,10 +216,6 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
 
 Пропускает диалоги. **⚠️ МОЖЕТ ВЫЗВАТЬ СОФТЛОК ⚠️**
 
-#### **Следующий мод**
-
-❓
-
 ### Список патчей
 
 #### **1. Пропуск интро**
@@ -245,11 +235,11 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
 
 - Установить один из поддерживаемых загрузчиков **(я рекомендую поставить BepInEx)**:
 
-  - [BepInEx](https://github.com/BepInEx/BepInEx/releases)
-    - Нам нужен **BepInEx-Unity.IL2CPP-win-x64-6.x.x** (6-ая версия)
+  - [BepInEx](https://github.com/BepInEx/BepInEx/releases/tag/v6.0.0-pre.2)
+    - Нам нужен **BepInEx-Unity.IL2CPP-win-x64-6.0.0-pre.2**
     - Распакуйте содержимое архива в папку с игрой
-  - [MelonLoader](https://github.com/LavaGang/MelonLoader/releases)
-    - Просто используйте **установщик** последней версии
+  - [MelonLoader](https://github.com/LavaGang/MelonLoader/releases/tag/v0.7.0)
+    - Версия установщика **v0.7.0**
 
 - Скачать [последнюю версию мода](https://github.com/MrSago/MiSide-KappiMod/releases/latest) **под нужный загрузчик:**
 
