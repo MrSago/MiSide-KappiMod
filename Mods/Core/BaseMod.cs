@@ -24,6 +24,20 @@ public abstract class BaseMod
 
     public virtual bool IsEnabled { get; protected set; } = false;
 
+    public void InitializeAttribute()
+    {
+        var type = GetType();
+        var modInfoAttribute =
+            type.GetCustomAttribute<ModInfoAttribute>()
+            ?? throw new InvalidOperationException($"{nameof(ModInfoAttribute)} is missing");
+
+        _id = type.DeclaringType?.Name ?? type.Name;
+        _name = modInfoAttribute.Name;
+        _description = modInfoAttribute.Description;
+        _version = modInfoAttribute.Version;
+        _author = modInfoAttribute.Author;
+    }
+
     public void Initialize()
     {
         if (IsInitialized)
@@ -34,7 +48,6 @@ public abstract class BaseMod
 
         try
         {
-            InitializeAttribute();
             OnInitialize();
             IsInitialized = true;
             KappiLogger.Log("Mod initialized successfully", Id);
@@ -102,21 +115,4 @@ public abstract class BaseMod
     protected virtual void OnEnable() { }
 
     protected virtual void OnDisable() { }
-
-    private void InitializeAttribute()
-    {
-        var type = GetType();
-        var modInfoAttribute = type.GetCustomAttribute<ModInfoAttribute>();
-        if (modInfoAttribute is null)
-        {
-            KappiLogger.LogError($"{nameof(ModInfoAttribute)} is missing", Id);
-            throw new InvalidOperationException($"{nameof(ModInfoAttribute)} is missing");
-        }
-
-        _id = type.DeclaringType?.Name ?? type.Name;
-        _name = modInfoAttribute.Name;
-        _description = modInfoAttribute.Description;
-        _version = modInfoAttribute.Version;
-        _author = modInfoAttribute.Author;
-    }
 }
