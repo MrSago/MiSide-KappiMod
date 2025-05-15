@@ -16,6 +16,9 @@ public static class DialoguePatcher
     private static bool _isInitialized = false;
     public static bool IsInitialized => _isInitialized;
 
+    private static readonly DialogueEventSystem _dialogueEventSystem = new();
+    public static DialogueEventSystem EventSystem => _dialogueEventSystem;
+
     private static HarmonyLib.Harmony _harmony = null!;
 
     public static void Init()
@@ -47,8 +50,8 @@ public static class DialoguePatcher
 
             try
             {
-                DialogueEventArgs args = CreateDialogueEventArgs(__instance);
-                DialogueEventSystem.InvokePrefixDialogueStart(args);
+                var args = DialogueEventArgs.Create(__instance);
+                _dialogueEventSystem.InvokePrefixDialogueStart(args);
             }
             catch (Exception ex)
             {
@@ -66,23 +69,13 @@ public static class DialoguePatcher
 
             try
             {
-                DialogueEventArgs args = CreateDialogueEventArgs(__instance);
-                DialogueEventSystem.InvokePostfixDialogueStart(args);
+                var args = DialogueEventArgs.Create(__instance);
+                _dialogueEventSystem.InvokePostfixDialogueStart(args);
             }
             catch (Exception ex)
             {
                 KappiLogger.LogException("Failed to process postfix dialogue start", exception: ex);
             }
         }
-
-        private static DialogueEventArgs CreateDialogueEventArgs(Dialogue_3DText instance) =>
-            new(
-                instance,
-                instance.name,
-                SceneManager.GetActiveScene().name,
-                instance.indexString,
-                instance.textPrint,
-                instance.speaker
-            );
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -32,20 +33,30 @@ public class DialogueEventArgs : EventArgs
         Text = text;
         Speaker = speaker;
     }
+
+    public static DialogueEventArgs Create(Dialogue_3DText instance) =>
+        new(
+            instance,
+            instance.name,
+            SceneManager.GetActiveScene().name,
+            instance.indexString,
+            instance.textPrint,
+            instance.speaker
+        );
 }
 
-public static class DialogueEventSystem
+public class DialogueEventSystem
 {
-    public static event EventHandler<DialogueEventArgs>? OnPrefixDialogueStart;
-    public static event EventHandler<DialogueEventArgs>? OnPostfixDialogueStart;
+    public event EventHandler<DialogueEventArgs>? OnPrefixDialogueStart;
+    public event EventHandler<DialogueEventArgs>? OnPostfixDialogueStart;
 
-    public static void InvokePrefixDialogueStart(DialogueEventArgs args)
+    public void InvokePrefixDialogueStart(DialogueEventArgs args)
     {
-        OnPrefixDialogueStart?.Invoke(null, args);
+        OnPrefixDialogueStart?.Invoke(this, args);
     }
 
-    public static void InvokePostfixDialogueStart(DialogueEventArgs args)
+    public void InvokePostfixDialogueStart(DialogueEventArgs args)
     {
-        OnPostfixDialogueStart?.Invoke(null, args);
+        OnPostfixDialogueStart?.Invoke(this, args);
     }
 }

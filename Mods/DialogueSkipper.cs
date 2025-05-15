@@ -83,14 +83,14 @@ public sealed class DialogueSkipper : BaseMod
 
     private void SubscribeEvents()
     {
-        DialogueEventSystem.OnPrefixDialogueStart += HandleDialogueSkip;
-        DialogueEventSystem.OnPostfixDialogueStart += HandleDialogueSkip;
+        DialoguePatcher.EventSystem.OnPrefixDialogueStart += HandleDialogueSkip;
+        DialoguePatcher.EventSystem.OnPostfixDialogueStart += HandleDialogueSkip;
     }
 
     private void UnsubscribeEvents()
     {
-        DialogueEventSystem.OnPrefixDialogueStart -= HandleDialogueSkip;
-        DialogueEventSystem.OnPostfixDialogueStart -= HandleDialogueSkip;
+        DialoguePatcher.EventSystem.OnPrefixDialogueStart -= HandleDialogueSkip;
+        DialoguePatcher.EventSystem.OnPostfixDialogueStart -= HandleDialogueSkip;
     }
 
     private void HandleDialogueSkip(object? sender, DialogueEventArgs args)

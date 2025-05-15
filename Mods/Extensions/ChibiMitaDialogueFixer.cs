@@ -1,6 +1,7 @@
 using Il2CppInterop.Runtime;
 using KappiMod.Events;
 using KappiMod.Logging;
+using KappiMod.Patches;
 using KappiMod.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,7 +36,7 @@ internal class ChibiMitaDialogueFixer
         }
 
         KappiCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
-        DialogueEventSystem.OnPostfixDialogueStart += HandleDialogue;
+        DialoguePatcher.EventSystem.OnPostfixDialogueStart += HandleDialogue;
 
         _isInitialized = true;
         KappiLogger.Log("Initialized");
@@ -52,7 +53,7 @@ internal class ChibiMitaDialogueFixer
         _cachedChibiMita = null;
 
         KappiCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
-        DialogueEventSystem.OnPostfixDialogueStart -= HandleDialogue;
+        DialoguePatcher.EventSystem.OnPostfixDialogueStart -= HandleDialogue;
 
         _isInitialized = false;
         KappiLogger.Log("Cleaned up");
