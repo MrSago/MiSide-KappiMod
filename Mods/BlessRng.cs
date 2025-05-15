@@ -53,5 +53,7 @@ public sealed class BlessRng : BaseMod
         _patchManager?.RegisterPatch<ChipMiniGamePatch>();
         _patchManager?.RegisterPatch<FixedItemSpawnPatch>();
         _patchManager?.RegisterPatch<NoChibiDoorUnlockerPatch>();
+        _patchManager?.RegisterPatch<RingInstantReadyPatch>();
+        _patchManager?.RegisterPatch<GoodManekenPatch>();
     }
 }
