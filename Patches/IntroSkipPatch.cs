@@ -12,7 +12,7 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Patches;
 
-public static class IntroSkipper
+public static class IntroSkipPatch
 {
     private static bool _isInitialized = false;
     private static HarmonyLib.Harmony _harmony = null!;
@@ -45,7 +45,7 @@ public static class IntroSkipper
     {
         if (_isInitialized)
         {
-            KappiLogger.LogError($"{nameof(IntroSkipper)} is already initialized");
+            KappiLogger.LogError($"{nameof(IntroSkipPatch)} is already initialized");
             return;
         }
 

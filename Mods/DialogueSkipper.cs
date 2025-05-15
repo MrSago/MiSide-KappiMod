@@ -54,11 +54,9 @@ public sealed class DialogueSkipper : BaseMod
 
     protected override void OnInitialize()
     {
-        if (!DialoguePatcher.IsInitialized)
+        if (!DialoguePatch.IsInitialized)
         {
-            KappiLogger.LogError(
-                $"{nameof(DialoguePatcher)} is not initialized. Mod can't be used."
-            );
+            KappiLogger.LogError($"{nameof(DialoguePatch)} is not initialized. Mod can't be used.");
             return;
         }
 
@@ -83,14 +81,14 @@ public sealed class DialogueSkipper : BaseMod
 
     private void SubscribeEvents()
     {
-        DialoguePatcher.EventSystem.OnPrefixDialogueStart += HandleDialogueSkip;
-        DialoguePatcher.EventSystem.OnPostfixDialogueStart += HandleDialogueSkip;
+        DialoguePatch.EventSystem.OnPrefixDialogueStart += HandleDialogueSkip;
+        DialoguePatch.EventSystem.OnPostfixDialogueStart += HandleDialogueSkip;
     }
 
     private void UnsubscribeEvents()
     {
-        DialoguePatcher.EventSystem.OnPrefixDialogueStart -= HandleDialogueSkip;
-        DialoguePatcher.EventSystem.OnPostfixDialogueStart -= HandleDialogueSkip;
+        DialoguePatch.EventSystem.OnPrefixDialogueStart -= HandleDialogueSkip;
+        DialoguePatch.EventSystem.OnPostfixDialogueStart -= HandleDialogueSkip;
     }
 
     private void HandleDialogueSkip(object? sender, DialogueEventArgs args)

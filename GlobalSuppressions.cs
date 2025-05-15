@@ -10,21 +10,21 @@ using System.Diagnostics.CodeAnalysis;
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.DialoguePatcher.Patch.Postfix(Il2Cpp.Dialogue_3DText)"
+    Target = "~M:KappiMod.Patches.DialoguePatch.Patch.Postfix(Il2Cpp.Dialogue_3DText)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.DialoguePatcher.Patch.Prefix(Il2Cpp.Dialogue_3DText)"
+    Target = "~M:KappiMod.Patches.DialoguePatch.Patch.Prefix(Il2Cpp.Dialogue_3DText)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.IntroSkipper.Patch.Postfix(Il2Cpp.Menu)"
+    Target = "~M:KappiMod.Patches.IntroSkipPatch.Patch.Postfix(Il2Cpp.Menu)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",

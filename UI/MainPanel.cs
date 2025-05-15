@@ -259,14 +259,14 @@ public class MainPanel : PanelBase
     {
         UIFactory.CreateToggle(parent, "IntroSkipperToggle", out Toggle toggle, out Text text);
         text.text = "Skip menu intro";
-        toggle.isOn = IntroSkipper.Enabled;
+        toggle.isOn = IntroSkipPatch.Enabled;
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                IntroSkipper.Enabled = value;
-                if (IntroSkipper.Enabled != value)
+                IntroSkipPatch.Enabled = value;
+                if (IntroSkipPatch.Enabled != value)
                 {
-                    toggle.isOn = IntroSkipper.Enabled;
+                    toggle.isOn = IntroSkipPatch.Enabled;
                 }
             }
         );

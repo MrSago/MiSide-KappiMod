@@ -63,8 +63,8 @@ public static class KappiCore
 
     private static void InitPatches()
     {
-        DialoguePatcher.Init();
-        IntroSkipper.Init();
+        DialoguePatch.Init();
+        IntroSkipPatch.Init();
         NativeResolutionOption.Init();
     }
 

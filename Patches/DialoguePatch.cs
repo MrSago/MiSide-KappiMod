@@ -2,7 +2,6 @@ using HarmonyLib;
 using KappiMod.Events;
 using KappiMod.Logging;
 using KappiMod.Utils;
-using UnityEngine.SceneManagement;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -11,7 +10,7 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Patches;
 
-public static class DialoguePatcher
+public static class DialoguePatch
 {
     private static bool _isInitialized = false;
     public static bool IsInitialized => _isInitialized;
@@ -25,7 +24,7 @@ public static class DialoguePatcher
     {
         if (_isInitialized)
         {
-            KappiLogger.LogError($"{nameof(DialoguePatcher)} is already initialized");
+            KappiLogger.LogError($"{nameof(DialoguePatch)} is already initialized");
             return;
         }
 
