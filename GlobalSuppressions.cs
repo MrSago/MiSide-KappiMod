@@ -33,3 +33,10 @@ using System.Diagnostics.CodeAnalysis;
     Scope = "member",
     Target = "~M:KappiMod.Patches.NativeResolutionOption.Patch.Postfix(Il2Cpp.ButtonMouseClick)"
 )]
+[assembly: SuppressMessage(
+    "CodeQuality",
+    "IDE0051:Remove unused private members",
+    Justification = "<Pending>",
+    Scope = "member",
+    Target = "~M:KappiMod.Patches.RngRemovals.NoChibiDoorUnlockerPatch.Postfix(Il2Cpp.ObjectInteractive)"
+)]

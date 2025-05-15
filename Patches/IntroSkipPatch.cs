@@ -19,7 +19,7 @@ public static class IntroSkipPatch
 
     public static bool Enabled
     {
-        get => _isInitialized && ConfigManager.IntroSkipper.Value;
+        get => _isInitialized && ConfigManager.IntroSkipPatch.Value;
         set
         {
             if (!_isInitialized || value == Enabled)
@@ -37,7 +37,7 @@ public static class IntroSkipPatch
             }
 
             KappiLogger.Log(value ? "Enabled" : "Disabled");
-            ConfigManager.IntroSkipper.Value = value;
+            ConfigManager.IntroSkipPatch.Value = value;
         }
     }
 

@@ -30,7 +30,7 @@ public class MainPanel : PanelBase
 
     public override string Name => $"{BuildInfo.NAME} v{BuildInfo.VERSION}";
     public override int MinWidth => 420;
-    public override int MinHeight => 400;
+    public override int MinHeight => 500;
     public override Vector2 DefaultAnchorMin => new(0.25f, 0.25f);
     public override Vector2 DefaultAnchorMax => new(0.25f, 0.25f);
     public override bool CanDragAndResize => true;
@@ -54,6 +54,7 @@ public class MainPanel : PanelBase
         CreateSitUnlockerToggle(_togglesLeftColumn);
         CreateSprintUnlockerToggle(_togglesLeftColumn);
         CreateTimeScaleScrollerToggle(_togglesLeftColumn);
+        CreateBlessRngModToggle(_togglesLeftColumn);
 
         CreateLabel(_togglesRightColumn, "TogglePatchesLabel", "Toggle Patches");
         CreateIntroSkipperToggle(_togglesRightColumn);
@@ -225,6 +226,38 @@ public class MainPanel : PanelBase
         if (mod is null)
         {
             KappiLogger.LogError($"{nameof(TimeScaleScroller)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
+        toggle.onValueChanged.AddListener(
+            (value) =>
+            {
+                if (value)
+                {
+                    mod.Enable();
+                }
+                else
+                {
+                    mod.Disable();
+                }
+
+                if (mod.IsEnabled != value)
+                {
+                    toggle.isOn = mod.IsEnabled;
+                }
+            }
+        );
+    }
+
+    private static void CreateBlessRngModToggle(GameObject parent)
+    {
+        var mod = ModManager.GetMod<BlessRng>();
+        if (mod is null)
+        {
+            KappiLogger.LogError($"{nameof(BlessRng)} mod not found!");
             return;
         }
 

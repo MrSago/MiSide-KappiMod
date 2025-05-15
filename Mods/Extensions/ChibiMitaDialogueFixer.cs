@@ -15,6 +15,8 @@ namespace KappiMod.Mods.Extensions;
 
 internal class ChibiMitaDialogueFixer
 {
+    private const string BROKEN_DIALOGUE = "3D TextFactory 5";
+
     private bool _isInitialized = false;
     private Mob_ChibiMita? _cachedChibiMita;
 
@@ -74,7 +76,7 @@ internal class ChibiMitaDialogueFixer
 
     private void HandleDialogue(object? sender, DialogueEventArgs args)
     {
-        if (args.ObjectName is not ObjectNames.CHIBIMITA_BROKEN_DIALOGUE)
+        if (args.ObjectName is not BROKEN_DIALOGUE)
         {
             return;
         }

@@ -18,9 +18,10 @@ public static class ConfigManager
     public static ConfigElement<bool> SitUnlocker { get; private set; } = null!;
     public static ConfigElement<bool> SprintUnlocker { get; private set; } = null!;
     public static ConfigElement<bool> TimeScaleScroller { get; private set; } = null!;
+    public static ConfigElement<bool> BlessRngMod { get; private set; } = null!;
 
     // Patch config elements
-    public static ConfigElement<bool> IntroSkipper { get; private set; } = null!;
+    public static ConfigElement<bool> IntroSkipPatch { get; private set; } = null!;
 
     // Mod settings elements
     public static ConfigElement<int> FpsLimit { get; private set; } = null!;
@@ -62,8 +63,9 @@ public static class ConfigManager
         SitUnlocker = new(nameof(SitUnlocker), "Sit unlocker", true);
         SprintUnlocker = new(nameof(SprintUnlocker), "Sprint unlocker", true);
         TimeScaleScroller = new(nameof(TimeScaleScroller), "Time scale scroller", true);
+        BlessRngMod = new(nameof(BlessRngMod), "BlessRng mod", false);
 
-        IntroSkipper = new(nameof(IntroSkipper), "Intro skipper", true);
+        IntroSkipPatch = new(nameof(IntroSkipPatch), "Intro skip patch", true);
 
         FpsLimit = new(nameof(FpsLimit), "Fps limit", -1);
     }
