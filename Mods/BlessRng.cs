@@ -24,7 +24,7 @@ public sealed class BlessRng : BaseMod
         }
     }
 
-    private PatchManager? _patchManager;
+    private readonly PatchManager _patchManager = new();
 
     protected override void OnInitialize()
     {
@@ -38,22 +38,20 @@ public sealed class BlessRng : BaseMod
     protected override void OnEnable()
     {
         OnDisable();
-        _patchManager = new PatchManager();
         RegisterPatches();
     }
 
     protected override void OnDisable()
     {
-        _patchManager?.Dispose();
-        _patchManager = null;
+        _patchManager.Dispose();
     }
 
     private void RegisterPatches()
     {
-        _patchManager?.RegisterPatch<ChipMiniGamePatch>();
-        _patchManager?.RegisterPatch<FixedItemSpawnPatch>();
-        _patchManager?.RegisterPatch<NoChibiDoorUnlockerPatch>();
-        _patchManager?.RegisterPatch<RingInstantReadyPatch>();
-        _patchManager?.RegisterPatch<GoodManekenPatch>();
+        _patchManager.RegisterPatch<ChipMiniGamePatch>();
+        _patchManager.RegisterPatch<FixedItemSpawnPatch>();
+        _patchManager.RegisterPatch<NoChibiDoorUnlockerPatch>();
+        _patchManager.RegisterPatch<RingInstantReadyPatch>();
+        _patchManager.RegisterPatch<GoodManekenPatch>();
     }
 }
