@@ -103,8 +103,8 @@ public static class ModManager
                     continue;
                 }
 
-                _registeredMods[modType.Name] = mod;
                 mod.InitializeAttribute();
+                _registeredMods[mod.Name] = mod;
                 KappiLogger.Log($"Registered mod: {mod.Name} v{mod.Version} by {mod.Author}");
             }
             catch (Exception ex)
