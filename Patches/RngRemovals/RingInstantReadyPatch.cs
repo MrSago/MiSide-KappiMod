@@ -20,7 +20,7 @@ internal sealed class RingInstantReadyPatch : IPatch
 
     public RingInstantReadyPatch()
     {
-        _harmony = new HarmonyLib.Harmony(Id);
+        _harmony = new(Id);
         _harmony.PatchAll(typeof(RingInstantReadyPatch));
     }
 

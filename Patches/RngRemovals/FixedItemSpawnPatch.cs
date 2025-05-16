@@ -28,26 +28,22 @@ internal sealed class FixedItemSpawnPatch : IPatch
 
     private static readonly TransformPositions _pencilTransform = new()
     {
-        position = new Il2CppStructArray<Vector3>(new Vector3[1] { new(-7.448f, 0.8886f, 1.95f) }),
-        rotation = new Il2CppStructArray<Vector3>(new Vector3[1] { new(90.0f, 0.0f, -351.993f) }),
+        position = new(new Vector3[1] { new(-7.448f, 0.8886f, 1.95f) }),
+        rotation = new(new Vector3[1] { new(90.0f, 0.0f, -351.993f) }),
         target = null,
     };
 
     private static readonly TransformPositions _bowTransform = new()
     {
-        position = new Il2CppStructArray<Vector3>(
-            new Vector3[1] { new(-11.812f, 1.1907f, 2.106f) }
-        ),
-        rotation = new Il2CppStructArray<Vector3>(
-            new Vector3[1] { new(-80.229f, -204.517f, 86.24f) }
-        ),
+        position = new(new Vector3[1] { new(-11.812f, 1.1907f, 2.106f) }),
+        rotation = new(new Vector3[1] { new(-80.229f, -204.517f, 86.24f) }),
         target = null,
     };
 
     private static readonly TransformPositions _spoonTransform = new()
     {
-        position = new Il2CppStructArray<Vector3>(new Vector3[1] { new(7.279f, 0.8284f, 2.377f) }),
-        rotation = new Il2CppStructArray<Vector3>(new Vector3[1] { new(-90.0f, 0.0f, -102.211f) }),
+        position = new(new Vector3[1] { new(7.279f, 0.8284f, 2.377f) }),
+        rotation = new(new Vector3[1] { new(-90.0f, 0.0f, -102.211f) }),
         target = null,
     };
 
@@ -55,7 +51,7 @@ internal sealed class FixedItemSpawnPatch : IPatch
 
     public FixedItemSpawnPatch()
     {
-        _harmony = new HarmonyLib.Harmony(Id);
+        _harmony = new(Id);
         _harmony.PatchAll(typeof(FixedItemSpawnPatch));
     }
 
@@ -69,7 +65,7 @@ internal sealed class FixedItemSpawnPatch : IPatch
     {
         try
         {
-            Il2CppReferenceArray<TransformPositions> newTransforms = new(3);
+            var newTransforms = new Il2CppReferenceArray<TransformPositions>(3);
 
             newTransforms[0] = _pencilTransform;
             newTransforms[0].target = __instance.items[0].target;

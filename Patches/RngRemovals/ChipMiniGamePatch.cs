@@ -25,7 +25,7 @@ internal sealed class ChipMiniGamePatch : IPatch
 
     public ChipMiniGamePatch()
     {
-        _harmony = new HarmonyLib.Harmony(Id);
+        _harmony = new(Id);
         _harmony.PatchAll(typeof(ChipMiniGamePatch));
     }
 

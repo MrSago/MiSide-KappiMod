@@ -20,7 +20,7 @@ internal sealed class GoodManekenPatch : IPatch
 
     public GoodManekenPatch()
     {
-        _harmony = new HarmonyLib.Harmony(Id);
+        _harmony = new(Id);
         _harmony.PatchAll(typeof(GoodManekenPatch));
     }
 

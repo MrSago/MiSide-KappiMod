@@ -26,7 +26,7 @@ internal sealed class NoChibiDoorUnlockerPatch : IPatch
 
     public NoChibiDoorUnlockerPatch()
     {
-        _harmony = new HarmonyLib.Harmony(Id);
+        _harmony = new(Id);
         _harmony.PatchAll(typeof(NoChibiDoorUnlockerPatch));
 
         KappiCore.Loader.SceneWasLoaded += OnSceneWasLoaded;
