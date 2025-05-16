@@ -38,7 +38,7 @@ internal sealed class RingInstantReadyPatch : IPatch
         }
         catch (Exception ex)
         {
-            KappiLogger.LogException("Failed to set ring wait event", exception: ex);
+            KappiLogger.LogException("Failed to skip ring wait event", exception: ex);
             return;
         }
 
