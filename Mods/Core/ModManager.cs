@@ -103,7 +103,6 @@ public static class ModManager
                     continue;
                 }
 
-                mod.InitializeAttribute();
                 _registeredMods[mod.Id] = mod;
                 KappiLogger.Log($"Registered mod: {mod.Name} v{mod.Version} by {mod.Author}");
             }

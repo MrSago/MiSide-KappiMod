@@ -24,18 +24,9 @@ public abstract class BaseMod
 
     public virtual bool IsEnabled { get; protected set; } = false;
 
-    public void InitializeAttribute()
+    public BaseMod()
     {
-        var type = GetType();
-        var modInfoAttribute =
-            type.GetCustomAttribute<ModInfoAttribute>()
-            ?? throw new InvalidOperationException($"{nameof(ModInfoAttribute)} is missing");
-
-        _id = type.DeclaringType?.Name ?? type.Name;
-        _name = modInfoAttribute.Name;
-        _description = modInfoAttribute.Description;
-        _version = modInfoAttribute.Version;
-        _author = modInfoAttribute.Author;
+        InitializeAttribute();
     }
 
     public void Initialize()
@@ -115,4 +106,18 @@ public abstract class BaseMod
     protected virtual void OnEnable() { }
 
     protected virtual void OnDisable() { }
+
+    private void InitializeAttribute()
+    {
+        var type = GetType();
+        var modInfoAttribute =
+            type.GetCustomAttribute<ModInfoAttribute>()
+            ?? throw new InvalidOperationException($"{nameof(ModInfoAttribute)} is missing");
+
+        _id = type.DeclaringType?.Name ?? type.Name;
+        _name = modInfoAttribute.Name;
+        _description = modInfoAttribute.Description;
+        _version = modInfoAttribute.Version;
+        _author = modInfoAttribute.Author;
+    }
 }
