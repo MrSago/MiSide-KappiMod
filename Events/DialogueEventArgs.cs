@@ -44,19 +44,3 @@ public class DialogueEventArgs : EventArgs
             instance.speaker
         );
 }
-
-public class DialogueEventSystem
-{
-    public event EventHandler<DialogueEventArgs>? OnPrefixDialogueStart;
-    public event EventHandler<DialogueEventArgs>? OnPostfixDialogueStart;
-
-    public void InvokePrefixDialogueStart(DialogueEventArgs args)
-    {
-        OnPrefixDialogueStart?.Invoke(this, args);
-    }
-
-    public void InvokePostfixDialogueStart(DialogueEventArgs args)
-    {
-        OnPostfixDialogueStart?.Invoke(this, args);
-    }
-}

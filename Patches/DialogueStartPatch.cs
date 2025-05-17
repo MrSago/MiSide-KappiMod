@@ -1,6 +1,7 @@
 using HarmonyLib;
 using KappiMod.Events;
 using KappiMod.Logging;
+using KappiMod.Patches.Core;
 using KappiMod.Utils;
 #if ML
 using Il2Cpp;
@@ -10,36 +11,37 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Patches;
 
-public static class DialoguePatch
+[HarmonyPatch]
+public sealed class DialogueStartPatch : IPatch
 {
-    private static bool _isInitialized = false;
-    public static bool IsInitialized => _isInitialized;
+    public string Id => "com.kappimod.dialoguestartpatch";
+    public string Name => "Dialogue Start Patch";
+    public string Description => "Patches dialogue events to allow for custom handling";
 
-    private static readonly DialogueEventSystem _dialogueEventSystem = new();
-    public static DialogueEventSystem EventSystem => _dialogueEventSystem;
+    public event EventHandler<DialogueEventArgs>? OnPrefixDialogueStart;
+    public event EventHandler<DialogueEventArgs>? OnPostfixDialogueStart;
 
-    private static HarmonyLib.Harmony _harmony = null!;
+    private readonly HarmonyLib.Harmony _harmony;
 
-    public static void Init()
+    private static DialogueStartPatch? _instance;
+
+    public DialogueStartPatch()
     {
-        if (_isInitialized)
-        {
-            KappiLogger.LogError($"{nameof(DialoguePatch)} is already initialized");
-            return;
-        }
-
-        _isInitialized = true;
-
-        _harmony = new("com.kappimod.dialoguepatcher");
+        _instance = this;
+        _harmony = new(Id);
         _harmony.PatchAll(typeof(Patch));
+    }
 
-        KappiLogger.Log("Initialized");
+    public void Dispose()
+    {
+        _harmony.UnpatchSelf();
+        _instance = null;
     }
 
     [HarmonyPatch]
     private static class Patch
     {
-        [HarmonyPatch(typeof(Dialogue_3DText), "Start")]
+        [HarmonyPatch(typeof(Dialogue_3DText), nameof(Dialogue_3DText.Start))]
         private static void Prefix(Dialogue_3DText __instance)
         {
             if (!UnityHelpers.IsValid(__instance))
@@ -50,7 +52,7 @@ public static class DialoguePatch
             try
             {
                 var args = DialogueEventArgs.Create(__instance);
-                _dialogueEventSystem.InvokePrefixDialogueStart(args);
+                _instance?.OnPrefixDialogueStart?.Invoke(_instance, args);
             }
             catch (Exception ex)
             {
@@ -58,7 +60,7 @@ public static class DialoguePatch
             }
         }
 
-        [HarmonyPatch(typeof(Dialogue_3DText), "Start")]
+        [HarmonyPatch(typeof(Dialogue_3DText), nameof(Dialogue_3DText.Start))]
         private static void Postfix(Dialogue_3DText __instance)
         {
             if (!UnityHelpers.IsValid(__instance))
@@ -69,7 +71,7 @@ public static class DialoguePatch
             try
             {
                 var args = DialogueEventArgs.Create(__instance);
-                _dialogueEventSystem.InvokePostfixDialogueStart(args);
+                _instance?.OnPostfixDialogueStart?.Invoke(_instance, args);
             }
             catch (Exception ex)
             {

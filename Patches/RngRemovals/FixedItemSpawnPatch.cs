@@ -60,7 +60,7 @@ internal sealed class FixedItemSpawnPatch : IPatch
         _harmony.UnpatchSelf();
     }
 
-    [HarmonyPatch(typeof(Location2Main), "Start")]
+    [HarmonyPatch(typeof(Location2Main), nameof(Location2Main.Start))]
     public static void Prefix(Location2Main __instance)
     {
         try

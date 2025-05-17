@@ -39,7 +39,7 @@ internal sealed class NoChibiDoorUnlockerPatch : IPatch
         KappiCore.Loader.SceneWasLoaded -= OnSceneWasLoaded;
     }
 
-    [HarmonyPatch(typeof(ObjectInteractive), "OnDisable")]
+    [HarmonyPatch(typeof(ObjectInteractive), nameof(ObjectInteractive.OnDisable))]
     private static void Postfix(ObjectInteractive __instance)
     {
         try

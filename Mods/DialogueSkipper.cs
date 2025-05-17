@@ -15,7 +15,7 @@ using DialogueSceneMappings = Dictionary<string, Dictionary<string, int>>;
 [ModInfo(
     name: "Dialogue Skipper",
     description: "Skip certain dialogue sections in the game",
-    version: "1.0.0",
+    version: "1.1.0",
     author: BuildInfo.COMPANY
 )]
 public sealed class DialogueSkipper : BaseMod
@@ -40,7 +40,14 @@ public sealed class DialogueSkipper : BaseMod
         },
     };
 
-    private readonly ChibiMitaDialogueFixer _chibiMitaDialogueFixer = new();
+    private readonly DialogueStartPatch _dialoguePatch;
+    private readonly ChibiMitaDialogueFixer _chibiMitaDialogueFixer;
+
+    public DialogueSkipper()
+    {
+        _dialoguePatch = new();
+        _chibiMitaDialogueFixer = new(_dialoguePatch);
+    }
 
     public override bool IsEnabled
     {
@@ -54,12 +61,6 @@ public sealed class DialogueSkipper : BaseMod
 
     protected override void OnInitialize()
     {
-        if (!DialoguePatch.IsInitialized)
-        {
-            KappiLogger.LogError($"{nameof(DialoguePatch)} is not initialized. Mod can't be used.");
-            return;
-        }
-
         if (ConfigManager.DialogueSkipper.Value)
         {
             OnEnable();
@@ -81,14 +82,14 @@ public sealed class DialogueSkipper : BaseMod
 
     private void SubscribeEvents()
     {
-        DialoguePatch.EventSystem.OnPrefixDialogueStart += HandleDialogueSkip;
-        DialoguePatch.EventSystem.OnPostfixDialogueStart += HandleDialogueSkip;
+        _dialoguePatch.OnPrefixDialogueStart += HandleDialogueSkip;
+        _dialoguePatch.OnPostfixDialogueStart += HandleDialogueSkip;
     }
 
     private void UnsubscribeEvents()
     {
-        DialoguePatch.EventSystem.OnPrefixDialogueStart -= HandleDialogueSkip;
-        DialoguePatch.EventSystem.OnPostfixDialogueStart -= HandleDialogueSkip;
+        _dialoguePatch.OnPrefixDialogueStart -= HandleDialogueSkip;
+        _dialoguePatch.OnPostfixDialogueStart -= HandleDialogueSkip;
     }
 
     private void HandleDialogueSkip(object? sender, DialogueEventArgs args)

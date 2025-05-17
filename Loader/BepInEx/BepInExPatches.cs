@@ -10,7 +10,7 @@ namespace KappiMod.Loader.BepInEx;
 [HarmonyPatch]
 public static class BepInExPatches
 {
-    [HarmonyPatch(typeof(SceneManager), "Internal_SceneLoaded")]
+    [HarmonyPatch(typeof(SceneManager), nameof(SceneManager.Internal_SceneLoaded))]
     [HarmonyPostfix]
     private static void SceneLoadedPostfix(Scene scene)
     {

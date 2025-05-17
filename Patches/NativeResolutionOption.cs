@@ -34,7 +34,7 @@ public static class NativeResolutionOption
     [HarmonyPatch]
     private static class Patch
     {
-        [HarmonyPatch(typeof(ButtonMouseClick), "OnPointerDown")]
+        [HarmonyPatch(typeof(ButtonMouseClick), nameof(ButtonMouseClick.OnPointerDown))]
         private static void Postfix(ButtonMouseClick __instance)
         {
             if (

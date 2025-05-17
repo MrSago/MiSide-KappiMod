@@ -34,7 +34,7 @@ internal sealed class ChipMiniGamePatch : IPatch
         _harmony.UnpatchSelf();
     }
 
-    [HarmonyPatch(typeof(TamagotchiGame_Chip), "Restart")]
+    [HarmonyPatch(typeof(TamagotchiGame_Chip), nameof(TamagotchiGame_Chip.Restart))]
     private static void Postfix(TamagotchiGame_Chip __instance)
     {
         try

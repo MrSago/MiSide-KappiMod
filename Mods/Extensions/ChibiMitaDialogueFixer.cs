@@ -17,10 +17,17 @@ internal class ChibiMitaDialogueFixer
 {
     private const string BROKEN_DIALOGUE = "3D TextFactory 5";
 
+    private readonly DialogueStartPatch _dialoguePatch;
+
     private bool _isInitialized = false;
     private Mob_ChibiMita? _cachedChibiMita;
 
-    internal void Init()
+    public ChibiMitaDialogueFixer(DialogueStartPatch dialoguePatch)
+    {
+        _dialoguePatch = dialoguePatch;
+    }
+
+    public void Init()
     {
         if (_isInitialized)
         {
@@ -38,13 +45,13 @@ internal class ChibiMitaDialogueFixer
         }
 
         KappiCore.Loader.SceneWasInitialized += OnSceneWasInitialized;
-        DialoguePatch.EventSystem.OnPostfixDialogueStart += HandleDialogue;
+        _dialoguePatch.OnPostfixDialogueStart += HandleDialogue;
 
         _isInitialized = true;
         KappiLogger.Log("Initialized");
     }
 
-    internal void CleanUp()
+    public void CleanUp()
     {
         if (!_isInitialized)
         {
@@ -55,7 +62,7 @@ internal class ChibiMitaDialogueFixer
         _cachedChibiMita = null;
 
         KappiCore.Loader.SceneWasInitialized -= OnSceneWasInitialized;
-        DialoguePatch.EventSystem.OnPostfixDialogueStart -= HandleDialogue;
+        _dialoguePatch.OnPostfixDialogueStart -= HandleDialogue;
 
         _isInitialized = false;
         KappiLogger.Log("Cleaned up");

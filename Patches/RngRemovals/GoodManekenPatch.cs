@@ -29,7 +29,7 @@ internal sealed class GoodManekenPatch : IPatch
         _harmony.UnpatchSelf();
     }
 
-    [HarmonyPatch(typeof(MakeManeken_Main), "SiwtchGet")]
+    [HarmonyPatch(typeof(MakeManeken_Main), nameof(MakeManeken_Main.SiwtchGet))]
     private static void Prefix(MakeManeken_Main __instance)
     {
         try

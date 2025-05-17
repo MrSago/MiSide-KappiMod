@@ -29,7 +29,7 @@ internal sealed class RingInstantReadyPatch : IPatch
         _harmony.UnpatchSelf();
     }
 
-    [HarmonyPatch(typeof(Location7_RingWork), "Start")]
+    [HarmonyPatch(typeof(Location7_RingWork), nameof(Location7_RingWork.Start))]
     private static void Postfix(Location7_RingWork __instance)
     {
         try
