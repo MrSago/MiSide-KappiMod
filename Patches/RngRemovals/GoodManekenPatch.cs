@@ -1,6 +1,8 @@
 using HarmonyLib;
 using KappiMod.Logging;
+using KappiMod.Mods;
 using KappiMod.Patches.Core;
+using KappiMod.UI.Internal.EventDisplay;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -43,6 +45,8 @@ internal sealed class GoodManekenPatch : IPatch
             return;
         }
 
-        KappiLogger.Log("Good maneken properties set");
+        const string message = "Good maneken properties set";
+        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+        KappiLogger.Log(message);
     }
 }

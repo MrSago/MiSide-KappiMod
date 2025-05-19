@@ -1,6 +1,8 @@
 using HarmonyLib;
 using KappiMod.Logging;
+using KappiMod.Mods;
 using KappiMod.Patches.Core;
+using KappiMod.UI.Internal.EventDisplay;
 using UnityEngine;
 #if ML
 using Il2Cpp;
@@ -48,6 +50,8 @@ internal sealed class ChipMiniGamePatch : IPatch
             return;
         }
 
-        KappiLogger.Log("Chip mini-game points set to fixed values");
+        const string message = "Chip mini-game points set to fixed values";
+        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+        KappiLogger.Log(message);
     }
 }

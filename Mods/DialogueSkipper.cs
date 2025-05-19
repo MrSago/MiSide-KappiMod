@@ -6,6 +6,7 @@ using KappiMod.Mods.Core;
 using KappiMod.Mods.Extensions;
 using KappiMod.Patches;
 using KappiMod.Properties;
+using KappiMod.UI.Internal.EventDisplay;
 
 namespace KappiMod.Mods;
 
@@ -59,25 +60,33 @@ public sealed class DialogueSkipper : BaseMod
         }
     }
 
-    protected override void OnInitialize()
-    {
-        if (ConfigManager.DialogueSkipper.Value)
-        {
-            OnEnable();
-            base.IsEnabled = true;
-        }
-    }
+    protected override void OnInitialize() { }
 
     protected override void OnEnable()
     {
+        KappiCore.Loader.SceneWasLoaded += OnSceneWasLoaded;
         SubscribeEvents();
         _chibiMitaDialogueFixer.Init();
     }
 
     protected override void OnDisable()
     {
+        KappiCore.Loader.SceneWasLoaded -= OnSceneWasLoaded;
         UnsubscribeEvents();
         _chibiMitaDialogueFixer.CleanUp();
+    }
+
+    private static void OnSceneWasLoaded(int buildIndex, string sceneName)
+    {
+        try
+        {
+            EventManager.ShowEvent(new($"{nameof(DialogueSkipper)} still enabled"));
+        }
+        catch (Exception ex)
+        {
+            KappiLogger.LogException("Failed to show event", exception: ex);
+            return;
+        }
     }
 
     private void SubscribeEvents()

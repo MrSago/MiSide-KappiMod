@@ -1,6 +1,8 @@
 using HarmonyLib;
 using KappiMod.Logging;
+using KappiMod.Mods;
 using KappiMod.Patches.Core;
+using KappiMod.UI.Internal.EventDisplay;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -42,6 +44,8 @@ internal sealed class RingInstantReadyPatch : IPatch
             return;
         }
 
-        KappiLogger.Log("Ring wait event skipped");
+        const string message = "Ring wait event skipped";
+        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+        KappiLogger.Log(message);
     }
 }

@@ -5,32 +5,39 @@ using KappiMod.Patches;
 using KappiMod.Properties;
 using KappiMod.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UniverseLib;
 using UniverseLib.UI;
 using UniverseLib.UI.Models;
 using UniverseLib.UI.Panels;
 
-namespace KappiMod.UI;
+namespace KappiMod.UI.IMGUI;
 
 public class MainPanel : PanelBase
 {
-    private GameObject? _updateButton;
+    private readonly List<Toggle> _modToggles = new();
+    private readonly List<Toggle> _speedrunModToggles = new();
 
     private GameObject? _togglesColumnsLayout;
     private GameObject? _togglesLeftColumn;
     private GameObject? _togglesRightColumn;
 
+    private GameObject? _speedrunModsColumnsLayout;
+    private GameObject? _speedrunModsLeftColumn;
+
     private GameObject? _modsSettingsColumnsLayout;
     private GameObject? _modsSettingsLeftColumn;
     private GameObject? _fpsLimitRow;
+
+    private GameObject? _updateButton;
 
     public MainPanel(UIBase owner)
         : base(owner) { }
 
     public override string Name => $"{BuildInfo.NAME} v{BuildInfo.VERSION}";
     public override int MinWidth => 420;
-    public override int MinHeight => 500;
+    public override int MinHeight => 550;
     public override Vector2 DefaultAnchorMin => new(0.25f, 0.25f);
     public override Vector2 DefaultAnchorMax => new(0.25f, 0.25f);
     public override bool CanDragAndResize => true;
@@ -49,15 +56,28 @@ public class MainPanel : PanelBase
         _togglesRightColumn = CreateVerticalGroup(_togglesColumnsLayout, "TogglesRightColumn");
 
         CreateLabel(_togglesLeftColumn, "ToggleModsLabel", "Toggle Mods");
-        CreateDialogueSkipperToggle(_togglesLeftColumn);
         CreateFlashlightIncreaserToggle(_togglesLeftColumn);
         CreateSitUnlockerToggle(_togglesLeftColumn);
         CreateSprintUnlockerToggle(_togglesLeftColumn);
         CreateTimeScaleScrollerToggle(_togglesLeftColumn);
-        CreateBlessRngModToggle(_togglesLeftColumn);
 
         CreateLabel(_togglesRightColumn, "TogglePatchesLabel", "Toggle Patches");
         CreateIntroSkipperToggle(_togglesRightColumn);
+
+        _speedrunModsColumnsLayout = CreateColumnsLayout(
+            ContentRoot,
+            "SpeedrunModsColumnsLayout",
+            minHeight: 150
+        );
+
+        _speedrunModsLeftColumn = CreateVerticalGroup(
+            _speedrunModsColumnsLayout,
+            "SpeedrunModsLeftColumn"
+        );
+
+        CreateLabel(_speedrunModsLeftColumn, "SpeedrunModsLabel", "Speedrun Mods");
+        CreateBlessRngModToggle(_speedrunModsLeftColumn);
+        CreateDialogueSkipperToggle(_speedrunModsLeftColumn);
 
         _modsSettingsColumnsLayout = CreateColumnsLayout(
             ContentRoot,
@@ -90,41 +110,9 @@ public class MainPanel : PanelBase
         StatusBar.text = text;
     }
 
-    #region TOGGLE_MODS
+    #region Toggle Mods
 
-    private static void CreateDialogueSkipperToggle(GameObject parent)
-    {
-        var mod = ModManager.GetMod<DialogueSkipper>();
-        if (mod is null)
-        {
-            KappiLogger.LogError($"{nameof(DialogueSkipper)} mod not found!");
-            return;
-        }
-
-        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
-        text.text = mod.Name;
-        toggle.isOn = mod.IsEnabled;
-        toggle.onValueChanged.AddListener(
-            (value) =>
-            {
-                if (value)
-                {
-                    mod.Enable();
-                }
-                else
-                {
-                    mod.Disable();
-                }
-
-                if (mod.IsEnabled != value)
-                {
-                    toggle.isOn = mod.IsEnabled;
-                }
-            }
-        );
-    }
-
-    private static void CreateFlashlightIncreaserToggle(GameObject parent)
+    private void CreateFlashlightIncreaserToggle(GameObject parent)
     {
         var mod = ModManager.GetMod<FlashlightIncreaser>();
         if (mod is null)
@@ -134,16 +122,24 @@ public class MainPanel : PanelBase
         }
 
         UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        _modToggles.Add(toggle);
+
         text.text = mod.Name;
         toggle.isOn = mod.IsEnabled;
+
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                if (value)
+                if (value == mod.IsEnabled)
+                {
+                    return;
+                }
+
+                if (value && !mod.IsEnabled)
                 {
                     mod.Enable();
                 }
-                else
+                else if (!value && mod.IsEnabled)
                 {
                     mod.Disable();
                 }
@@ -156,7 +152,7 @@ public class MainPanel : PanelBase
         );
     }
 
-    private static void CreateSitUnlockerToggle(GameObject parent)
+    private void CreateSitUnlockerToggle(GameObject parent)
     {
         var mod = ModManager.GetMod<SitUnlocker>();
         if (mod is null)
@@ -166,16 +162,24 @@ public class MainPanel : PanelBase
         }
 
         UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        _modToggles.Add(toggle);
+
         text.text = mod.Name;
         toggle.isOn = mod.IsEnabled;
+
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                if (value)
+                if (value == mod.IsEnabled)
+                {
+                    return;
+                }
+
+                if (value && !mod.IsEnabled)
                 {
                     mod.Enable();
                 }
-                else
+                else if (!value && mod.IsEnabled)
                 {
                     mod.Disable();
                 }
@@ -188,7 +192,7 @@ public class MainPanel : PanelBase
         );
     }
 
-    private static void CreateSprintUnlockerToggle(GameObject parent)
+    private void CreateSprintUnlockerToggle(GameObject parent)
     {
         var mod = ModManager.GetMod<SprintUnlocker>();
         if (mod is null)
@@ -198,16 +202,24 @@ public class MainPanel : PanelBase
         }
 
         UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        _modToggles.Add(toggle);
+
         text.text = mod.Name;
         toggle.isOn = mod.IsEnabled;
+
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                if (value)
+                if (value == mod.IsEnabled)
+                {
+                    return;
+                }
+
+                if (value && !mod.IsEnabled)
                 {
                     mod.Enable();
                 }
-                else
+                else if (!value && mod.IsEnabled)
                 {
                     mod.Disable();
                 }
@@ -220,7 +232,7 @@ public class MainPanel : PanelBase
         );
     }
 
-    private static void CreateTimeScaleScrollerToggle(GameObject parent)
+    private void CreateTimeScaleScrollerToggle(GameObject parent)
     {
         var mod = ModManager.GetMod<TimeScaleScroller>();
         if (mod is null)
@@ -230,16 +242,24 @@ public class MainPanel : PanelBase
         }
 
         UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        _modToggles.Add(toggle);
+
         text.text = mod.Name;
         toggle.isOn = mod.IsEnabled;
+
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                if (value)
+                if (value == mod.IsEnabled)
+                {
+                    return;
+                }
+
+                if (value && !mod.IsEnabled)
                 {
                     mod.Enable();
                 }
-                else
+                else if (!value && mod.IsEnabled)
                 {
                     mod.Disable();
                 }
@@ -252,47 +272,22 @@ public class MainPanel : PanelBase
         );
     }
 
-    private static void CreateBlessRngModToggle(GameObject parent)
-    {
-        var mod = ModManager.GetMod<BlessRng>();
-        if (mod is null)
-        {
-            KappiLogger.LogError($"{nameof(BlessRng)} mod not found!");
-            return;
-        }
+    #endregion Toggle Mods
 
-        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
-        text.text = mod.Name;
-        toggle.isOn = mod.IsEnabled;
-        toggle.onValueChanged.AddListener(
-            (value) =>
-            {
-                if (value)
-                {
-                    mod.Enable();
-                }
-                else
-                {
-                    mod.Disable();
-                }
-
-                if (mod.IsEnabled != value)
-                {
-                    toggle.isOn = mod.IsEnabled;
-                }
-            }
-        );
-    }
-
-    #endregion TOGGLE_MODS
-
-    #region TOGGLE_PATCHES
+    #region Toggle Patches
 
     private static void CreateIntroSkipperToggle(GameObject parent)
     {
-        UIFactory.CreateToggle(parent, "IntroSkipperToggle", out Toggle toggle, out Text text);
+        UIFactory.CreateToggle(
+            parent,
+            $"{nameof(IntroSkipPatch)}Toggle",
+            out Toggle toggle,
+            out Text text
+        );
+
         text.text = "Skip menu intro";
         toggle.isOn = IntroSkipPatch.Enabled;
+
         toggle.onValueChanged.AddListener(
             (value) =>
             {
@@ -305,9 +300,154 @@ public class MainPanel : PanelBase
         );
     }
 
-    #endregion TOGGLE_PATCHES
+    #endregion Toggle Patches
 
-    #region MODS_SETTINGS
+    #region Speedrun Mods
+
+    private void CreateBlessRngModToggle(GameObject parent)
+    {
+        var mod = ModManager.GetMod<BlessRng>();
+        if (mod is null)
+        {
+            KappiLogger.LogError($"{nameof(BlessRng)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        _speedrunModToggles.Add(toggle);
+
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
+
+        toggle.onValueChanged.AddListener(
+            (value) =>
+            {
+                if (value == mod.IsEnabled)
+                {
+                    return;
+                }
+
+                if (SceneManager.GetActiveScene().name is not ObjectNames.MAIN_MENU_SCENE)
+                {
+                    MessageBox.Show("This mod toggled only in the main menu");
+                    toggle.isOn = !value;
+                    return;
+                }
+
+                if (value && !mod.IsEnabled)
+                {
+                    toggle.isOn = false;
+                    toggle.interactable = false;
+
+                    MessageBox.ShowYesNo(
+                        "BlessRng mod is designed primarily for speedrunners, "
+                            + "so you will sometimes see pop-up messages during the game. "
+                            + "This is done to prevent cheating in clean runs. Do you want to enable it?",
+                        () =>
+                        {
+                            mod.Enable();
+                            DisableAllModToggles();
+                            toggle.interactable = true;
+                            toggle.isOn = true;
+                        },
+                        () =>
+                        {
+                            toggle.interactable = true;
+                        }
+                    );
+                }
+                else if (!value && mod.IsEnabled)
+                {
+                    mod.Disable();
+                    EnableAllModToggles();
+                }
+
+                if (mod.IsEnabled != value)
+                {
+                    toggle.isOn = mod.IsEnabled;
+                }
+            }
+        );
+    }
+
+    private void CreateDialogueSkipperToggle(GameObject parent)
+    {
+        var mod = ModManager.GetMod<DialogueSkipper>();
+        if (mod is null)
+        {
+            KappiLogger.LogError($"{nameof(DialogueSkipper)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        _speedrunModToggles.Add(toggle);
+
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
+
+        toggle.onValueChanged.AddListener(
+            (value) =>
+            {
+                if (value == mod.IsEnabled)
+                {
+                    return;
+                }
+
+                if (SceneManager.GetActiveScene().name is not ObjectNames.MAIN_MENU_SCENE)
+                {
+                    MessageBox.Show("This mod toggled only in the main menu");
+                    toggle.isOn = !value;
+                    return;
+                }
+
+                if (value && !mod.IsEnabled)
+                {
+                    mod.Enable();
+                    DisableAllModToggles();
+                }
+                else if (!value && mod.IsEnabled)
+                {
+                    mod.Disable();
+                    EnableAllModToggles();
+                }
+
+                if (mod.IsEnabled != value)
+                {
+                    toggle.isOn = mod.IsEnabled;
+                }
+            }
+        );
+    }
+
+    private void EnableAllModToggles()
+    {
+        if (_speedrunModToggles.Any(toggle => toggle.isOn))
+        {
+            return;
+        }
+
+        _modToggles.ForEach(
+            (toggle) =>
+            {
+                toggle.interactable = true;
+            }
+        );
+    }
+
+    private void DisableAllModToggles()
+    {
+        _modToggles.ForEach(
+            (toggle) =>
+            {
+                toggle.isOn = false;
+                toggle.interactable = false;
+            }
+        );
+    }
+
+    #endregion Speedrun Mods
+
+    #region Mods Settings
 
     private void CreateFpsLimitField(GameObject parent)
     {
@@ -374,9 +514,9 @@ public class MainPanel : PanelBase
         };
     }
 
-    #endregion MODS_SETTINGS
+    #endregion Mods Settings
 
-    #region CHECK_FOR_UPDATES
+    #region Checking for updates
 
     private void CheckForUpdates()
     {
@@ -411,7 +551,9 @@ public class MainPanel : PanelBase
     private void CreateUpdateButton()
     {
         if (_updateButton != null)
+        {
             return;
+        }
 
         GameObject buttonContainer = UIFactory.CreateHorizontalGroup(
             UIRoot,
@@ -455,9 +597,9 @@ public class MainPanel : PanelBase
         Application.OpenURL(VersionChecker.DownloadUrl);
     }
 
-    #endregion CHECK_FOR_UPDATES
+    #endregion Checking for updates
 
-    #region CREATING_UI_HELPERS
+    #region UI Factory
 
     private static GameObject CreateColumnsLayout(
         GameObject parent,
@@ -540,5 +682,5 @@ public class MainPanel : PanelBase
         );
     }
 
-    #endregion CREATING_UI_HELPERS
+    #endregion UI Factory
 }

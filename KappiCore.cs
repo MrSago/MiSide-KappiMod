@@ -4,7 +4,8 @@ using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Patches;
 using KappiMod.Properties;
-using KappiMod.UI;
+using KappiMod.UI.IMGUI;
+using KappiMod.UI.Internal.EventDisplay;
 using KappiMod.Utils;
 using UniverseLib;
 
@@ -59,6 +60,7 @@ public static class KappiCore
     {
         VersionChecker.CheckForUpdatesAsync();
         PreviousSceneTracker.Init();
+        EventManager.Init();
     }
 
     private static void InitPatches()

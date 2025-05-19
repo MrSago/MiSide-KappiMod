@@ -1,6 +1,8 @@
 using HarmonyLib;
 using KappiMod.Logging;
+using KappiMod.Mods;
 using KappiMod.Patches.Core;
+using KappiMod.UI.Internal.EventDisplay;
 using KappiMod.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -66,7 +68,10 @@ internal sealed class NoChibiDoorUnlockerPatch : IPatch
         }
 
         bool found = TryFindDoor();
-        KappiLogger.Log("Door " + (found ? "found" : "not found"));
+
+        string message = "Chibi door " + (found ? "found" : "not found");
+        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+        KappiLogger.Log(message);
     }
 
     private static void UnlockDoor()
@@ -78,7 +83,10 @@ internal sealed class NoChibiDoorUnlockerPatch : IPatch
         }
 
         _cachedDoor.lockDoor = false;
-        KappiLogger.Log("Door unlocked");
+
+        const string message = "Chibi door unlocked";
+        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+        KappiLogger.Log(message);
     }
 
     private static Transform? GetRootTransform()

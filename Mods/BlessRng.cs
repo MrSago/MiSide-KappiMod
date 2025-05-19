@@ -26,14 +26,7 @@ public sealed class BlessRng : BaseMod
 
     private readonly PatchManager _patchManager = new();
 
-    protected override void OnInitialize()
-    {
-        if (ConfigManager.BlessRngMod.Value)
-        {
-            OnEnable();
-            base.IsEnabled = true;
-        }
-    }
+    protected override void OnInitialize() { }
 
     protected override void OnEnable()
     {

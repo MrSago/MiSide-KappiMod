@@ -1,7 +1,9 @@
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using KappiMod.Logging;
+using KappiMod.Mods;
 using KappiMod.Patches.Core;
+using KappiMod.UI.Internal.EventDisplay;
 using UnityEngine;
 #if ML
 using Il2Cpp;
@@ -84,6 +86,8 @@ internal sealed class FixedItemSpawnPatch : IPatch
             return;
         }
 
-        KappiLogger.Log("Fixed item positions set successfully");
+        const string message = "Fixed items positions set";
+        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+        KappiLogger.Log(message);
     }
 }

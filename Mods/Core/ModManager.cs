@@ -5,10 +5,10 @@ namespace KappiMod.Mods.Core;
 
 public static class ModManager
 {
-    private static readonly List<Type> _modTypes = new();
-
     private static readonly Dictionary<string, BaseMod> _registeredMods = new();
     public static IReadOnlyDictionary<string, BaseMod> RegisteredMods => _registeredMods;
+
+    private static readonly List<Type> _modTypes = new();
 
     public static void Init()
     {
@@ -33,6 +33,11 @@ public static class ModManager
         where T : BaseMod
     {
         return _registeredMods.Values.OfType<T>().FirstOrDefault();
+    }
+
+    public static IEnumerable<BaseMod> GetAllMods()
+    {
+        return _registeredMods.Values;
     }
 
     public static void EnableAllMods()

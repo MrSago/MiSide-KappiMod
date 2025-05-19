@@ -13,11 +13,13 @@ public static class ConfigManager
     public static ConfigElement<bool> ForceUnlockMouse { get; private set; } = null!;
 
     // Mod config elements
-    public static ConfigElement<bool> DialogueSkipper { get; private set; } = null!;
     public static ConfigElement<bool> FlashlightIncreaser { get; private set; } = null!;
     public static ConfigElement<bool> SitUnlocker { get; private set; } = null!;
     public static ConfigElement<bool> SprintUnlocker { get; private set; } = null!;
     public static ConfigElement<bool> TimeScaleScroller { get; private set; } = null!;
+
+    // Speedrun config elements
+    public static ConfigElement<bool> DialogueSkipper { get; private set; } = null!;
     public static ConfigElement<bool> BlessRngMod { get; private set; } = null!;
 
     // Patch config elements
@@ -58,12 +60,13 @@ public static class ConfigManager
         );
         ForceUnlockMouse = new(nameof(ForceUnlockMouse), "Force unlock mouse", true);
 
-        DialogueSkipper = new(nameof(DialogueSkipper), "Dialogue skipper", false);
         FlashlightIncreaser = new(nameof(FlashlightIncreaser), "Flashlight increaser", true);
         SitUnlocker = new(nameof(SitUnlocker), "Sit unlocker", true);
         SprintUnlocker = new(nameof(SprintUnlocker), "Sprint unlocker", true);
         TimeScaleScroller = new(nameof(TimeScaleScroller), "Time scale scroller", true);
+
         BlessRngMod = new(nameof(BlessRngMod), "BlessRng mod", false);
+        DialogueSkipper = new(nameof(DialogueSkipper), "Dialogue skipper", false);
 
         IntroSkipPatch = new(nameof(IntroSkipPatch), "Intro skip patch", true);
 

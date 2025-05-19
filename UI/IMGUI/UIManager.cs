@@ -2,7 +2,7 @@ using KappiMod.Properties;
 using UnityEngine;
 using UniverseLib.UI;
 
-namespace KappiMod.UI;
+namespace KappiMod.UI.IMGUI;
 
 public static class UIManager
 {
@@ -28,6 +28,8 @@ public static class UIManager
         UiBase = UniversalUI.RegisterUI(BuildInfo.GUID, null);
 
         Panel = new(UiBase);
+
+        MessageBox.Init();
 
         KappiCore.Loader.Update += OnUpdate;
     }
