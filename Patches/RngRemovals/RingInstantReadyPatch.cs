@@ -16,7 +16,8 @@ internal sealed class RingInstantReadyPatch : IPatch
 {
     public string Id => "com.kappimod.ringinstantready";
     public string Name => "Ring Instant Ready Patch";
-    public string Description => "Skips the ring wait event and instantly makes the ring ready";
+    public string Description =>
+        "Skips the ring wait event and instantly makes the ring ready in Cappie chapter";
 
     private readonly HarmonyLib.Harmony _harmony;
 

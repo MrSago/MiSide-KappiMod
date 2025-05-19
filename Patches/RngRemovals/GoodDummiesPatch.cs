@@ -12,18 +12,18 @@ using BepInEx.IL2CPP;
 namespace KappiMod.Patches.RngRemovals;
 
 [HarmonyPatch]
-internal sealed class GoodManekenPatch : IPatch
+internal sealed class GoodDummiesPatch : IPatch
 {
     public string Id => "com.kappimod.goodmaneken";
     public string Name => "Good Maneken Patch";
-    public string Description => "Makes all manekens good by removing the RNG from mini-game";
+    public string Description => "Makes all dummies good, removing the RNG from mini-game.";
 
     private readonly HarmonyLib.Harmony _harmony;
 
-    public GoodManekenPatch()
+    public GoodDummiesPatch()
     {
         _harmony = new(Id);
-        _harmony.PatchAll(typeof(GoodManekenPatch));
+        _harmony.PatchAll(typeof(GoodDummiesPatch));
     }
 
     public void Dispose()
@@ -41,11 +41,11 @@ internal sealed class GoodManekenPatch : IPatch
         }
         catch (Exception ex)
         {
-            KappiLogger.LogException("Failed to set maneken properties", exception: ex);
+            KappiLogger.LogException("Failed to set dummies properties", exception: ex);
             return;
         }
 
-        const string message = "Good maneken properties set";
+        const string message = "Good dummies properties set";
         EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
         KappiLogger.Log(message);
     }

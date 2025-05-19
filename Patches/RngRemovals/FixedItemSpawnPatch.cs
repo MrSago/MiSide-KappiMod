@@ -18,7 +18,7 @@ internal sealed class FixedItemSpawnPatch : IPatch
 {
     public string Id => "com.kappimod.fixeditemspawn";
     public string Name => "Fixed Item Spawn Patch";
-    public string Description => "Set fixed item spawning positions in Chapter 2";
+    public string Description => "Set fixed item spawn positions in Chapter 2";
 
     // private const string PENCIL_OBJECT_NAME = "ItemPencil";
     // private const string BOW_OBJECT_NAME = "ItemBow";

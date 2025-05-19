@@ -52,7 +52,7 @@ using System.Diagnostics.CodeAnalysis;
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.RngRemovals.GoodManekenPatch.Prefix(Il2Cpp.MakeManeken_Main)"
+    Target = "~M:KappiMod.Patches.RngRemovals.GoodDummiesPatch.Prefix(Il2Cpp.MakeManeken_Main)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",

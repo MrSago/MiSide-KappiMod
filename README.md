@@ -75,7 +75,11 @@ Latest version of the mod pack is available [here](https://github.com/MrSago/MiS
 
    Hold Left Shift and scroll mouse wheel for changing time scale.
 
-8. Dialogue skipper
+8. BlessRng mod
+
+   More information [here](./Patches/RngRemovals/README.md).
+
+9. Dialogue skipper
 
    Skips dialogues. **⚠️ MAY CAUSE SOFTLOCK ⚠️**
 
@@ -192,7 +196,11 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
 
    Зажмите левый Shift и прокрутите колесико мыши чтобы изменить time scale.
 
-8. Пропуск диалогов
+8. BlessRng мод
+
+   Больше информации [здесь](./Patches/RngRemovals/README.md).
+
+9. Пропуск диалогов
 
    Пропускает диалоги. **⚠️ МОЖЕТ ВЫЗВАТЬ СОФТЛОК ⚠️**
 
