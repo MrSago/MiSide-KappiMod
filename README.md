@@ -32,11 +32,11 @@ Latest version of the mod pack is available [here](https://github.com/MrSago/MiS
 
 ### Mod list
 
-1. Mod GUI
+1. Mod menu
 
    Opens by F1 key.
 
-   > _Note: the installed settings in the GUI of the mod are saved!_
+   > _Note: the installed settings in the menu of the mod are saved!_
 
 2. Console unlocker
 
@@ -51,7 +51,7 @@ Latest version of the mod pack is available [here](https://github.com/MrSago/MiS
        <img src="./Content/img/flashlight_preview.gif" alt="gif preview">
    </details>
 
-4. Set FPS limit in GUI
+4. Set FPS limit in mod menu
 
    <details>
      <summary>FPS limit preview.</summary>
@@ -83,7 +83,7 @@ Latest version of the mod pack is available [here](https://github.com/MrSago/MiS
 
 1. Intro skipper
 
-   Automatically skips intro and cutscene when starting the game. Enabled in the GUI (F1 key).
+   Automatically skips intro and cutscene when starting the game. Enabled in the mod menu (F1 key).
 
 2. Native resolution option
 
@@ -117,7 +117,7 @@ Latest version of the mod pack is available [here](https://github.com/MrSago/MiS
 
 |            Key             |                 Action                  |
 | :------------------------: | :-------------------------------------: |
-|             F1             |              Open mod GUI               |
+|             F1             |              Open mod menu              |
 |        **~** (hold)        |          Open in game console           |
 |             F              | Increase flashlight distance and radius |
 |           LShift           |                 Sprint                  |
@@ -149,11 +149,11 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
 
 ### Список модификаций
 
-1. GUI мода
+1. Меню мода
 
    Открывается по клавише F1.
 
-   > _Установленные настройки в GUI мода сохраняются!_
+   > _Установленные настройки в меню мода сохраняются!_
 
 2. Разблокировка консоли
 
@@ -168,7 +168,7 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
        <img src="./Content/img/flashlight_preview.gif" alt="gif preview">
    </details>
 
-4. Установка FPS лимита в GUI
+4. Установка FPS лимита в мод меню
 
    <details>
      <summary>Превью настройки в меню мода</summary>
@@ -200,7 +200,7 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
 
 1. Пропуск интро
 
-   Автоматически пропускает интро и катсцену при старте игры Пропуск диалогов включается в GUI (клавиша F1).
+   Автоматически пропускает интро и катсцену при старте игры Пропуск диалогов включается в мод меню (клавиша F1).
 
 2. Нативное разрешение в настройках
 
@@ -234,7 +234,7 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
 
 |           Клавиша            |               Действие                |
 | :--------------------------: | :-----------------------------------: |
-|              F1              |           Открыть GUI мода            |
+|              F1              |           Открыть меню мода           |
 |     **~** (удерживание)      |     Открыть внутриигровую консоль     |
 |              F               | Увеличить дальность и радиус фонарика |
 |            LShift            |                  Бег                  |
