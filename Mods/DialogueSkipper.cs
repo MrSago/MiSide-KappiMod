@@ -37,7 +37,12 @@ public sealed class DialogueSkipper : BaseMod
         },
         {
             "Scene 15 - BasementAndDeath",
-            new DialogueMapping { { "Player 3", 70 } }
+            new DialogueMapping
+            {
+                { "Player 1", 68 },
+                { "Player 2", 69 },
+                { "Player 3", 70 },
+            }
         },
     };
 
