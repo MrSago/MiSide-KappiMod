@@ -77,7 +77,7 @@ Latest version of the mod pack is available [here](https://github.com/MrSago/MiS
 
 8. BlessRng mod
 
-   More information [here](./Patches/RngRemovals/README.md).
+   More information [here](./Patches/Rng/README.md).
 
 9. Dialogue skipper
 
@@ -198,7 +198,7 @@ But you can check this: <https://deepwiki.com/MrSago/MiSide-KappiMod>
 
 8. BlessRng мод
 
-   Больше информации [здесь](./Patches/RngRemovals/README.md).
+   Больше информации [здесь](./Patches/Rng/README.md).
 
 9. Пропуск диалогов
 
