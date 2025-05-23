@@ -61,7 +61,7 @@ public static class NativeResolutionOption
                 .FindObjectsOfTypeAll(Il2CppType.Of<MenuCaseOption>())
                 ?.FirstOrDefault(x => x.name == "Button Resolution")
                 ?.Cast<MenuCaseOption>();
-            if (!UnityHelpers.IsValid(menuCaseOption) || menuCaseOption == null)
+            if (!Helpers.IsValid(menuCaseOption) || menuCaseOption == null)
             {
                 KappiLogger.LogError("MenuCaseOption not found");
                 return;

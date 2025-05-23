@@ -38,26 +38,26 @@ using System.Diagnostics.CodeAnalysis;
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.RngRemovals.NoChibiDoorUnlockerPatch.Postfix(Il2Cpp.ObjectInteractive)"
+    Target = "~M:KappiMod.Patches.Rng.NoChibiDoorUnlockerPatch.Postfix(Il2Cpp.ObjectInteractive)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.RngRemovals.ChipMiniGamePatch.Postfix(Il2Cpp.TamagotchiGame_Chip)"
+    Target = "~M:KappiMod.Patches.Rng.ChipMiniGamePatch.Postfix(Il2Cpp.TamagotchiGame_Chip)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.RngRemovals.GoodDummiesPatch.Prefix(Il2Cpp.MakeManeken_Main)"
+    Target = "~M:KappiMod.Patches.Rng.GoodDummiesPatch.Prefix(Il2Cpp.MakeManeken_Main)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.RngRemovals.RingInstantReadyPatch.Postfix(Il2Cpp.Location7_RingWork)"
+    Target = "~M:KappiMod.Patches.Rng.RingInstantReadyPatch.Postfix(Il2Cpp.Location7_RingWork)"
 )]

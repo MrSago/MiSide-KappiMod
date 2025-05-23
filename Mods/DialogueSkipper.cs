@@ -10,7 +10,6 @@ using KappiMod.UI.Internal.EventDisplay;
 
 namespace KappiMod.Mods;
 
-using DialogueMapping = Dictionary<string, int>;
 using DialogueSceneMappings = Dictionary<string, Dictionary<string, int>>;
 
 [ModInfo(
@@ -25,19 +24,19 @@ public sealed class DialogueSkipper : BaseMod
     {
         {
             "Scene 7 - Backrooms",
-            new DialogueMapping { { "KindMita 1 [Продолжает]", 203 }, { "KindMita 2", 204 } }
+            new() { { "KindMita 1 [Продолжает]", 203 }, { "KindMita 2", 204 } }
         },
         {
             "Scene 17 - Dreamer",
-            new DialogueMapping { { "Mita 3", 74 }, { "Mita 4", 75 } }
+            new() { { "Mita 3", 74 }, { "Mita 4", 75 } }
         },
         {
             "Scene 14 - MobilePlayer",
-            new DialogueMapping { { "Mita 4", 118 } }
+            new() { { "Mita 4", 118 } }
         },
         {
             "Scene 15 - BasementAndDeath",
-            new DialogueMapping
+            new()
             {
                 { "Player 1", 68 },
                 { "Player 2", 69 },

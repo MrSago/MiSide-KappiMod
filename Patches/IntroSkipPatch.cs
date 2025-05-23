@@ -112,7 +112,7 @@ public static class IntroSkipPatch
                 return;
             }
 
-            if (PreviousSceneTracker.Name is ObjectNames.ENDING_GAME_SCENE)
+            if (SceneTracker.Name is ObjectNames.ENDING_GAME_SCENE)
             {
                 return;
             }

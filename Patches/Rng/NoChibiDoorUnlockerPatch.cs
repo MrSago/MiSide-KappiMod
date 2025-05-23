@@ -12,7 +12,7 @@ using Il2Cpp;
 using BepInEx.IL2CPP;
 #endif
 
-namespace KappiMod.Patches.RngRemovals;
+namespace KappiMod.Patches.Rng;
 
 [HarmonyPatch]
 internal sealed class NoChibiDoorUnlockerPatch : IPatch
@@ -104,12 +104,12 @@ internal sealed class NoChibiDoorUnlockerPatch : IPatch
 
     private static bool TryFindDoor()
     {
-        if (UnityHelpers.IsValid(_cachedDoor))
+        if (Helpers.IsValid(_cachedDoor))
         {
             return true;
         }
 
         _cachedDoor = GetRootTransform()?.Find(DOOR_PATH)?.gameObject?.GetComponent<ObjectDoor>();
-        return UnityHelpers.IsValid(_cachedDoor);
+        return Helpers.IsValid(_cachedDoor);
     }
 }

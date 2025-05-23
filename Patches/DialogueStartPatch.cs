@@ -44,7 +44,7 @@ public sealed class DialogueStartPatch : IPatch
         [HarmonyPatch(typeof(Dialogue_3DText), nameof(Dialogue_3DText.Start))]
         private static void Prefix(Dialogue_3DText __instance)
         {
-            if (!UnityHelpers.IsValid(__instance))
+            if (!Helpers.IsValid(__instance))
             {
                 return;
             }
@@ -63,7 +63,7 @@ public sealed class DialogueStartPatch : IPatch
         [HarmonyPatch(typeof(Dialogue_3DText), nameof(Dialogue_3DText.Start))]
         private static void Postfix(Dialogue_3DText __instance)
         {
-            if (!UnityHelpers.IsValid(__instance))
+            if (!Helpers.IsValid(__instance))
             {
                 return;
             }

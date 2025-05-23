@@ -9,13 +9,13 @@ using Il2Cpp;
 using BepInEx.IL2CPP;
 #endif
 
-namespace KappiMod.Patches.RngRemovals;
+namespace KappiMod.Patches.Rng;
 
 [HarmonyPatch]
 internal sealed class GoodDummiesPatch : IPatch
 {
-    public string Id => "com.kappimod.goodmaneken";
-    public string Name => "Good Maneken Patch";
+    public string Id => "com.kappimod.gooddummies";
+    public string Name => "Good Dummies Patch";
     public string Description => "Makes all dummies good, removing the RNG from mini-game.";
 
     private readonly HarmonyLib.Harmony _harmony;

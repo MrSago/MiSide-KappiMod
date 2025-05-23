@@ -11,7 +11,7 @@ using Il2Cpp;
 using BepInEx.IL2CPP;
 #endif
 
-namespace KappiMod.Patches.RngRemovals;
+namespace KappiMod.Patches.Rng;
 
 [HarmonyPatch]
 internal sealed class FixedItemSpawnPatch : IPatch

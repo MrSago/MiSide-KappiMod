@@ -59,7 +59,7 @@ public static class KappiCore
     private static void InitUtils()
     {
         VersionChecker.CheckForUpdatesAsync();
-        PreviousSceneTracker.Init();
+        SceneTracker.Init();
         EventManager.Init();
     }
 

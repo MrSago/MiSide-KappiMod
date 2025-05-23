@@ -99,7 +99,7 @@ internal class ChibiMitaDialogueFixer
 
     private bool TryFindChibiMita()
     {
-        if (UnityHelpers.IsValid(_cachedChibiMita))
+        if (Helpers.IsValid(_cachedChibiMita))
         {
             return true;
         }
@@ -109,7 +109,7 @@ internal class ChibiMitaDialogueFixer
             ?.FirstOrDefault(x => x.name == "ChibiMita")
             ?.Cast<Mob_ChibiMita>();
 
-        bool isFound = UnityHelpers.IsValid(_cachedChibiMita);
+        bool isFound = Helpers.IsValid(_cachedChibiMita);
         KappiLogger.Log($"ChibiMita {(isFound ? "found" : "not found")}");
         return isFound;
     }

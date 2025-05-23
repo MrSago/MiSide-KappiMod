@@ -49,7 +49,7 @@ public sealed class SprintUnlocker : BaseMod
     protected override void OnDisable()
     {
         KappiCore.Loader.Update -= OnUpdate;
-        if (UnityHelpers.IsValid(_cachedPlayerMove))
+        if (Helpers.IsValid(_cachedPlayerMove))
         {
             SetPlayerRunState(false);
             _cachedPlayerMove = null;
@@ -84,12 +84,12 @@ public sealed class SprintUnlocker : BaseMod
 
     private bool TryFindPlayerMove()
     {
-        if (UnityHelpers.IsValid(_cachedPlayerMove))
+        if (Helpers.IsValid(_cachedPlayerMove))
         {
             return true;
         }
 
         _cachedPlayerMove = GameObject.Find("Player")?.GetComponent<PlayerMove>();
-        return UnityHelpers.IsValid(_cachedPlayerMove);
+        return Helpers.IsValid(_cachedPlayerMove);
     }
 }

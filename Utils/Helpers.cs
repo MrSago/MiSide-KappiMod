@@ -1,7 +1,11 @@
+using UnityEngine;
+
 namespace KappiMod.Utils;
 
 public static class Helpers
 {
+    public static bool IsValid(MonoBehaviour? obj) => obj != null && obj.gameObject != null;
+
     public static string GenerateRandomString(int length = 8, int? seed = null)
     {
         if (length <= 0)
@@ -15,7 +19,7 @@ public static class Helpers
         }
 
         const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        var random = seed.HasValue ? new Random(seed.Value) : new Random();
+        var random = seed.HasValue ? new System.Random(seed.Value) : new System.Random();
         return new string(
             Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray()
         );

@@ -2,7 +2,7 @@ using KappiMod.Logging;
 
 namespace KappiMod.Utils;
 
-public static class PreviousSceneTracker
+public static class SceneTracker
 {
     private static bool _isInitialized = false;
     private static string _currentSceneName = string.Empty;
@@ -18,7 +18,7 @@ public static class PreviousSceneTracker
     {
         if (_isInitialized)
         {
-            KappiLogger.LogError($"{nameof(PreviousSceneTracker)} is already initialized");
+            KappiLogger.LogError($"{nameof(SceneTracker)} is already initialized");
             return;
         }
 

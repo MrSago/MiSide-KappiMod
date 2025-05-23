@@ -1,7 +1,7 @@
 using KappiMod.Config;
 using KappiMod.Mods.Core;
 using KappiMod.Patches.Core;
-using KappiMod.Patches.RngRemovals;
+using KappiMod.Patches.Rng;
 using KappiMod.Properties;
 
 namespace KappiMod.Mods;
