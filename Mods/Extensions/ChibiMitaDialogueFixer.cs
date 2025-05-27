@@ -22,12 +22,12 @@ internal class ChibiMitaDialogueFixer
     private bool _isInitialized = false;
     private Mob_ChibiMita? _cachedChibiMita;
 
-    public ChibiMitaDialogueFixer(DialogueStartPatch dialoguePatch)
+    internal ChibiMitaDialogueFixer(DialogueStartPatch dialoguePatch)
     {
         _dialoguePatch = dialoguePatch;
     }
 
-    public void Init()
+    internal void Init()
     {
         if (_isInitialized)
         {
@@ -51,7 +51,7 @@ internal class ChibiMitaDialogueFixer
         KappiLogger.Log("Initialized");
     }
 
-    public void CleanUp()
+    internal void CleanUp()
     {
         if (!_isInitialized)
         {

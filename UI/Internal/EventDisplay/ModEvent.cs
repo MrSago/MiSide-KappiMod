@@ -7,12 +7,12 @@ namespace KappiMod.UI.Internal.EventDisplay;
 /// </summary>
 internal class ModEvent
 {
-    public string EventString { get; }
+    internal string EventString { get; }
     internal GameObject? HintObject = null;
     internal float TimeUntilHide = 9f;
     internal float TimeUntilDestroy = 10f;
 
-    public ModEvent(string eventString)
+    internal ModEvent(string eventString)
     {
         EventString = eventString;
     }

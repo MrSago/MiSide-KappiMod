@@ -63,7 +63,7 @@ internal sealed class FixedItemSpawnPatch : IPatch
     }
 
     [HarmonyPatch(typeof(Location2Main), nameof(Location2Main.Start))]
-    public static void Prefix(Location2Main __instance)
+    private static void Prefix(Location2Main __instance)
     {
         try
         {

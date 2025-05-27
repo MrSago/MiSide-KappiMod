@@ -18,12 +18,12 @@ internal static class EventManager
     private static readonly List<ModEvent> EventObjects = new();
     private static readonly int Hide = Animator.StringToHash("Hide");
 
-    public static void Init()
+    internal static void Init()
     {
         KappiCore.Loader.Update += Update;
     }
 
-    public static void ShowEvent(ModEvent modEvent)
+    internal static void ShowEvent(ModEvent modEvent)
     {
         EnsureObjectsSelected();
         GameObject? hintScreenObject = UnityEngine.Object.Instantiate(
@@ -60,7 +60,7 @@ internal static class EventManager
         }
     }
 
-    internal static void Update()
+    private static void Update()
     {
         List<ModEvent> objectsToBeRemoved = new();
 
