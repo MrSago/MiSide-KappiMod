@@ -22,14 +22,14 @@ namespace KappiMod.Loader.MelonLoader;
 public class KappiMelonMod : MelonMod, IKappiModLoader
 {
     public string KappiModDirectoryDestination => MelonEnvironment.ModsDirectory;
-    public string UnhollowedModulesDirectory =>
+
+    public string UnhollowedModulesDirectory { get; } =
         Path.Combine(
-            Path.GetDirectoryName(KappiModDirectoryDestination) ?? "",
+            Path.GetDirectoryName(MelonEnvironment.ModsDirectory) ?? "",
             Path.Combine("MelonLoader", "Il2CppAssemblies")
         );
 
-    private MelonLoaderConfigHandler _configHandler = null!;
-    public ConfigHandler ConfigHandler => _configHandler;
+    public ConfigHandler ConfigHandler { get; private set; } = null!;
 
     public Action<object> OnLogMessage => MelonLogger.Msg;
     public Action<object> OnLogWarning => MelonLogger.Warning;
@@ -49,7 +49,7 @@ public class KappiMelonMod : MelonMod, IKappiModLoader
 
     public override void OnLateInitializeMelon()
     {
-        _configHandler = new();
+        ConfigHandler = new MelonLoaderConfigHandler();
         KappiCore.Init(this);
     }
 }

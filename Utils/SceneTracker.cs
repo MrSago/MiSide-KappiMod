@@ -8,11 +8,9 @@ public static class SceneTracker
     private static string _currentSceneName = string.Empty;
     private static int _currentSceneBuildIndex = -1;
 
-    private static string _previousSceneName = string.Empty;
-    public static string Name => _previousSceneName;
+    public static string Name { get; private set; } = string.Empty;
 
-    private static int _previousSceneBuildIndex = -1;
-    public static int BuildIndex => _previousSceneBuildIndex;
+    public static int BuildIndex { get; private set; } = -1;
 
     public static void Init()
     {
@@ -30,8 +28,8 @@ public static class SceneTracker
 
     private static void OnSceneWasLoaded(int buildIndex, string sceneName)
     {
-        _previousSceneName = _currentSceneName;
-        _previousSceneBuildIndex = _currentSceneBuildIndex;
+        Name = _currentSceneName;
+        BuildIndex = _currentSceneBuildIndex;
 
         _currentSceneName = sceneName;
         _currentSceneBuildIndex = buildIndex;
