@@ -16,6 +16,8 @@ public class KappiBepInExPlugin : BasePlugin, IKappiModLoader
 {
     public static KappiBepInExPlugin Instance = null!;
 
+    private static readonly Harmony _harmony = new(BuildInfo.GUID);
+
     public string KappiModDirectoryDestination { get; } =
         Path.Combine(Paths.PluginPath, KappiCore.MOD_DIRECTORY_NAME);
     public string UnhollowedModulesDirectory { get; } =
@@ -30,8 +32,6 @@ public class KappiBepInExPlugin : BasePlugin, IKappiModLoader
     public event Action? Update;
     public event Action<int, string>? SceneWasLoaded;
     public event Action<int, string>? SceneWasInitialized;
-
-    private static readonly Harmony _harmony = new(BuildInfo.GUID);
 
     public void OnUpdate() => Update?.Invoke();
 
