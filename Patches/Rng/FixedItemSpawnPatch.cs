@@ -67,7 +67,7 @@ internal sealed class FixedItemSpawnPatch : IPatch
     {
         try
         {
-            var newTransforms = new Il2CppReferenceArray<TransformPositions>(3);
+            Il2CppReferenceArray<TransformPositions> newTransforms = new(3);
 
             newTransforms[0] = _pencilTransform;
             newTransforms[0].target = __instance.items[0].target;

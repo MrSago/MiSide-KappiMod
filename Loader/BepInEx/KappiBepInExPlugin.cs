@@ -45,7 +45,7 @@ public class KappiBepInExPlugin : BasePlugin, IKappiModLoader
     public override void Load()
     {
         Instance = this;
-        _configHandler = new BepInExConfigHandler();
+        _configHandler = new();
         HarmonyInstance.PatchAll(typeof(BepInExPatches));
         IL2CPPChainloader.AddUnityComponent(typeof(KappiModBepInExEventProxy));
         KappiCore.Init(this);

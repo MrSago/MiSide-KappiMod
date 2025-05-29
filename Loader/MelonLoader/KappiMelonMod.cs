@@ -49,7 +49,7 @@ public class KappiMelonMod : MelonMod, IKappiModLoader
 
     public override void OnLateInitializeMelon()
     {
-        _configHandler = new MelonLoaderConfigHandler();
+        _configHandler = new();
         KappiCore.Init(this);
     }
 }

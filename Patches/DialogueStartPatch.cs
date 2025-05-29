@@ -51,7 +51,7 @@ public sealed class DialogueStartPatch : IPatch
 
             try
             {
-                var args = DialogueEventArgs.Create(__instance);
+                var args = DialogueEventArgs.Create(__instance, DialoguePatchType.Prefix);
                 _instance?.OnPrefixDialogueStart?.Invoke(_instance, args);
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ public sealed class DialogueStartPatch : IPatch
 
             try
             {
-                var args = DialogueEventArgs.Create(__instance);
+                var args = DialogueEventArgs.Create(__instance, DialoguePatchType.Postfix);
                 _instance?.OnPostfixDialogueStart?.Invoke(_instance, args);
             }
             catch (Exception ex)

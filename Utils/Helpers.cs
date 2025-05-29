@@ -19,8 +19,8 @@ public static class Helpers
         }
 
         const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        var random = seed.HasValue ? new System.Random(seed.Value) : new System.Random();
-        return new string(
+        System.Random random = seed.HasValue ? new(seed.Value) : new();
+        return new(
             Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray()
         );
     }

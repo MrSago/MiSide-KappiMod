@@ -83,13 +83,13 @@ public class MessageBox : PanelBase
         if (_uiBase is null)
         {
             throw new InvalidOperationException(
-                "MessageBox system not initialized. Call MessageBox.Init() first"
+                $"MessageBox system not initialized. Call {nameof(Init)}() first"
             );
         }
 
         _activeMessageBox?.OnClosePanelClicked();
 
-        _activeMessageBox = new MessageBox(
+        _activeMessageBox = new(
             _uiBase,
             message,
             button1Text,
@@ -149,7 +149,7 @@ public class MessageBox : PanelBase
             true,
             true,
             5,
-            new Vector4(10, 10, 10, 10)
+            new(10, 10, 10, 10)
         );
 
         UIFactory.SetLayoutElement(
@@ -188,7 +188,7 @@ public class MessageBox : PanelBase
             true,
             true,
             5,
-            new Vector4(5, 10, 5, 5)
+            new(5, 10, 5, 5)
         );
 
         UIFactory.SetLayoutElement(

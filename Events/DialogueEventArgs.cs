@@ -8,6 +8,12 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Events;
 
+public enum DialoguePatchType
+{
+    Postfix,
+    Prefix,
+}
+
 public class DialogueEventArgs : EventArgs
 {
     public Dialogue_3DText DialogueInstance { get; private init; }
@@ -16,6 +22,7 @@ public class DialogueEventArgs : EventArgs
     public int IndexString { get; private init; }
     public string Text { get; private init; }
     public GameObject? Speaker { get; private init; }
+    public DialoguePatchType PatchType { get; private init; }
 
     public DialogueEventArgs(
         Dialogue_3DText dialogueInstance,
@@ -23,7 +30,8 @@ public class DialogueEventArgs : EventArgs
         string sceneName,
         int indexString,
         string text,
-        GameObject? speaker
+        GameObject? speaker,
+        DialoguePatchType patchType
     )
     {
         DialogueInstance = dialogueInstance;
@@ -32,15 +40,17 @@ public class DialogueEventArgs : EventArgs
         IndexString = indexString;
         Text = text;
         Speaker = speaker;
+        PatchType = patchType;
     }
 
-    public static DialogueEventArgs Create(Dialogue_3DText instance) =>
+    public static DialogueEventArgs Create(Dialogue_3DText instance, DialoguePatchType patchType) =>
         new(
             instance,
             instance.name,
             SceneManager.GetActiveScene().name,
             instance.indexString,
             instance.textPrint,
-            instance.speaker
+            instance.speaker,
+            patchType
         );
 }

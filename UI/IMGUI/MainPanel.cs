@@ -121,7 +121,7 @@ public class MainPanel : PanelBase
             return;
         }
 
-        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out var toggle, out var text);
         _modToggles.Add(toggle);
 
         text.text = mod.Name;
@@ -161,7 +161,7 @@ public class MainPanel : PanelBase
             return;
         }
 
-        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out var toggle, out var text);
         _modToggles.Add(toggle);
 
         text.text = mod.Name;
@@ -201,7 +201,7 @@ public class MainPanel : PanelBase
             return;
         }
 
-        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out var toggle, out var text);
         _modToggles.Add(toggle);
 
         text.text = mod.Name;
@@ -241,7 +241,7 @@ public class MainPanel : PanelBase
             return;
         }
 
-        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out var toggle, out var text);
         _modToggles.Add(toggle);
 
         text.text = mod.Name;
@@ -281,8 +281,8 @@ public class MainPanel : PanelBase
         UIFactory.CreateToggle(
             parent,
             $"{nameof(IntroSkipPatch)}Toggle",
-            out Toggle toggle,
-            out Text text
+            out var toggle,
+            out var text
         );
 
         text.text = "Skip menu intro";
@@ -313,7 +313,7 @@ public class MainPanel : PanelBase
             return;
         }
 
-        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out var toggle, out var text);
         _speedrunModToggles.Add(toggle);
 
         text.text = mod.Name;
@@ -379,7 +379,7 @@ public class MainPanel : PanelBase
             return;
         }
 
-        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out Toggle toggle, out Text text);
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out var toggle, out var text);
         _speedrunModToggles.Add(toggle);
 
         text.text = mod.Name;
@@ -466,7 +466,7 @@ public class MainPanel : PanelBase
             true,
             true,
             2,
-            new Vector4(2, 2, 2, 2)
+            new(2, 2, 2, 2)
         );
         UIFactory.SetLayoutElement(
             _fpsLimitRow,
@@ -563,7 +563,7 @@ public class MainPanel : PanelBase
             true,
             true,
             2,
-            new Vector4(2, 2, 2, 2)
+            new(2, 2, 2, 2)
         );
 
         UIFactory.SetLayoutElement(
@@ -617,7 +617,7 @@ public class MainPanel : PanelBase
             true,
             true,
             0,
-            new Vector4(2, 2, 2, 2)
+            new(2, 2, 2, 2)
         );
 
         UIFactory.SetLayoutElement(
@@ -646,7 +646,7 @@ public class MainPanel : PanelBase
             true,
             true,
             3,
-            new Vector4(2, 2, 2, 2)
+            new(2, 2, 2, 2)
         );
 
         UIFactory.SetLayoutElement(

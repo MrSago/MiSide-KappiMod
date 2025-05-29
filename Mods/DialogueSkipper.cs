@@ -95,13 +95,11 @@ public sealed class DialogueSkipper : BaseMod
 
     private void SubscribeEvents()
     {
-        _dialoguePatch.OnPrefixDialogueStart += HandleDialogueSkip;
         _dialoguePatch.OnPostfixDialogueStart += HandleDialogueSkip;
     }
 
     private void UnsubscribeEvents()
     {
-        _dialoguePatch.OnPrefixDialogueStart -= HandleDialogueSkip;
         _dialoguePatch.OnPostfixDialogueStart -= HandleDialogueSkip;
     }
 
@@ -133,9 +131,9 @@ public sealed class DialogueSkipper : BaseMod
             return;
         }
 
-        StringBuilder sb = new();
-        sb.Append('\n');
+        StringBuilder sb = new("\n");
         sb.AppendLine(new string(separator, 50));
+        sb.AppendLine($"Dialogue patch type: {args.PatchType}");
         sb.AppendLine($"Dialogue name: {args.ObjectName}");
         sb.AppendLine($"Scene name: {args.SceneName}");
         sb.AppendLine($"Index string: {args.IndexString}");
