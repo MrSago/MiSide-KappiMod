@@ -1,4 +1,5 @@
 using HarmonyLib;
+using KappiMod.Constants;
 using KappiMod.Logging;
 using KappiMod.Mods;
 using KappiMod.Patches.Core;
@@ -15,10 +16,10 @@ using BepInEx.IL2CPP;
 namespace KappiMod.Patches.Rng;
 
 [HarmonyPatch]
-internal sealed class NoChibiDoorUnlockerPatch : IPatch
+internal sealed class ChibiDoorUnlockerPatch : IPatch
 {
-    public string Id => "com.kappimod.nochibidoorunlocker";
-    public string Name => "No Chibi Door Unlocker";
+    public string Id => "com.kappimod.chibidoorunlocker";
+    public string Name => "Chibi Door Unlocker";
     public string Description => "Unlocks the door without catching chibi guys";
 
     private const string DOOR_PATH = "House/Doors/DoorCage ChibiPlayers - NextLadder/DoorPhysic";
@@ -26,10 +27,10 @@ internal sealed class NoChibiDoorUnlockerPatch : IPatch
     private static ObjectDoor? _cachedDoor;
     private readonly HarmonyLib.Harmony _harmony;
 
-    public NoChibiDoorUnlockerPatch()
+    public ChibiDoorUnlockerPatch()
     {
         _harmony = new(Id);
-        _harmony.PatchAll(typeof(NoChibiDoorUnlockerPatch));
+        _harmony.PatchAll(typeof(ChibiDoorUnlockerPatch));
 
         KappiCore.Loader.SceneWasLoaded += OnSceneWasLoaded;
     }
@@ -62,7 +63,7 @@ internal sealed class NoChibiDoorUnlockerPatch : IPatch
 
     private static void OnSceneWasLoaded(int buildIndex, string sceneName)
     {
-        if (sceneName is not ObjectNames.BACKROOMS_SCENE)
+        if (sceneName is not SceneName.CHIBIMITA_SCENE)
         {
             return;
         }
@@ -93,7 +94,7 @@ internal sealed class NoChibiDoorUnlockerPatch : IPatch
     {
         foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
         {
-            if (root.name is ObjectNames.WORLD_ROOT_NAME)
+            if (root.name is SceneName.WORLD_ROOT_NAME)
             {
                 return root.transform;
             }

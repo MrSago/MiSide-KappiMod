@@ -38,7 +38,7 @@ using System.Diagnostics.CodeAnalysis;
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.Rng.NoChibiDoorUnlockerPatch.Postfix(Il2Cpp.ObjectInteractive)"
+    Target = "~M:KappiMod.Patches.Rng.ChibiDoorUnlockerPatch.Postfix(Il2Cpp.ObjectInteractive)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",
