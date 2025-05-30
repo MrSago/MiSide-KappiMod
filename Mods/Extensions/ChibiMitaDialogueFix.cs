@@ -14,7 +14,7 @@ using BepInEx.IL2CPP;
 
 namespace KappiMod.Mods.Extensions;
 
-internal class ChibiMitaDialogueFixer
+internal class ChibiMitaDialogueFix
 {
     private const string BROKEN_DIALOGUE = "3D TextFactory 5";
 
@@ -23,7 +23,7 @@ internal class ChibiMitaDialogueFixer
     private bool _isInitialized = false;
     private Mob_ChibiMita? _cachedChibiMita;
 
-    internal ChibiMitaDialogueFixer(DialogueStartPatch dialoguePatch)
+    internal ChibiMitaDialogueFix(DialogueStartPatch dialoguePatch)
     {
         _dialoguePatch = dialoguePatch;
     }
@@ -32,7 +32,7 @@ internal class ChibiMitaDialogueFixer
     {
         if (_isInitialized)
         {
-            KappiLogger.LogError($"{nameof(ChibiMitaDialogueFixer)} is already initialized");
+            KappiLogger.LogError($"{nameof(ChibiMitaDialogueFix)} is already initialized");
             return;
         }
 
@@ -56,7 +56,7 @@ internal class ChibiMitaDialogueFixer
     {
         if (!_isInitialized)
         {
-            KappiLogger.LogError($"{nameof(ChibiMitaDialogueFixer)} is not initialized");
+            KappiLogger.LogError($"{nameof(ChibiMitaDialogueFix)} is not initialized");
             return;
         }
 

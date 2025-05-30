@@ -46,7 +46,7 @@ public sealed class DialogueSkipper : BaseMod
     };
 
     private readonly DialogueStartPatch _dialoguePatch;
-    private readonly ChibiMitaDialogueFixer _chibiMitaDialogueFixer;
+    private readonly ChibiMitaDialogueFix _chibiMitaDialogueFixer;
 
     public DialogueSkipper()
     {
