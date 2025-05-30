@@ -1,4 +1,5 @@
 using Il2CppInterop.Runtime;
+using KappiMod.Constants;
 using KappiMod.Events;
 using KappiMod.Logging;
 using KappiMod.Patches;
@@ -35,7 +36,7 @@ internal class ChibiMitaDialogueFixer
             return;
         }
 
-        if (SceneManager.GetActiveScene().name is ObjectNames.CHIBIMITA_SCENE)
+        if (SceneManager.GetActiveScene().name is SceneName.CHIBIMITA)
         {
             TryFindChibiMita();
         }
@@ -70,7 +71,7 @@ internal class ChibiMitaDialogueFixer
 
     private void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
-        if (sceneName is ObjectNames.CHIBIMITA_SCENE)
+        if (sceneName is SceneName.CHIBIMITA)
         {
             _cachedChibiMita = null;
             TryFindChibiMita();

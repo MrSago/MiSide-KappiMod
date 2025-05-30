@@ -63,7 +63,7 @@ internal sealed class ChibiDoorUnlockerPatch : IPatch
 
     private static void OnSceneWasLoaded(int buildIndex, string sceneName)
     {
-        if (sceneName is not SceneName.CHIBIMITA_SCENE)
+        if (sceneName is not SceneName.CHIBIMITA)
         {
             return;
         }
@@ -94,7 +94,7 @@ internal sealed class ChibiDoorUnlockerPatch : IPatch
     {
         foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
         {
-            if (root.name is SceneName.WORLD_ROOT_NAME)
+            if (root.name is SceneName.WORLD_ROOT)
             {
                 return root.transform;
             }

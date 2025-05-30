@@ -1,3 +1,4 @@
+using KappiMod.Constants;
 using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Properties;
@@ -46,7 +47,7 @@ public sealed class ConsoleUnlocker : BaseMod
 
     private void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
-        if (sceneName is not ObjectNames.MAIN_MENU_SCENE)
+        if (sceneName is not SceneName.MAIN_MENU)
         {
             return;
         }

@@ -1,3 +1,4 @@
+using KappiMod.Constants;
 using KappiMod.Logging;
 using KappiMod.Mods;
 using KappiMod.Mods.Core;
@@ -327,7 +328,7 @@ public class MainPanel : PanelBase
                     return;
                 }
 
-                if (SceneManager.GetActiveScene().name is not ObjectNames.MAIN_MENU_SCENE)
+                if (SceneManager.GetActiveScene().name is not SceneName.MAIN_MENU)
                 {
                     MessageBox.Show("This mod toggled only in the main menu");
                     toggle.isOn = !value;
@@ -393,7 +394,7 @@ public class MainPanel : PanelBase
                     return;
                 }
 
-                if (SceneManager.GetActiveScene().name is not ObjectNames.MAIN_MENU_SCENE)
+                if (SceneManager.GetActiveScene().name is not SceneName.MAIN_MENU)
                 {
                     MessageBox.Show("This mod toggled only in the main menu");
                     toggle.isOn = !value;

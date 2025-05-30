@@ -1,5 +1,6 @@
 using HarmonyLib;
 using KappiMod.Config;
+using KappiMod.Constants;
 using KappiMod.Logging;
 using KappiMod.Utils;
 using UnityEngine;
@@ -64,7 +65,7 @@ public static class IntroSkipPatch
 
     private static void OnSceneWasInitialized(int buildIndex, string sceneName)
     {
-        if (sceneName is not ObjectNames.AIHASTO_INTRO_SCENE)
+        if (sceneName is not SceneName.AIHASTO_INTRO)
         {
             return;
         }
@@ -112,7 +113,7 @@ public static class IntroSkipPatch
                 return;
             }
 
-            if (SceneTracker.Name is ObjectNames.ENDING_GAME_SCENE)
+            if (SceneTracker.Name is SceneName.ENDING_GAME)
             {
                 return;
             }
