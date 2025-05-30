@@ -101,7 +101,7 @@ public abstract class BaseMod
         }
     }
 
-    protected abstract void OnInitialize();
+    protected virtual void OnInitialize() { }
 
     protected virtual void OnEnable() { }
 

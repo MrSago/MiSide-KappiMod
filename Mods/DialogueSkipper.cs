@@ -64,8 +64,6 @@ public sealed class DialogueSkipper : BaseMod
         }
     }
 
-    protected override void OnInitialize() { }
-
     protected override void OnEnable()
     {
         KappiCore.Loader.SceneWasLoaded += OnSceneWasLoaded;
