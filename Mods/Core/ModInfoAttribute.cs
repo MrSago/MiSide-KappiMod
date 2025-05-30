@@ -1,7 +1,7 @@
 namespace KappiMod.Mods.Core;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-public class ModInfoAttribute : Attribute
+public sealed class ModInfoAttribute : Attribute
 {
     public string Name { get; private set; }
     public string Description { get; private set; }
@@ -18,6 +18,6 @@ public class ModInfoAttribute : Attribute
         Name = name;
         Description = description ?? "No description";
         Version = version ?? "1.0.0";
-        Author = author ?? "Unknown";
+        Author = author ?? "Anonymous";
     }
 }
