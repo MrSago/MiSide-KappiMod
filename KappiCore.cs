@@ -47,6 +47,9 @@ public static class KappiCore
         InitUtils();
         InitPatches();
         InitModSystem();
+
+        KappiLogger.Log($"Steam ID: {SteamHelper.Instance?.GetSteamID()}");
+        KappiLogger.Log($"Persona Name: {SteamHelper.Instance?.GetPersonaName()}");
     }
 
     private static void LateInitUI()
