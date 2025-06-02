@@ -1,3 +1,4 @@
+using KappiMod.Config;
 using KappiMod.Constants;
 using KappiMod.Logging;
 using KappiMod.Mods;
@@ -81,6 +82,7 @@ public class MainPanel : PanelBase
         CreateLabel(_speedrunModsLeftColumn, "SpeedrunModsLabel", "Speedrun Mods");
         CreateBlessRngModToggle(_speedrunModsLeftColumn);
         CreateDialogueSkipperToggle(_speedrunModsLeftColumn);
+        CreateCustomRngToggle(_speedrunModsLeftColumn);
 
         _modsSettingsColumnsLayout = CreateColumnsLayout(
             ContentRoot,
@@ -147,7 +149,7 @@ public class MainPanel : PanelBase
                     mod.Disable();
                 }
 
-                if (mod.IsEnabled != value)
+                if (value != mod.IsEnabled)
                 {
                     toggle.isOn = mod.IsEnabled;
                 }
@@ -187,7 +189,7 @@ public class MainPanel : PanelBase
                     mod.Disable();
                 }
 
-                if (mod.IsEnabled != value)
+                if (value != mod.IsEnabled)
                 {
                     toggle.isOn = mod.IsEnabled;
                 }
@@ -227,7 +229,7 @@ public class MainPanel : PanelBase
                     mod.Disable();
                 }
 
-                if (mod.IsEnabled != value)
+                if (value != mod.IsEnabled)
                 {
                     toggle.isOn = mod.IsEnabled;
                 }
@@ -267,7 +269,7 @@ public class MainPanel : PanelBase
                     mod.Disable();
                 }
 
-                if (mod.IsEnabled != value)
+                if (value != mod.IsEnabled)
                 {
                     toggle.isOn = mod.IsEnabled;
                 }
@@ -368,7 +370,7 @@ public class MainPanel : PanelBase
                     EnableAllModToggles();
                 }
 
-                if (mod.IsEnabled != value)
+                if (value != mod.IsEnabled)
                 {
                     toggle.isOn = mod.IsEnabled;
                 }
@@ -420,7 +422,54 @@ public class MainPanel : PanelBase
                     EnableAllModToggles();
                 }
 
-                if (mod.IsEnabled != value)
+                if (value != mod.IsEnabled)
+                {
+                    toggle.isOn = mod.IsEnabled;
+                }
+            }
+        );
+    }
+
+    private void CreateCustomRngToggle(GameObject parent)
+    {
+        if (!ConfigManager.DebugMode.Value)
+        {
+            return;
+        }
+
+        var mod = ModManager.GetMod<CustomRng>();
+        if (mod is null)
+        {
+            KappiLogger.LogError($"{nameof(CustomRng)} mod not found!");
+            return;
+        }
+
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out var toggle, out var text);
+        _speedrunModToggles.Add(toggle);
+
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
+
+        toggle.onValueChanged.AddListener(
+            (value) =>
+            {
+                if (value == mod.IsEnabled)
+                {
+                    return;
+                }
+
+                if (value && !mod.IsEnabled)
+                {
+                    mod.Enable();
+                    DisableAllModToggles();
+                }
+                else if (!value && mod.IsEnabled)
+                {
+                    mod.Disable();
+                    EnableAllModToggles();
+                }
+
+                if (value != mod.IsEnabled)
                 {
                     toggle.isOn = mod.IsEnabled;
                 }
