@@ -45,15 +45,16 @@ public static class KappiLogger
             return;
         }
 
-        StringBuilder sb = new(message?.ToString() ?? string.Empty);
+        StringBuilder sb = new();
         if (!string.IsNullOrEmpty(prefix))
         {
             string callerClassName = Path.GetFileNameWithoutExtension(prefix);
-            sb.Insert(0, $"[{callerClassName}] ");
+            sb.Append($"[{callerClassName}] ");
         }
+        sb.Append(message?.ToString() ?? string.Empty);
         if (exception is not null)
         {
-            sb.Append($"\nException: {exception.Message}\n{exception.StackTrace}");
+            sb.Append($"\n{exception}");
         }
 
         string logMessage = sb.ToString();
