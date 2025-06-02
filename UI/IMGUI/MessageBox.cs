@@ -105,8 +105,12 @@ public class MessageBox : PanelBase
 
     #region Instance Members
 
-    private GameObject? _mainContainer;
-    private GameObject? _buttonContainer;
+    public override string Name => nameof(MessageBox);
+    public override int MinWidth => 350;
+    public override int MinHeight => 200;
+    public override Vector2 DefaultAnchorMin => new(0.5f, 0.5f);
+    public override Vector2 DefaultAnchorMax => new(0.5f, 0.5f);
+    public override bool CanDragAndResize => false;
 
     private readonly string _message;
     private readonly string _button1Text;
@@ -114,12 +118,8 @@ public class MessageBox : PanelBase
     private readonly string? _button2Text;
     private readonly Action? _button2Callback;
 
-    public override string Name => nameof(MessageBox);
-    public override int MinWidth => 350;
-    public override int MinHeight => 200;
-    public override Vector2 DefaultAnchorMin => new(0.5f, 0.5f);
-    public override Vector2 DefaultAnchorMax => new(0.5f, 0.5f);
-    public override bool CanDragAndResize => false;
+    private GameObject? _mainContainer;
+    private GameObject? _buttonContainer;
 
     private MessageBox(
         UIBase owner,
