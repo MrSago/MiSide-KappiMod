@@ -26,8 +26,6 @@ public sealed class BlessRng : BaseMod
 
     private readonly PatchManager _patchManager = new();
 
-    protected override void OnInitialize() { }
-
     protected override void OnEnable()
     {
         OnDisable();
