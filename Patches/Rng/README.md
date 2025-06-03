@@ -6,25 +6,23 @@ List of mod patches here. If you found an error, or you have some suggestions, y
 
 ## Rng Patches
 
+1. [ChibiDoorUnlockerPatch](./ChibiDoorUnlockerPatch.cs)
+
+   Unlocks the door without catching chibi guys. Just interact with the box that contains the chibis and the door will be unlocked.
+
 1. [ChipMiniGamePatch](./ChipMiniGamePatch.cs)
 
    Removes randomness from the chip mini-game by fixing start/end points.
 
-2. [FixedItemSpawnPatch](./FixedItemSpawnPatch.cs)
+1. [FixedItemSpawnPatch](./FixedItemSpawnPatch.cs)
 
-   Set fixed item spawn positions in Chapter 2.
+   Set fixed item spawn positions in Chapter 2 and Chapter 3.
 
-   > I don't know good spawn positions for better runs.
+1. [PassableDummiesPatch](./PassableDummiesPatch.cs)
 
-3. [GoodDummiesPatch](./GoodDummiesPatch.cs)
+   Makes all dummies passable. Just accept or decline all dummies, regardless of their characteristics, such as emotions or red eyes.
 
-   Makes all dummies good, removing the RNG from mini-game. Just accept all dummies, regardless of their characteristics, such as emotions or red eyes.
-
-4. [NoChibiDoorUnlockerPatch](./NoChibiDoorUnlockerPatch.cs)
-
-   Unlocks the door without catching chibi guys. Just interact with the box that contains the chibis and the door will open.
-
-5. [RingInstantReadyPatch](./RingInstantReadyPatch.cs)
+1. [RingInstantReadyPatch](./RingInstantReadyPatch.cs)
 
    Skips the ring wait event and instantly makes the ring ready in Cappie chapter.
 
