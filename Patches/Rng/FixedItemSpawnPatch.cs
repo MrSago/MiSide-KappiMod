@@ -4,7 +4,9 @@ using KappiMod.Logging;
 using KappiMod.Mods;
 using KappiMod.Patches.Core;
 using KappiMod.UI.Internal.EventDisplay;
+using KappiMod.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -19,14 +21,6 @@ internal sealed class FixedItemSpawnPatch : IPatch
     public string Id => "com.kappimod.fixeditemspawn";
     public string Name => "Fixed Item Spawn Patch";
     public string Description => "Set fixed item spawn positions in Chapter 2";
-
-    // private const string PENCIL_OBJECT_NAME = "ItemPencil";
-    // private const string BOW_OBJECT_NAME = "ItemBow";
-    // private const string SPOON_OBJECT_NAME = "ItemSpoon";
-
-    // private const int PENCIL_TRANSFORM_INDEX = 5;
-    // private const int BOW_TRANSFORM_INDEX = 3;
-    // private const int SPOON_TRANSFORM_INDEX = 3;
 
     private static readonly TransformPositions _pencilTransform = new()
     {
@@ -49,6 +43,13 @@ internal sealed class FixedItemSpawnPatch : IPatch
         target = null,
     };
 
+    private static readonly TransformPositions _scissorsTransform = new()
+    {
+        position = new(new Vector3[1] { new(-11.82f, 1.1968f, 2.1288f) }),
+        rotation = new(new Vector3[1] { new(270.0f, 145.8725f, 0.0f) }),
+        target = null,
+    };
+
     private readonly HarmonyLib.Harmony _harmony;
 
     public FixedItemSpawnPatch()
@@ -62,8 +63,9 @@ internal sealed class FixedItemSpawnPatch : IPatch
         _harmony.UnpatchSelf();
     }
 
+    [HarmonyPrefix]
     [HarmonyPatch(typeof(Location2Main), nameof(Location2Main.Start))]
-    private static void Prefix(Location2Main __instance)
+    private static void Location2StartPrefix(Location2Main __instance)
     {
         try
         {
@@ -79,15 +81,55 @@ internal sealed class FixedItemSpawnPatch : IPatch
             newTransforms[2].target = __instance.items[2].target;
 
             __instance.items = newTransforms;
+
+            const string message = "Fixed items positions set";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+            KappiLogger.Log(message);
         }
         catch (Exception ex)
         {
             KappiLogger.LogException("Failed to set item positions", exception: ex);
-            return;
         }
+    }
 
-        const string message = "Fixed items positions set";
-        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-        KappiLogger.Log(message);
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(Location3), nameof(Location3.Start))]
+    private static void SetScissorsTransformInLocation3(Location3 __instance)
+    {
+        try
+        {
+            Transform? scissorsTransform = Helpers
+                .GetRootTransform()
+                ?.Find("Acts/Act General/Scissors");
+            if (scissorsTransform == null)
+            {
+                KappiLogger.LogWarning("Scissors transform not found in Location 3");
+                return;
+            }
+
+            const float delay = 5.0f;
+
+            Helpers.Delay.ExecuteAfter(
+                (UnityAction)(
+                    () =>
+                    {
+                        scissorsTransform.position = _scissorsTransform.position[0];
+                        scissorsTransform.localPosition = _scissorsTransform.position[0];
+                        scissorsTransform.rotation = Quaternion.Euler(
+                            _scissorsTransform.rotation[0]
+                        );
+
+                        const string message = "Scissors positions set";
+                        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+                        KappiLogger.Log(message);
+                    }
+                ),
+                delay
+            );
+        }
+        catch (Exception ex)
+        {
+            KappiLogger.LogException("Failed to set item positions", exception: ex);
+        }
     }
 }
