@@ -10,13 +10,6 @@ using System.Diagnostics.CodeAnalysis;
     "IDE0051:Remove unused private members",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:KappiMod.Patches.DialogueStartPatch.Patch.Postfix(Il2Cpp.Dialogue_3DText)"
-)]
-[assembly: SuppressMessage(
-    "CodeQuality",
-    "IDE0051:Remove unused private members",
-    Justification = "<Pending>",
-    Scope = "member",
     Target = "~M:KappiMod.Patches.DialogueStartPatch.Patch.OnDialogueStartPrefix(Il2Cpp.Dialogue_3DText)"
 )]
 [assembly: SuppressMessage(
@@ -46,13 +39,6 @@ using System.Diagnostics.CodeAnalysis;
     Justification = "<Pending>",
     Scope = "member",
     Target = "~M:KappiMod.Patches.Rng.ChipMiniGamePatch.SetChipMiniGamePoints(Il2Cpp.TamagotchiGame_Chip)"
-)]
-[assembly: SuppressMessage(
-    "CodeQuality",
-    "IDE0051:Remove unused private members",
-    Justification = "<Pending>",
-    Scope = "member",
-    Target = "~M:KappiMod.Patches.Rng.GoodDummiesPatch.InitializeDummyProperties(Il2Cpp.MakeManeken_Main)"
 )]
 [assembly: SuppressMessage(
     "CodeQuality",

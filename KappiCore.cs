@@ -46,7 +46,7 @@ public static class KappiCore
 
         InitUtils();
         InitPatches();
-        InitModSystem();
+        ModManager.Init();
 
         KappiLogger.Log($"Steam ID: {SteamHelper.Instance?.GetSteamID()}");
         KappiLogger.Log($"Persona Name: {SteamHelper.Instance?.GetPersonaName()}");
@@ -70,12 +70,5 @@ public static class KappiCore
     {
         IntroSkipPatch.Init();
         NativeResolutionOption.Init();
-    }
-
-    private static void InitModSystem()
-    {
-        KappiLogger.Log("Initializing mod system...");
-        ModManager.Init();
-        KappiLogger.Log($"Mod system initialized with {ModManager.RegisteredMods.Count} mods");
     }
 }

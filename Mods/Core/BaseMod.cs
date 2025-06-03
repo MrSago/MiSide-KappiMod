@@ -41,7 +41,6 @@ public abstract class BaseMod
         {
             OnInitialize();
             IsInitialized = true;
-            KappiLogger.Log("Mod initialized successfully", Id);
         }
         catch (Exception ex)
         {
