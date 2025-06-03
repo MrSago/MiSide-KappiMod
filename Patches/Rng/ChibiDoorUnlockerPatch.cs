@@ -66,7 +66,7 @@ internal sealed class ChibiDoorUnlockerPatch : IPatch
 
     private static void OnSceneWasLoaded(int buildIndex, string sceneName)
     {
-        if (sceneName is not SceneName.CHIBIMITA)
+        if (sceneName is not SceneName.BACKROOMS)
         {
             return;
         }
