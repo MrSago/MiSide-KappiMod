@@ -87,7 +87,6 @@ public sealed class DialogueSkipper : BaseMod
         catch (Exception ex)
         {
             KappiLogger.LogException("Failed to show event", exception: ex);
-            return;
         }
     }
 

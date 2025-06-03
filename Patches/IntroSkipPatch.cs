@@ -105,8 +105,9 @@ public static class IntroSkipPatch
     [HarmonyPatch]
     private static class Patch
     {
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Menu), nameof(Menu.Start))]
-        private static void Postfix(Menu __instance)
+        private static void MenuStartSkipHandler(Menu __instance)
         {
             if (!Enabled)
             {

@@ -2,7 +2,7 @@ using HarmonyLib;
 using KappiMod.Events;
 using KappiMod.Logging;
 using KappiMod.Patches.Core;
-using KappiMod.Utils;
+using UniverseLib.Utility;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -28,6 +28,7 @@ public sealed class DialogueStartPatch : IPatch
     public DialogueStartPatch()
     {
         _instance = this;
+
         _harmony = new(Id);
         _harmony.PatchAll(typeof(Patch));
     }
@@ -35,16 +36,18 @@ public sealed class DialogueStartPatch : IPatch
     public void Dispose()
     {
         _harmony.UnpatchSelf();
+
         _instance = null;
     }
 
     [HarmonyPatch]
     private static class Patch
     {
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(Dialogue_3DText), nameof(Dialogue_3DText.Start))]
-        private static void Prefix(Dialogue_3DText __instance)
+        private static void OnDialogueStartPrefix(Dialogue_3DText __instance)
         {
-            if (!Helpers.IsValid(__instance))
+            if (UnityHelpers.IsNullOrDestroyed(__instance))
             {
                 return;
             }
@@ -60,10 +63,11 @@ public sealed class DialogueStartPatch : IPatch
             }
         }
 
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(Dialogue_3DText), nameof(Dialogue_3DText.Start))]
-        private static void Postfix(Dialogue_3DText __instance)
+        private static void OnDialogueStartPostfix(Dialogue_3DText __instance)
         {
-            if (!Helpers.IsValid(__instance))
+            if (UnityHelpers.IsNullOrDestroyed(__instance))
             {
                 return;
             }

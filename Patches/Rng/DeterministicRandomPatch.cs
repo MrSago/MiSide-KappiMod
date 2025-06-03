@@ -55,7 +55,7 @@ public sealed class DeterministicRandomPatch : IPatch
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(UnityEngine.Random), nameof(UnityEngine.Random.value), MethodType.Getter)]
-    private static bool ValuePrefix(ref float __result)
+    private static bool Value(ref float __result)
     {
         if (_disabledRandom)
         {
@@ -73,7 +73,7 @@ public sealed class DeterministicRandomPatch : IPatch
         nameof(UnityEngine.Random.insideUnitSphere),
         MethodType.Getter
     )]
-    private static bool InsideUnitSpherePrefix(ref Vector3 __result)
+    private static bool InsideUnitSphere(ref Vector3 __result)
     {
         if (_disabledRandom)
         {
@@ -101,7 +101,7 @@ public sealed class DeterministicRandomPatch : IPatch
         nameof(UnityEngine.Random.insideUnitCircle),
         MethodType.Getter
     )]
-    private static bool InsideUnitCirclePrefix(ref Vector2 __result)
+    private static bool InsideUnitCircle(ref Vector2 __result)
     {
         if (_disabledRandom)
         {
@@ -125,7 +125,7 @@ public sealed class DeterministicRandomPatch : IPatch
         nameof(UnityEngine.Random.onUnitSphere),
         MethodType.Getter
     )]
-    private static bool OnUnitSpherePrefix(ref Vector3 __result)
+    private static bool OnUnitSphere(ref Vector3 __result)
     {
         if (_disabledRandom)
         {
@@ -152,7 +152,7 @@ public sealed class DeterministicRandomPatch : IPatch
         nameof(UnityEngine.Random.rotation),
         MethodType.Getter
     )]
-    private static bool RotationPrefix(ref Quaternion __result)
+    private static bool Rotation(ref Quaternion __result)
     {
         if (_disabledRandom)
         {
@@ -185,9 +185,9 @@ public sealed class DeterministicRandomPatch : IPatch
         nameof(UnityEngine.Random.rotationUniform),
         MethodType.Getter
     )]
-    private static bool RotationUniformPrefix(ref Quaternion __result)
+    private static bool RotationUniform(ref Quaternion __result)
     {
-        return RotationPrefix(ref __result);
+        return Rotation(ref __result);
     }
 
     #endregion Getters Patches
@@ -200,7 +200,7 @@ public sealed class DeterministicRandomPatch : IPatch
         nameof(UnityEngine.Random.Range),
         new[] { typeof(float), typeof(float) }
     )]
-    private static bool RangeFloatPrefix(float minInclusive, float maxInclusive, ref float __result)
+    private static bool RangeFloat(float minInclusive, float maxInclusive, ref float __result)
     {
         if (_disabledRandom)
         {
@@ -218,7 +218,7 @@ public sealed class DeterministicRandomPatch : IPatch
         nameof(UnityEngine.Random.Range),
         new[] { typeof(int), typeof(int) }
     )]
-    private static bool RangeIntPrefix(int minInclusive, int maxExclusive, ref int __result)
+    private static bool RangeInt(int minInclusive, int maxExclusive, ref int __result)
     {
         if (_disabledRandom)
         {
@@ -232,7 +232,7 @@ public sealed class DeterministicRandomPatch : IPatch
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(UnityEngine.Random), nameof(UnityEngine.Random.GetRandomUnitCircle))]
-    private static void GetRandomUnitCirclePrefix(out Vector2 output)
+    private static void GetRandomUnitCircle(out Vector2 output)
     {
         if (_disabledRandom)
         {

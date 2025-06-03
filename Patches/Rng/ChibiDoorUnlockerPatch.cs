@@ -5,8 +5,7 @@ using KappiMod.Mods;
 using KappiMod.Patches.Core;
 using KappiMod.UI.Internal.EventDisplay;
 using KappiMod.Utils;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using UniverseLib.Utility;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -42,8 +41,9 @@ internal sealed class ChibiDoorUnlockerPatch : IPatch
         KappiCore.Loader.SceneWasLoaded -= OnSceneWasLoaded;
     }
 
+    [HarmonyPostfix]
     [HarmonyPatch(typeof(ObjectInteractive), nameof(ObjectInteractive.OnDisable))]
-    private static void Postfix(ObjectInteractive __instance)
+    private static void ChibiDoorUnlock(ObjectInteractive __instance)
     {
         try
         {
@@ -53,11 +53,14 @@ internal sealed class ChibiDoorUnlockerPatch : IPatch
             }
 
             UnlockDoor();
+
+            const string message = "Chibi door unlocked";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+            KappiLogger.Log(message);
         }
         catch (Exception ex)
         {
             KappiLogger.LogException("Failed to open door", exception: ex);
-            return;
         }
     }
 
@@ -68,11 +71,18 @@ internal sealed class ChibiDoorUnlockerPatch : IPatch
             return;
         }
 
-        bool found = TryFindDoor();
+        try
+        {
+            bool found = TryFindDoor();
 
-        string message = "Chibi door " + (found ? "found" : "not found");
-        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-        KappiLogger.Log(message);
+            string message = "Chibi door " + (found ? "found" : "not found");
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+            KappiLogger.Log(message);
+        }
+        catch (Exception ex)
+        {
+            KappiLogger.LogException("Failed to check door on scene load", exception: ex);
+        }
     }
 
     private static void UnlockDoor()
@@ -84,33 +94,20 @@ internal sealed class ChibiDoorUnlockerPatch : IPatch
         }
 
         _cachedDoor.lockDoor = false;
-
-        const string message = "Chibi door unlocked";
-        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-        KappiLogger.Log(message);
-    }
-
-    private static Transform? GetRootTransform()
-    {
-        foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
-        {
-            if (root.name is SceneName.WORLD_ROOT)
-            {
-                return root.transform;
-            }
-        }
-
-        return null;
     }
 
     private static bool TryFindDoor()
     {
-        if (Helpers.IsValid(_cachedDoor))
+        if (!UnityHelpers.IsNullOrDestroyed(_cachedDoor))
         {
             return true;
         }
 
-        _cachedDoor = GetRootTransform()?.Find(DOOR_PATH)?.gameObject?.GetComponent<ObjectDoor>();
-        return Helpers.IsValid(_cachedDoor);
+        _cachedDoor = Helpers
+            .GetRootTransform()
+            ?.Find(DOOR_PATH)
+            ?.gameObject?.GetComponent<ObjectDoor>();
+
+        return !UnityHelpers.IsNullOrDestroyed(_cachedDoor);
     }
 }

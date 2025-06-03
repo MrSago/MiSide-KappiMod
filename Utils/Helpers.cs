@@ -1,10 +1,23 @@
+using KappiMod.Constants;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace KappiMod.Utils;
 
 public static class Helpers
 {
-    public static bool IsValid(MonoBehaviour? obj) => obj != null && obj.gameObject != null;
+    public static Transform? GetRootTransform()
+    {
+        foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            if (root.name is SceneName.WORLD_ROOT)
+            {
+                return root.transform;
+            }
+        }
+
+        return null;
+    }
 
     public static string GenerateRandomString(int length = 8, int? seed = null)
     {

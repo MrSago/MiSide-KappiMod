@@ -2,8 +2,8 @@ using KappiMod.Config;
 using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Properties;
-using KappiMod.Utils;
 using UnityEngine;
+using UniverseLib.Utility;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -49,7 +49,7 @@ public sealed class SprintUnlocker : BaseMod
     protected override void OnDisable()
     {
         KappiCore.Loader.Update -= OnUpdate;
-        if (Helpers.IsValid(_cachedPlayerMove))
+        if (!UnityHelpers.IsNullOrDestroyed(_cachedPlayerMove))
         {
             SetPlayerRunState(false);
             _cachedPlayerMove = null;
@@ -84,12 +84,12 @@ public sealed class SprintUnlocker : BaseMod
 
     private bool TryFindPlayerMove()
     {
-        if (Helpers.IsValid(_cachedPlayerMove))
+        if (!UnityHelpers.IsNullOrDestroyed(_cachedPlayerMove))
         {
             return true;
         }
 
         _cachedPlayerMove = GameObject.Find("Player")?.GetComponent<PlayerMove>();
-        return Helpers.IsValid(_cachedPlayerMove);
+        return !UnityHelpers.IsNullOrDestroyed(_cachedPlayerMove);
     }
 }

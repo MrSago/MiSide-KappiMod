@@ -1,8 +1,8 @@
 using HarmonyLib;
 using Il2CppInterop.Runtime;
 using KappiMod.Logging;
-using KappiMod.Utils;
 using UnityEngine;
+using UniverseLib.Utility;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -34,8 +34,9 @@ public static class NativeResolutionOption
     [HarmonyPatch]
     private static class Patch
     {
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(ButtonMouseClick), nameof(ButtonMouseClick.OnPointerDown))]
-        private static void Postfix(ButtonMouseClick __instance)
+        private static void AddResolutionOption(ButtonMouseClick __instance)
         {
             if (
                 __instance.name != "Button Option Graphics"
@@ -61,7 +62,7 @@ public static class NativeResolutionOption
                 .FindObjectsOfTypeAll(Il2CppType.Of<MenuCaseOption>())
                 ?.FirstOrDefault(x => x.name == "Button Resolution")
                 ?.Cast<MenuCaseOption>();
-            if (!Helpers.IsValid(menuCaseOption) || menuCaseOption == null)
+            if (UnityHelpers.IsNullOrDestroyed(menuCaseOption) || menuCaseOption == null)
             {
                 KappiLogger.LogError("MenuCaseOption not found");
                 return;

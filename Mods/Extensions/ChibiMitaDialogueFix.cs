@@ -3,9 +3,9 @@ using KappiMod.Constants;
 using KappiMod.Events;
 using KappiMod.Logging;
 using KappiMod.Patches;
-using KappiMod.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniverseLib.Utility;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -100,7 +100,7 @@ internal class ChibiMitaDialogueFix
 
     private bool TryFindChibiMita()
     {
-        if (Helpers.IsValid(_cachedChibiMita))
+        if (!UnityHelpers.IsNullOrDestroyed(_cachedChibiMita))
         {
             return true;
         }
@@ -110,7 +110,7 @@ internal class ChibiMitaDialogueFix
             ?.FirstOrDefault(x => x.name == "ChibiMita")
             ?.Cast<Mob_ChibiMita>();
 
-        bool isFound = Helpers.IsValid(_cachedChibiMita);
+        bool isFound = !UnityHelpers.IsNullOrDestroyed(_cachedChibiMita);
         KappiLogger.Log($"ChibiMita {(isFound ? "found" : "not found")}");
         return isFound;
     }

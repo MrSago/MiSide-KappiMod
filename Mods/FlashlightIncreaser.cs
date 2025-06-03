@@ -2,8 +2,8 @@ using KappiMod.Config;
 using KappiMod.Logging;
 using KappiMod.Mods.Core;
 using KappiMod.Properties;
-using KappiMod.Utils;
 using UnityEngine;
+using UniverseLib.Utility;
 #if ML
 using Il2Cpp;
 #elif BIE
@@ -138,13 +138,13 @@ public sealed class FlashlightIncreaser : BaseMod
 
     private bool TryFindWorldPlayer()
     {
-        if (Helpers.IsValid(_cachedWorldPlayer))
+        if (!UnityHelpers.IsNullOrDestroyed(_cachedWorldPlayer))
         {
             return true;
         }
 
         _cachedWorldPlayer = GameObject.Find("World")?.GetComponent<WorldPlayer>();
-        return Helpers.IsValid(_cachedWorldPlayer);
+        return !UnityHelpers.IsNullOrDestroyed(_cachedWorldPlayer);
     }
 
     private void ResetState()

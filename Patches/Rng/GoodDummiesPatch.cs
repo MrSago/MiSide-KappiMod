@@ -31,22 +31,22 @@ internal sealed class GoodDummiesPatch : IPatch
         _harmony.UnpatchSelf();
     }
 
+    [HarmonyPrefix]
     [HarmonyPatch(typeof(MakeManeken_Main), nameof(MakeManeken_Main.SiwtchGet))]
-    private static void Prefix(MakeManeken_Main __instance)
+    private static void InitializeDummyProperties(MakeManeken_Main __instance)
     {
         try
         {
             __instance.badIndexAnimation = 0;
             __instance.indexBedManeken = 0;
+
+            const string message = "Good dummies properties set";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+            KappiLogger.Log(message);
         }
         catch (Exception ex)
         {
             KappiLogger.LogException("Failed to set dummies properties", exception: ex);
-            return;
         }
-
-        const string message = "Good dummies properties set";
-        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-        KappiLogger.Log(message);
     }
 }

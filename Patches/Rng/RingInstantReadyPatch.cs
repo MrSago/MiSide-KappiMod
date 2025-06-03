@@ -32,21 +32,21 @@ internal sealed class RingInstantReadyPatch : IPatch
         _harmony.UnpatchSelf();
     }
 
+    [HarmonyPostfix]
     [HarmonyPatch(typeof(Location7_RingWork), nameof(Location7_RingWork.Start))]
-    private static void Postfix(Location7_RingWork __instance)
+    private static void SkipRingWait(Location7_RingWork __instance)
     {
         try
         {
             __instance.ReadyTime();
+
+            const string message = "Ring wait event skipped";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+            KappiLogger.Log(message);
         }
         catch (Exception ex)
         {
             KappiLogger.LogException("Failed to skip ring wait event", exception: ex);
-            return;
         }
-
-        const string message = "Ring wait event skipped";
-        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-        KappiLogger.Log(message);
     }
 }

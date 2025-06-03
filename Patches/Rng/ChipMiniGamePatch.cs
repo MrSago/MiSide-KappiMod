@@ -36,22 +36,22 @@ internal sealed class ChipMiniGamePatch : IPatch
         _harmony.UnpatchSelf();
     }
 
+    [HarmonyPostfix]
     [HarmonyPatch(typeof(TamagotchiGame_Chip), nameof(TamagotchiGame_Chip.Restart))]
-    private static void Postfix(TamagotchiGame_Chip __instance)
+    private static void SetChipMiniGamePoints(TamagotchiGame_Chip __instance)
     {
         try
         {
             __instance.pointStart.gameObject.transform.localPosition = _pointStart;
             __instance.pointFinish.gameObject.transform.localPosition = _pointFinish;
+
+            const string message = "Chip mini-game points set to fixed values";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
+            KappiLogger.Log(message);
         }
         catch (Exception ex)
         {
             KappiLogger.LogException("Failed to set points", exception: ex);
-            return;
         }
-
-        const string message = "Chip mini-game points set to fixed values";
-        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-        KappiLogger.Log(message);
     }
 }
