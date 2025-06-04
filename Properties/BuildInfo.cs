@@ -6,7 +6,7 @@ internal static class BuildInfo
     internal const string DESCRIPTION = "Just for fun!";
     internal const string AUTHOR = "MrS4g0";
     internal const string COMPANY = "KappiMod Team";
-    internal const string VERSION = "0.7.1";
+    internal const string VERSION = "0.7.2";
     internal const string GAMEVERSION = null;
     internal const string DOWNLOADLINK = "https://github.com/MrSago/MiSide-KappiMod";
     internal const string PACKAGE = "com.miside.kappimod";
