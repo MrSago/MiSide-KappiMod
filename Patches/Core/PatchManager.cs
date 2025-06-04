@@ -2,7 +2,7 @@ using KappiMod.Logging;
 
 namespace KappiMod.Patches.Core;
 
-public class PatchManager : IDisposable
+public sealed class PatchManager : IDisposable
 {
     private readonly List<IPatch> _patches = new();
 
@@ -55,6 +55,5 @@ public class PatchManager : IDisposable
         }
 
         _patches.Clear();
-        GC.SuppressFinalize(this);
     }
 }
