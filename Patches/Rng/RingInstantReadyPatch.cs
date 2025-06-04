@@ -40,9 +40,9 @@ internal sealed class RingInstantReadyPatch : IPatch
         {
             __instance.ReadyTime();
 
-            const string message = "Ring wait event skipped";
-            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-            KappiLogger.Log(message);
+            const string MESSAGE = "Ring wait event skipped";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {MESSAGE}"));
+            KappiLogger.Log(MESSAGE);
         }
         catch (Exception ex)
         {

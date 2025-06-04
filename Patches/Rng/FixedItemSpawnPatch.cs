@@ -82,9 +82,9 @@ internal sealed class FixedItemSpawnPatch : IPatch
 
             __instance.items = newTransforms;
 
-            const string message = "Fixed items positions set";
-            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-            KappiLogger.Log(message);
+            const string MESSAGE = "Fixed items positions set";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {MESSAGE}"));
+            KappiLogger.Log(MESSAGE);
         }
         catch (Exception ex)
         {
@@ -107,7 +107,7 @@ internal sealed class FixedItemSpawnPatch : IPatch
                 return;
             }
 
-            const float delay = 5.0f;
+            const float DELAY_SEC = 5.0f;
 
             Helpers.Delay.ExecuteAfter(
                 (UnityAction)(
@@ -119,12 +119,12 @@ internal sealed class FixedItemSpawnPatch : IPatch
                             _scissorsTransform.rotation[0]
                         );
 
-                        const string message = "Scissors positions set";
-                        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-                        KappiLogger.Log(message);
+                        const string MESSAGE = "Scissors positions set";
+                        EventManager.ShowEvent(new($"{nameof(BlessRng)}: {MESSAGE}"));
+                        KappiLogger.Log(MESSAGE);
                     }
                 ),
-                delay
+                DELAY_SEC
             );
         }
         catch (Exception ex)

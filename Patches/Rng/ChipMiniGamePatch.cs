@@ -45,9 +45,9 @@ internal sealed class ChipMiniGamePatch : IPatch
             __instance.pointStart.gameObject.transform.localPosition = _pointStart;
             __instance.pointFinish.gameObject.transform.localPosition = _pointFinish;
 
-            const string message = "Chip mini-game points set to fixed values";
-            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-            KappiLogger.Log(message);
+            const string MESSAGE = "Chip mini-game points set to fixed values";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {MESSAGE}"));
+            KappiLogger.Log(MESSAGE);
         }
         catch (Exception ex)
         {

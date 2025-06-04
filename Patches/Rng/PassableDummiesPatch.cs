@@ -48,9 +48,9 @@ internal sealed class PassableDummiesPatch : IPatch
                 __instance.indexBedManeken = 1;
             }
 
-            const string message = "Dummy properties set";
-            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-            KappiLogger.Log(message);
+            const string MESSAGE = "Dummy properties set";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {MESSAGE}"));
+            KappiLogger.Log(MESSAGE);
         }
         catch (Exception ex)
         {

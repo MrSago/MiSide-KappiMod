@@ -54,9 +54,9 @@ internal sealed class ChibiDoorUnlockerPatch : IPatch
 
             UnlockDoor();
 
-            const string message = "Chibi door unlocked";
-            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {message}"));
-            KappiLogger.Log(message);
+            const string MESSAGE = "Chibi door unlocked";
+            EventManager.ShowEvent(new($"{nameof(BlessRng)}: {MESSAGE}"));
+            KappiLogger.Log(MESSAGE);
         }
         catch (Exception ex)
         {
