@@ -277,35 +277,47 @@ public class MainPanel : PanelBase
         );
     }
 
-    #endregion Toggle Mods
-
-    #region Toggle Patches
-
-    private static void CreateIntroSkipperToggle(GameObject parent)
+    private void CreateIntroSkipperToggle(GameObject parent)
     {
-        UIFactory.CreateToggle(
-            parent,
-            $"{nameof(IntroSkipPatch)}Toggle",
-            out var toggle,
-            out var text
-        );
+        var mod = ModManager.GetMod<IntroSkipper>();
+        if (mod is null)
+        {
+            KappiLogger.LogError($"{nameof(IntroSkipper)} mod not found!");
+            return;
+        }
 
-        text.text = "Skip menu intro";
-        toggle.isOn = IntroSkipPatch.Enabled;
+        UIFactory.CreateToggle(parent, $"{mod.Id}Toggle", out var toggle, out var text);
+        _modToggles.Add(toggle);
+
+        text.text = mod.Name;
+        toggle.isOn = mod.IsEnabled;
 
         toggle.onValueChanged.AddListener(
             (value) =>
             {
-                IntroSkipPatch.Enabled = value;
-                if (IntroSkipPatch.Enabled != value)
+                if (value == mod.IsEnabled)
                 {
-                    toggle.isOn = IntroSkipPatch.Enabled;
+                    return;
+                }
+
+                if (value && !mod.IsEnabled)
+                {
+                    mod.Enable();
+                }
+                else if (!value && mod.IsEnabled)
+                {
+                    mod.Disable();
+                }
+
+                if (value != mod.IsEnabled)
+                {
+                    toggle.isOn = mod.IsEnabled;
                 }
             }
         );
     }
 
-    #endregion Toggle Patches
+    #endregion Toggle Mods
 
     #region Speedrun Mods
 
