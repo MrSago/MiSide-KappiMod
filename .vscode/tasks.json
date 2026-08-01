@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build: ML",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/KappiMod.csproj",
+        "--configuration",
+        "Release",
+        "/clp:NoSummary",
+        "-p:Loader=ML",
+        "-p:Platform=x64"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "detail": "Builds KappiMod for MelonLoader."
+    },
+    {
+      "label": "build: BIE",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/KappiMod.csproj",
+        "--configuration",
+        "Release",
+        "/clp:NoSummary",
+        "-p:Loader=BIE",
+        "-p:Platform=x64"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "detail": "Builds KappiMod for BepInEx."
+    },
+    {
+      "label": "build: all loaders",
+      "dependsOn": [
+        "build: ML",
+        "build: BIE"
+      ],
+      "dependsOrder": "parallel",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Builds both MelonLoader and BepInEx variants."
+    }
+  ]
+}
