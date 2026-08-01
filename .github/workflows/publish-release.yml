@@ -29,18 +29,18 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Build ML configuration
-        run: dotnet build --configuration ML --no-restore
+      - name: Build MelonLoader release
+        run: dotnet build --configuration Release --no-restore -p:Loader=ML -p:Platform=x64
 
-      - name: Build BIE configuration
-        run: dotnet build --configuration BIE --no-restore
+      - name: Build BepInEx release
+        run: dotnet build --configuration Release --no-restore -p:Loader=BIE -p:Platform=x64
 
       - name: Create artifacts directory structure
         run: |
           mkdir -p ./artifacts/ML/Mods ./artifacts/ML/UserLibs ./artifacts/BIE/BepInEx/plugins/${{ env.MOD_NAME }}
-          cp ./bin/Release/${{ env.MOD_NAME }}.MelonLoader.dll ./artifacts/ML/Mods/
+          cp ./bin/Release/ML/${{ env.MOD_NAME }}.MelonLoader.dll ./artifacts/ML/Mods/
           cp ./Assemblies/UserLibs/UniverseLib.ML.IL2CPP.Interop.dll ./artifacts/ML/UserLibs/
-          cp ./bin/Release/${{ env.MOD_NAME }}.BepInEx.dll ./artifacts/BIE/BepInEx/plugins/${{ env.MOD_NAME }}/
+          cp ./bin/Release/BIE/${{ env.MOD_NAME }}.BepInEx.dll ./artifacts/BIE/BepInEx/plugins/${{ env.MOD_NAME }}/
           cp ./Assemblies/UserLibs/UniverseLib.BIE.IL2CPP.Interop.dll ./artifacts/BIE/BepInEx/plugins/${{ env.MOD_NAME }}/
 
       - name: Create release zips

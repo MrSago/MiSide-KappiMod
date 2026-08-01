@@ -6,29 +6,36 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>KappiMod</AssemblyName>
-    <Configurations>ML;BIE</Configurations>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>x64</Platforms>
+    <OutputPath>bin\$(Configuration)\$(Loader)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\$(Loader)\</IntermediateOutputPath>
   </PropertyGroup>
 
-  <!--Configurations-->
-  <PropertyGroup Condition="'$(Configuration)'=='ML'">
-    <OutputPath>bin\Release</OutputPath>
-    <DefineConstants>ML</DefineConstants>
+  <Target Name="ValidateLoader" BeforeTargets="PrepareForBuild" Condition="'$(Loader)'!='ML' and '$(Loader)'!='BIE'">
+    <Error Text="Invalid Loader '$(Loader)'. Use -p:Loader=ML or -p:Loader=BIE." />
+  </Target>
+
+  <!--Loaders-->
+  <PropertyGroup Condition="'$(Loader)'=='ML'">
+    <DefineConstants>$(DefineConstants);ML</DefineConstants>
     <AssemblyName>KappiMod.MelonLoader</AssemblyName>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='BIE'">
-    <OutputPath>bin\Release</OutputPath>
-    <DefineConstants>BIE</DefineConstants>
+  <PropertyGroup Condition="'$(Loader)'=='BIE'">
+    <DefineConstants>$(DefineConstants);BIE</DefineConstants>
     <AssemblyName>KappiMod.BepInEx</AssemblyName>
   </PropertyGroup>
   <!---->
 
   <!--References-->
-  <ItemGroup Condition="'$(Configuration)'=='ML'">
+  <ItemGroup Condition="'$(Loader)'=='ML'">
     <Content Include="$(ProjectDir)Assemblies\*">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
@@ -40,11 +47,11 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='BIE'">
+  <ItemGroup Condition="'$(Loader)'=='BIE'">
     <Content Include="$(ProjectDir)Assemblies\*">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
-    <Reference Include="$(ProjectDir)Assemblies\Loaders\BepInEx\*.dll">
+    <Reference Include="$(ProjectDir)Assemblies\Loaders\BepInEx\*.dll" Exclude="$(ProjectDir)Assemblies\Loaders\BepInEx\dobby.dll">
       <Private>false</Private>
     </Reference>
     <Reference Include="$(ProjectDir)Assemblies\UserLibs\UniverseLib.BIE.IL2CPP.Interop.dll" >

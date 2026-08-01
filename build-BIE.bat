@@ -1,10 +1,10 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-dotnet build -c BIE
+dotnet build -c Release -p:Loader=BIE -p:Platform=x64
 if errorlevel 1 goto :error
 
-set "SOURCE=.\bin\Release"
+set "SOURCE=.\bin\Release\BIE"
 set "DEST=C:\Program Files (x86)\Steam\steamapps\common\MiSide\BepInEx\plugins\KappiMod"
 set "FILE=KappiMod.BepInEx.dll"
 

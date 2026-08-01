@@ -1,10 +1,10 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-dotnet build -c ML
+dotnet build -c Release -p:Loader=ML -p:Platform=x64
 if errorlevel 1 goto :error
 
-set "SOURCE=.\bin\Release"
+set "SOURCE=.\bin\Release\ML"
 set "DEST=C:\Program Files (x86)\Steam\steamapps\common\MiSide\Mods"
 set "FILE=KappiMod.MelonLoader.dll"
 
