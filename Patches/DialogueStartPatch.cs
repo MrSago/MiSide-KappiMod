@@ -100,6 +100,24 @@ public sealed class DialogueStartPatch : IPatch
         }
     }
 
+    private static void RaiseTamagotchiDialogue(Tamagotchi_Dialogue dialogue)
+    {
+        if (dialogue.IsNullOrDestroyed())
+        {
+            return;
+        }
+
+        try
+        {
+            var args = DialogueTamagotchiEventArgs.Create(dialogue, DialoguePatchType.Postfix);
+            _instance?.OnPostfixDialogueStart?.Invoke(_instance, args);
+        }
+        catch (Exception ex)
+        {
+            KappiLogger.LogException("Failed to process Tamagotchi dialogue event", exception: ex);
+        }
+    }
+
     [HarmonyPatch]
     private static class Patch
     {
@@ -144,6 +162,18 @@ public sealed class DialogueStartPatch : IPatch
             }
 
             RaiseTicTacToeDialogue(__instance);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Tamagotchi_Dialogue), nameof(Tamagotchi_Dialogue.Update))]
+        private static void OnTamagotchiUpdatePostfix(Tamagotchi_Dialogue __instance)
+        {
+            if (__instance.IsNullOrDestroyed() || !__instance.enableDialogue || __instance.play)
+            {
+                return;
+            }
+
+            RaiseTamagotchiDialogue(__instance);
         }
     }
 }
