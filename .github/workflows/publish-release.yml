@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "6.x.x"
 
@@ -47,7 +47,7 @@ jobs:
         run: |
           cd ./artifacts/ML
           zip -r ../../${{ env.MOD_NAME }}.MelonLoader-${{ github.ref_name }}.zip ./*
-          cd ./artifacts/BIE
+          cd ../BIE
           zip -r ../../${{ env.MOD_NAME }}.BepInEx-${{ github.ref_name }}.zip ./*
 
       - name: Create release
